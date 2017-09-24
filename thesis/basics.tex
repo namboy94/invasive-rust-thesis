@@ -1,6 +1,64 @@
 \chapter{Grundlagen und Verwandte Arbeiten}\label{sec:basics}
 
-Hier: Rust, Invasive Computing/Rechnen, SPARC
-%TODO Rust
-%TODO SPARC
-%TODO Invasive Computing
+\section{Rust}
+
+Rust ist eine Programmiersprache, welche von Mozilla Research entwickelt wird \cite(rustWikDe).
+Die Entwicklung der Sprache begann als persönliches Projekt des Mozilla-Mitarbeiters Graydon Hoare und wird
+seit 2009 von Mozilla unterstützt \cite(rustWikDe). 2010 erschien die erste öffentliche Version der Sprache,
+im Jahr 2015 wurde die erste stabile Version veröffentlicht \cite(rustWikDe). 
+Sie erfreut sich in der jüngsten Vergangenheit wachsende Beliebtheit bei Programmierern aller Art.
+%TODO Statistik dass Rust beliebt ist
+
+
+\subsection{Motivation}
+
+Eine der Kernziele der Rust Programmiersprache ist es, sichere Speicherzugriffe zu gewährleisten. Dies wird mithilfe des sogenannten
+``Ownership''-modells erreicht. Dieses Modell ermöglicht es, fehlerhafte Speicherzugriffe und Pufferüberläufe zu vermeiden, ohne
+dabei von einem Garbage Collector Gebrauch zu machen. Dies macht Rust zu einer interessanten Alternative zu Low-Level Sprachen
+wie C, welche nicht sicher bezüglich der Speicherverwaltung sind, als auch zu Sprachen mit Garbage Collector wie X10, welche durch
+den Garbage Collector in gewissen Situationen, beispielsweise bei Echtzeitsystemen, nicht ideal sind.
+
+Ein weiteres Ziel der Sprache ist die Geschwindigkeit. Rust soll vergleichbare Geschwindigkeiten zu anderen Low-Level Sprachen wie
+C erreichen und obendrein effizientes Einbinden mit anderen Sprachen ermöglichen.
+
+Nebenläuigkeit ist ein weiteres Hauptziel der Sprache.
+
+Rust bietet Abstraktionen, welche im Gegensatz zu Sprachen wie Python, nicht oder nur gering die Geschwindigkeit des Programm beinflussen.
+
+\subsection{Grundlegende Eigenschaften der Sprache}
+
+Die Programmiersprache Rust lehnt sich syntaktisch an andere C-artige Sprachen an, unterscheidet sich aber hierbei in einigen
+Aspekten. So sind in `if`/`else` Blöcken beispielsweise die runden Klammern beispielsweise Optional, so wie es auch in
+Sprachen wie Python der Fall ist.
+
+Typsystem
+
+Mehrere Pardigmen (OOP, Funktional)
+
+\subsection{Eigentums/Ownership Modell}
+
+\subsection{Architektur/Compiler}
+
+Der offizielle Rust Compiler rustc
+
+Zum Abhängigkeitsmanagement und Distribution wurde das Tool `cargo` entwickelt. Es ermóglicht es 
+
+Etwas zum Cross Compiling
+
+
+
+\section{SPARC}
+
+Sparc
+
+\section{Invasives Computing}
+
+Invasives Computing ist ein paralleles Programmiermodell, welches es ermöglicht, temporär Ressourcen auf einem Parallelrechner
+zu beanspruchen und anschließend wieder freizugeben.Hierbei gibt es drei wesentliche Phasen, die `invade`, `infect` und `retreat` Phasen. 
+
+In der `invade` Phase werden zunächst Ressourcen für das laufende Programm reserviert. Welche Ressourcen genau reserviert werden,
+wird durch `constraints` bestimmt.
+
+Anschließend wird in der `infect` Phase die Funktion auf den reservierten Prozessorelementen ausgeführt.
+
+Werden die reservierten Ressourcen nicht mehr benötigt, so kann man diese in der `retreat` Phase wieder freigeben.

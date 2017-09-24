@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.8.13)  4 SEP 2017 11:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Arch Linux) (preloaded format=pdflatex 2017.8.13)  24 SEP 2017 18:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1279,7 +1279,7 @@ LaTeX Info: Redefining \nameref on input line 24.
 \@outlinefile=\write4
 \openout4 = `build/thesis.out'.
 
-<KITLogo.pdf, id=27, pagebox=cropbox, 198.7425pt x 91.34125pt>
+<KITLogo.pdf, id=51, pagebox=cropbox, 198.7425pt x 91.34125pt>
 File: KITLogo.pdf Graphic file (type pdf)
 <use KITLogo.pdf>
 Package pdftex.def Info: KITLogo.pdf  used on input line 27. on input line 27.
@@ -1313,7 +1313,7 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <8> on input line 27.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <6> on input line 27.
-<4665389330_d09f3d6b75_z.jpg, id=28, 346.1733pt x 263.0628pt>
+<4665389330_d09f3d6b75_z.jpg, id=52, 346.1733pt x 263.0628pt>
 File: 4665389330_d09f3d6b75_z.jpg Graphic file (type jpg)
 <use 4665389330_d09f3d6b75_z.jpg>
 Package pdftex.def Info: 4665389330_d09f3d6b75_z.jpg  used on input line 27. on
@@ -1459,17 +1459,48 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1.
-) (./impl.tex
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1.
+(babel)             in language  on input line 3.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1.
+(babel)             in language  on input line 3.
+
+LaTeX Warning: Citation `(' on page 9 undefined on input line 5.
+
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1.
+(babel)             in language  on input line 11.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1.
+(babel)             in language  on input line 11.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 25.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 25.
+
+Underfull \vbox (badness 1603) has occurred while \output is active []
+
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 30.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 30.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 30.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 30.
  [9]
 Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 31.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 31.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 39.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 39.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 43.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 43.
+)
+(./impl.tex
+Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1.
@@ -1477,10 +1508,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1.
- [10
-
-
-]
+ [10]
 chapter 3.
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1.
@@ -1495,7 +1523,10 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1.
- [11]
+ [11
+
+
+]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1.
 Package babel Info: Redefining ngerman shorthand "~
@@ -1624,25 +1655,29 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 79.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 79.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 79.
 Package rerunfilecheck Info: File `build/thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 3C540A811A496ECB0D05350C5A5A166A;276.
+(rerunfilecheck)             Checksum: 5E5EE64CEFCF7B2A626CFC5CDEE80D1E;671.
+
+
+LaTeX Warning: There were undefined references.
+
  ) 
 Here is how much of TeX's memory you used:
- 26277 strings out of 492990
- 488667 string characters out of 6138688
+ 26331 strings out of 492990
+ 489430 string characters out of 6138688
  708064 words of memory out of 5000000
- 29341 multiletter control sequences out of 15000+600000
- 48893 words of font info for 46 fonts, out of 8000000 for 9000
+ 29362 multiletter control sequences out of 15000+600000
+ 58704 words of font info for 62 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 73i,8n,76p,8817b,800s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 73i,11n,76p,8817b,800s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}</usr/share/texmf-dist/fo
 nts/type1/public/lm/lmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr
 10.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf
 -dist/fonts/type1/public/lm/lmr6.pfb></usr/share/texmf-dist/fonts/type1/public/
-lm/lmssbx10.pfb>
-Output written on build/thesis.pdf (21 pages, 313089 bytes).
+lm/lmro12.pfb></usr/share/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb>
+Output written on build/thesis.pdf (21 pages, 344196 bytes).
 PDF statistics:
- 162 PDF objects out of 1000 (max. 8388607)
- 130 compressed objects within 2 object streams
- 31 named destinations out of 1000 (max. 500000)
- 13375 words of extra memory for PDF output out of 14400 (max. 10000000)
+ 199 PDF objects out of 1000 (max. 8388607)
+ 166 compressed objects within 2 object streams
+ 37 named destinations out of 1000 (max. 500000)
+ 16495 words of extra memory for PDF output out of 17280 (max. 10000000)
 
