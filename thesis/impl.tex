@@ -1,3 +1,42 @@
 \chapter{Entwurf und Implementierung}\label{sec:impl}
 
-Hier sollten vorkommen: Die Rust Bindings, Der Bau des Cross-Compilers octorust, Die Verbesserungen und Abstraktionen in octolib
+Im folgenden wird die Implementierung des octorust Compilers und der octolib Bibliothek erläutert, welche
+den Gebrauch von Rust im invasiven Computing ermöglichen.
+
+\section{Rust auf der SPARCv8 Platform}
+
+Rust wird derzeit nicht offiziell auf der SPARCv8 Platform unterstützt, da Rust jedoch als Backend LLVM verwendet und dieses
+die Platform unterstützt, ist es auch möglich Rust auf dieser Architektur auszuführen.
+
+Rust erlaubt es, Programme ohne die Standardbibliothek zu implementieren, welches in diesem Fall notwendig ist, da die
+Standardbibliothek nicht trivial auf jeder beliebigen Platform verwendbar ist. 
+
+nostd core
+
+rustc json
+
+cargo json
+
+\section{Erstellung des octorust Compilers}
+
+Um das komplizierte Vorgehen bei der ``nostd'' Kompilierung und das anschließende Verlinken mit der IRTSS Runtime zu
+vereinfachen, wurde ein Python Programm namens ``octorust'' implementiert. Dieses erlaubt es,
+
+struktur
+
+linken
+
+\section{Bindings zur C API}
+
+Im folgenden wurde eine Rust Bibliothek geschrieben, welche
+
+\section{Rust-spezifische Verbesserungen}
+
+AgentClaim / Constraints Structs
+
+infect
+
+Implizites retreat
+
+Closures
+

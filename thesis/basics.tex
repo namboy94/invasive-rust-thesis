@@ -1,47 +1,156 @@
 \chapter{Grundlagen und Verwandte Arbeiten}\label{sec:basics}
 
+Im folgenden werden die Grundlagen der Programmiersprache Rust, des invasiven Computing und der Rechnerarchitektur
+SPARC behandelt.
+
 \section{Rust}
+
 
 Rust ist eine Programmiersprache, welche von Mozilla Research entwickelt wird \cite(rustWikDe).
 Die Entwicklung der Sprache begann als persönliches Projekt des Mozilla-Mitarbeiters Graydon Hoare und wird
 seit 2009 von Mozilla unterstützt \cite(rustWikDe). 2010 erschien die erste öffentliche Version der Sprache,
 im Jahr 2015 wurde die erste stabile Version veröffentlicht \cite(rustWikDe). 
-Sie erfreut sich in der jüngsten Vergangenheit wachsende Beliebtheit bei Programmierern aller Art.
-%TODO Statistik dass Rust beliebt ist
+Sie erfreut sich in der jüngsten Vergangenheit wachsende Beliebtheit bei Programmierern aller Art. So wurde
+bei einer Umfrage der Webseite stackoverflow.com im Jahre 2016 als beliebteste Programmiersprache bei Entwicklern
+ermittelt. \cite{stackoverflowSurvey}
 
+Das wohl derzeit prominenteste Projekt, welche Rust verwendet ist der Servo Layout-Engine, welcher gemeinsam von
+Mozilla und Samsung\cite{servoWikiDe} entwickelt wird. Dieser Layout-Engine soll schrittweise
+den bisherigen Engine `Gecko`, welcher in C++ geschrieben wurde, im Mozilla Firefox Webbrowser ersetzen und dabei
+deutlich bessere Leistung vorweisen.
 
 \subsection{Motivation}
 
 Eine der Kernziele der Rust Programmiersprache ist es, sichere Speicherzugriffe zu gewährleisten. Dies wird mithilfe des sogenannten
-``Ownership''-modells erreicht. Dieses Modell ermöglicht es, fehlerhafte Speicherzugriffe und Pufferüberläufe zu vermeiden, ohne
-dabei von einem Garbage Collector Gebrauch zu machen. Dies macht Rust zu einer interessanten Alternative zu Low-Level Sprachen
+``Ownership''-modells erreicht. Dieses Modell ermöglicht es, fehlerhafte Speicherzugriffe zu vermeiden, welche ein ernsthaftes
+Sicherheitsrisiko darstellen, denn diese können zu undefiniertem Verhalten führen, welches wiederum auch gezielt als
+Angriffsvektor genutzt werden kann. Diese Speichersicherheit wird erreicht, ohne dabei von einem Garbage Collector Gebrauch
+zu machen. Dies macht Rust zu einer interessanten Alternative zu Systemsprachen
 wie C, welche nicht sicher bezüglich der Speicherverwaltung sind, als auch zu Sprachen mit Garbage Collector wie X10, welche durch
-den Garbage Collector in gewissen Situationen, beispielsweise bei Echtzeitsystemen, nicht ideal sind.
+den Garbage Collector in gewissen Situationen und Anwendungsbereichen, beispielsweise bei Echtzeitsystemen, nicht ideal sind.
 
-Ein weiteres Ziel der Sprache ist die Geschwindigkeit. Rust soll vergleichbare Geschwindigkeiten zu anderen Low-Level Sprachen wie
-C erreichen und obendrein effizientes Einbinden mit anderen Sprachen ermöglichen.
+Eine weitere Angriffsfläche als auch Fehlerquelle in herkömmlichen Systemprogrammiersprachen wie C und C++
+ist das unsichere Typsystem. In Rust wird dies vermieden, indem ein typsicheres Typsystem verwendet wird.
 
-Nebenläuigkeit ist ein weiteres Hauptziel der Sprache.
+Ein weiteres Ziel der Sprache ist die Geschwindigkeit. Rust soll vergleichbare Geschwindigkeiten zu anderen Systemsprachen wie
+C oder C++ erreichen. Dies kann in Benchmarks zumeist auch bestätigt werden\cite{rustVsCBenchmark}. Benchmarks, welche Rust mit
+höheren Programmiersprachen wie Java\cite{rustVsJavaBenchmark} oder Python\cite{rustVsPythonBenchmark} vergleichen,
+weisen oft einen signfikanten Vorspruch für Rust auf.
 
-Rust bietet Abstraktionen, welche im Gegensatz zu Sprachen wie Python, nicht oder nur gering die Geschwindigkeit des Programm beinflussen.
+Das effiziente Einbinden mit anderen Sprachen ist eine zusätzliche Motivation hinter der Programmiersprache.
+So kann Rust beispielsweise mithilfe der sogenannten ``Foreign Function Interface''
+Funktionen welche in anderen Programmiersprachen geschrieben sind benutzen. Außerdem ist es möglich,
+Rust Code aus anderen Programmiersprachen, inklusive höheren Programmiersprachen wie Python oder Ruby, aufzurufen.
+
+Nebenläufigkeit ist ein weiteres Ziel der Sprache, mithilfe des Architektur der Sprache soll es zwischen einzelnen Threads
+nicht zu kritischen Wettläufen kommen, welches eines der Hauptfehlerquellen bei parallelem Programmieren beseitigt.
+
+Rust soll dem Programmierer zudem höhere Abstraktionen bieten, welche nicht oder nur gering die Effizienz des Programm
+beinflussen. Diese sogenannten ``Zero-cost Abstractions'' erleichtern es Programmierern, welche nur wenig Erfahrung mit
+Systemsprachen vorweisen können, die Programmiersprache zu verwenden, ohne dabei auf Leistung verzichten zu müssen..
 
 \subsection{Grundlegende Eigenschaften der Sprache}
+
+Im folgenden werden die grundlegenden Eigenschaften der Programmiersprache Rust erläutert.
+
+\subsubsection{Das Ownership-Modell}
+
+Das signifikanteste Alleinstellungsmerkmal der Programmiersprache Rust ist das Ownership Modell. Erst hierdurch wird die
+Speichersicherheit ohne Garbage Collector möglich.
+
+% Gültigen Anwendungsbereich verlassen ~ Out of Scope?
+Die Grundlage des Ownership-Modells ist die Bindung von Speicher an eine Variable. Sobald eine Variable initialisiert wird, 
+wird Speicher für diese alloziert. Sobald diese Variable sich allerdings nicht mehr im gültigen Anwendungsbereich befindet,
+wird dieser Speicher automatisch wieder freigegeben. Dies wird im folgenden Beispiel veranschaulicht:
+
+\begin{verbatim}
+    fn foo() {
+        let v = vec![1, 2, 3]; // Alloziert Speicher
+    }
+
+    fn main() {
+        foo();
+        // Speicher ist hier wieder freigegeben
+    } 
+\end{verbatim}
+
+Außerdem erlaubt es Rust keinen zwei Variablen auf denselben Speicher zu zeigen. So wird beispielsweise bei einer Zuweisung einer
+Variable zu einer anderen der ``Besitz'' des Speichers auf die neue Variable übertragen und die alte Variable kann nun nicht mehr
+verwendet werden. Dies geschieht auch wenn die Variable als Parameter in einem Funktionsaufrauf verwendet wird.
+Dieses Verhalten ist als ``Move''-Semantik bekannt. Eine Veranschaulichung dessen folgt:
+
+\begin{verbatim}
+    fn foo(v: Vec<i32>) {
+        // Details unwichtig
+    }
+
+    fn main() {
+	
+        let v = vec![1, 2, 3];
+        let v2 = v;  // v ist ab jetzt nicht mehr benutzbar!
+        foo(v2);     // v2 ist ab jetzt nicht mehr benutzbar!
+
+    }
+\end{verbatim}
+
+Durch dieses Verhalten wird sichergestellt, dass eine Variable exklusiven Zugriff auf die allozierten Speicherbereiche besitzt,
+wodurch fehlerhafte Speicherzugriffe vermieden werden.
+
+Eine Ausnahme hierzu bilden Type, welche das ``Copy-Trait'' implementieren. So können beispielsweise variablen vom Typ i32, welches
+das ``Copy-Trait'' implementiert, beliebig oft wiederverwendet werden. In diesem Fall existieren trotzdem nicht mehrere Zeiger
+auf dieselbe Speicherregion, der Speicherinhalt wird stattdessen jedesmal kopiert.
+
+Ein weiteres interessantes ``Trait'' welches ein Typ in Rust implementieren kann ist das ``Drop-Trait''. Imlementiert ein Typ dieses,
+so kann zusätzlicher Code ausgeführt werden, sobald eine Variable von dem Typ den gültigen Anwendungsbereich verlässt. Dies kann
+hilfreich sein, um andere Speicherbereiche, welche in einem nicht-trivialen Zusammenhang von der nun ungültigen Variable abhängen.
+
+Das Ownership-Modell wird in der Praxis von Compiler durchgesetzt. So werden die Garantien, welche das Ownership-Modell
+verspricht, bereits zur Compile-Zeit sichergestellt. Zusätzlich fällt die Notwendigkeit für einen Garbage Collector weg, welches
+zu einer besseren Laufzeitseffizienz und Determinismus beitragen.
+
+\subsubsection{Typsystem}
+
+Rust verfügt über ein statisches, typsicheres Typsystem. Dies bedeutet dass jede Variable einen eindeutigen Typ besitzt und keinen
+anderen Typ annehmen kann.
+
+Rust erlaubt es zudem, per Typinferenz die explizite Angabe eines Typen bei der Variablendeklaration zu vermeiden.
+
+Typsystem - Hindley-Milner
+
+Typsicher
+
+Lineare Typen / -> Affine Typen <-
+
+Generics
+
+\subsubsection{Paradigmen}
+
+
+
+Mehrere Pardigmen (OOP, Funktional)
 
 Die Programmiersprache Rust lehnt sich syntaktisch an andere C-artige Sprachen an, unterscheidet sich aber hierbei in einigen
 Aspekten. So sind in `if`/`else` Blöcken beispielsweise die runden Klammern beispielsweise Optional, so wie es auch in
 Sprachen wie Python der Fall ist.
 
-Typsystem
+\subsubsection{Fehlerbehandlung}
 
-Mehrere Pardigmen (OOP, Funktional)
 
-\subsection{Eigentums/Ownership Modell}
+Keine Exceptions -> Result<T,U>
+
+
+
+Keine Race Conditions - Sync/Send
 
 \subsection{Architektur/Compiler}
 
-Der offizielle Rust Compiler rustc
+Der offizielle Rust Compiler rustc 
 
-Zum Abhängigkeitsmanagement und Distribution wurde das Tool `cargo` entwickelt. Es ermóglicht es 
+Als Lösung zum Abhängigkeitsmanagement und der Distribution wurde das Tool `cargo` entwickelt. Es ermöglicht es
+dem Programmierer verwendete Bibliotheken in ein Projekt einzugliedern, indem diese in einer `.toml` Datei im Hauptverzeichniss
+des Projekts angegeben werden. Außerdem unterstützt `cargo` mehrere weiter hilfreiche Funktionen zum testen oder
+distributieren der entwickelten Software. Kompilierte Software kann als ein sogenanntes `Crate` bei der
+von den Rust entwickelten Platform[Citation Needed] `crates.io` mithilfe von `cargo` hochgeladen werden.
 
 Etwas zum Cross Compiling
 

@@ -1,3 +1,18 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{1}
+
+\bibitem{stackoverflowSurvey}
+stackoverflow.com, ``Developer survey results 2016,'' 2016.
+
+\bibitem{servoWikiDe}
+wikipedia.org, ``{Servo (Software)},'' 2017.
+
+\bibitem{rustVsCBenchmark}
+debian.org, ``{Rust programs versus C gcc},'' 2017.
+
+\bibitem{rustVsJavaBenchmark}
+debian.org, ``{Rust programs versus Java},'' 2017.
+
+\bibitem{rustVsPythonBenchmark}
+debian.org, ``{Rust programs versus Python 3},'' 2017.
 
 \end{thebibliography}

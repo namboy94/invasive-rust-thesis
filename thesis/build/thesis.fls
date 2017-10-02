@@ -307,9 +307,12 @@ INPUT basics.tex
 INPUT basics.tex
 INPUT /usr/share/texmf-dist/fonts/tfm/public/lm/ec-lmssbx10.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/lm/ec-lmssbx10.tfm
-INPUT impl.tex
-INPUT impl.tex
 INPUT /usr/share/texmf-dist/fonts/tfm/public/lm/ec-lmro12.tfm
+INPUT /usr/share/texmf-dist/tex/latex/lm/t1lmtt.fd
+INPUT /usr/share/texmf-dist/tex/latex/lm/t1lmtt.fd
+INPUT /usr/share/texmf-dist/fonts/tfm/public/lm/ec-lmtt12.tfm
+INPUT impl.tex
+INPUT impl.tex
 INPUT eval.tex
 INPUT eval.tex
 INPUT conclusion.tex
@@ -326,3 +329,4 @@ INPUT /usr/share/texmf-dist/fonts/type1/public/lm/lmr12.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/lm/lmr6.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/lm/lmro12.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb
+INPUT /usr/share/texmf-dist/fonts/type1/public/lm/lmtt12.pfb
