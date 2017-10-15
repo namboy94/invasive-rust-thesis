@@ -303,16 +303,18 @@ INPUT build/thesis.toc
 OUTPUT build/thesis.toc
 INPUT intro.tex
 INPUT intro.tex
+INPUT /usr/share/texmf-dist/fonts/tfm/public/lm/ec-lmssbx10.tfm
 INPUT basics.tex
 INPUT basics.tex
-INPUT /usr/share/texmf-dist/fonts/tfm/public/lm/ec-lmssbx10.tfm
-INPUT /usr/share/texmf-dist/fonts/tfm/public/lm/ec-lmssbx10.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/lm/ec-lmro12.tfm
+INPUT /usr/share/texmf-dist/fonts/tfm/public/lm/ec-lmssbx10.tfm
 INPUT /usr/share/texmf-dist/tex/latex/lm/t1lmtt.fd
 INPUT /usr/share/texmf-dist/tex/latex/lm/t1lmtt.fd
 INPUT /usr/share/texmf-dist/fonts/tfm/public/lm/ec-lmtt12.tfm
 INPUT impl.tex
 INPUT impl.tex
+INPUT /usr/share/texmf-dist/tex/latex/lm/omslmr.fd
+INPUT /usr/share/texmf-dist/tex/latex/lm/omslmr.fd
 INPUT eval.tex
 INPUT eval.tex
 INPUT conclusion.tex
@@ -322,6 +324,7 @@ INPUT build/thesis.bbl
 INPUT build/thesis.aux
 INPUT ./build/thesis.out
 INPUT ./build/thesis.out
+INPUT /usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc
 INPUT /usr/share/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc
 INPUT /usr/share/texmf-dist/fonts/type1/public/lm/lmbx12.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/lm/lmr10.pfb
@@ -329,4 +332,5 @@ INPUT /usr/share/texmf-dist/fonts/type1/public/lm/lmr12.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/lm/lmr6.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/lm/lmro12.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb
+INPUT /usr/share/texmf-dist/fonts/type1/public/lm/lmsy10.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/lm/lmtt12.pfb

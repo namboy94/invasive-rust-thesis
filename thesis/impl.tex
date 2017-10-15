@@ -1,32 +1,193 @@
 \chapter{Entwurf und Implementierung}\label{sec:impl}
 
-Im folgenden wird die Implementierung des octorust Compilers und der octolib Bibliothek erläutert, welche
-den Gebrauch von Rust im invasiven Computing ermöglichen.
+Im folgenden werden Programme und Bibliotheken entwickelt, welche es ermöglichen, Rust auf dem IRTSS Betriebssystem
+verwenden zu können
 
-\section{Rust auf der SPARCv8 Platform}
+\section{Rust auf der SPARC LEON Architektur}
 
-Rust wird derzeit nicht offiziell auf der SPARCv8 Platform unterstützt, da Rust jedoch als Backend LLVM verwendet und dieses
-die Platform unterstützt, ist es auch möglich Rust auf dieser Architektur auszuführen.
+Rust wird derzeit nicht offiziell auf der SPARC LEON/SPARCv8 Architektur unterstützt. Rust verwendet jedoch als Backend LLVM,
+welches diese Architektur unterstützt, daher ist es möglich, Rust-Programme für diese Architektur zu kompilieren.
+Die Rust-Standardbibliothek ist jedoch nicht trivial auf andere Architekturen zu portieren, Rust bietet allerdings die Funktion,
+Programme mit einer minimalem, platformunabhängigen Untermenge der Standardbibliothek zu kompilieren. Diese Funktion wird hier
+ausgenutzt, um eine minimale Implementierung der Programmiersprache auf die SPARC LEON Architektur zu portieren.
 
-Rust erlaubt es, Programme ohne die Standardbibliothek zu implementieren, welches in diesem Fall notwendig ist, da die
-Standardbibliothek nicht trivial auf jeder beliebigen Platform verwendbar ist. 
+% Hierfür wird jedoch eine bereits kompiliertes Core-Crate (libcore) benötigt, denn dieses enthält die
+% Grundfuktionen der Programmiersprache. Daher muss zunächst dieses Crate für die SPARC LEON Architektur kompiliert werden.
 
-nostd core
+% Der Rust-Compiler rustc erlaubt es mithilfe der \colorbox{lightgray}{-{}-target} Option, ein Rust-Programm für eine beliebige
+% Ziel-Architektur zu kompilieren.
 
-rustc json
+Um ein Rust Programm für eine nicht offiziell unterstütze Architektur zu kompilieren, muss man eine JSON-Datei erstellen, welche
+dem Compiler die nötigen Informationen zur Ziel-Architektur zur Verfügung stellt. Eine solche JSON Datei für die
+SPARC LEON Architektur sieht wie folgt aus\cite{initialSparcSupportGithub}:
+\begin{verbatim}
+{
+    "arch": "sparc",
+    "data-layout": "E-m:e-p:32:32-i64:64-f128:64-n32-S64",
+    "executables": true,
+    "llvm-target": "sparc",
+    "os": "none",
+    "panic-strategy": "abort",
+    "target-endian": "big",
+    "target-pointer-width": "32",
+    "linker-flavor": "ld",
+    "linker": "path_to_sparc_gcc",
+    "link-args": [
+        "-nostartfiles"
+    ]
+}
+\end{verbatim}
+Außerdem wird ein C-Linker, beispielsweise gcc, für die SPARC LEON Architektur benötigt. Der Pfad zu diesem Linker
+muss in der \colorbox{lightgray}{linker}-Option der JSON-Datei angegeben werden.
 
-cargo json
+Da die Standardbibliothek für die SPARC LEON Architektur nicht verfügbar ist, muss man stattdessen das Core-Crate/libcore verwenden.
+Damit ein Rust-Programm libcore anstelle der Standardbibliothek verwendet, 
+muss man die Zeile 
+\begin{verbatim} #![no_std] \end{verbatim}
+zum Anfang des Programms hinzufügen. Außerdem müssen die Funktionen ``eh\char`_personality'', ``eh\char`_unwind\char`_resume'' und
+``panic\char`_fmt'' in diesem Programm manuell implementiert werden.
+Am Anfang eines zu kompilierenden Programm muss also beispielsweise die folgenden
+Zeilen angegeben werden:
+\begin{verbatim}
+#![feature(lang_items, libc)]
+#![no_std]
+#![no_main]
 
-\section{Erstellung des octorust Compilers}
+#[lang = "eh_personality"] extern fn eh_personality() {}
+#[lang = "eh_unwind_resume"] extern fn eh_unwind_resume() {}
+#[lang = "panic_fmt"] fn panic_fmt() -> ! { loop {} }
+\end{verbatim}
 
-Um das komplizierte Vorgehen bei der ``nostd'' Kompilierung und das anschließende Verlinken mit der IRTSS Runtime zu
-vereinfachen, wurde ein Python Programm namens ``octorust'' implementiert. Dieses erlaubt es,
+Um dann das Core-Crate einzubinden, verwendet man idealerweise ein Cargo-Projekt und gibt den
+Pfad zum Core-Crate in der Cargo.toml Datei als Abhängigkeit an. Anschließend kann man das Programm mithilfe des
+Befehls ``cargo rustc -{}-target leon.json'' kompilieren, wobei leon.json der Name der zuvor erstellten JSON Datei ist.
+Dies kompiliert nun zuerst das Core-Crate für die SPARC LEON Architektur und anschließend das Programm selbst.
 
-struktur
+\section{Erstellung des octorust Hilfsprogramms}
 
-linken
+Um das relativ komplizierte und fehleranfällige Kompilieren für Rust-Programme auf der SPARC LEON Architektur zu vereinfachen als
+auch besagte Rust-Programme mit dem IRTSS Betriebssytem zu verwenden, wurde ein Python-Programm geschrieben, welche diese Schritte
+vereinfacht. Das Programm wurde in Python geschrieben, da Python's Standardbibliothek viele nützliche Funktionen zur Manipulation
+von Dateien bietet, welches sich in diesem Fall als hilfreich erweist. Außerdem bietet Python eine simple Schnittstelle zum Parsen
+von Kommandozeile-Argumenten.
 
-\section{Bindings zur C API}
+Das Programm verwendet setuptools und eine dafür konfigurierte setup.py Datei um das Programm lokal zu installieren. Während dem
+Installationsprozesses wird gleichzeitig ein Verzeichniss names .octorust im Heimverzeichniss des derzeitigen Nutzers erstellt,
+in dem IRTSS-builds, die octolib Rust-Bibliothek, welche später genauer erläutert wird, als auch ein SPARC gcc, insofern dass ein
+solcher nicht bereits installiert und im Pfad gefunden werden kann.
+
+Octorust soll die folgenden Optionen bieten:
+\begin{itemize}
+
+	\item{-h, -{}-help}
+	
+	Diese Option druckt einen Nutzungshinweis inklusive aller möglichen Kommandozeilenoptionen.
+	
+	\item{-a. -{}-architecture}
+	
+	Diese Option ermöglicht es, eine IRTSS Zielarchitektur zu wählen. Zur Wahl stehen x86guest, x64native als auch leon.
+	Sollte diese Option nicht angegeben werden, wird standardmäßig für die x86guest Architektur kompiliert.
+	
+	\item{-v, -{}-variant}
+	
+	Diese Option ermöglicht es, eine IRTSS-Variante zu wählen, beispielsweise generic oder 	4t5c-nores-chipit-w-iotile. Sollte diese
+	Option nicht angegeben werden, wird je nach gewählter Architektur eine passende Standardvariante verwendet. Im Falle von
+	x86guest und x64native wird die Variante generic gewählt und für leon die Variante 4t5c-nores-chipit-w-iotile.
+	
+	\item{-o, -{}-output}
+	
+	Mit dieser Option kann der Pfad zur resultierenden Ausgabedatei explizit angegeben	werden. Ansonsten ermittelt octorust
+	automtisch einen sinvollen Ausgabenamen, beispielsweise foo.out für ein Cargo-Project mit dem Namen foo.
+	
+	\item{-k, -{}-keep}
+	
+	Wird diese Option verwendet, werden jegliche temporäre Dateien, die während dem Kompilieren und dem Linken erstellt werden im
+	Anschluss nicht gelöscht.
+	
+	\item{-r, -{}-run}
+	
+	Wird diese Option verwendet, wird das Programm nach dem Kompilieren ausgeführt direkt ausgeführt. Für andere Architekturen
+	wird dabei vorausgesetzt dass qemu installiert ist.
+	
+	\item{-i, -{}-irtss-build-version}
+
+	Mithilfe dieser Option kann man eine spezifische IRTSS Version verwenden.
+	
+	\item{-{}-release}
+
+	Wird diese Option verwendet, werden Optimierungen für Rust-Programme aktiviert.
+	
+	\item{-{}-fetch-irtss}
+
+	Mithilfe dieser Option können IRTSS-builds von https://www4.cs.fau.de/invasic/octopos/ heruntergeladen werden. Hierfür ist jedoch
+	eine gültige Nutzername/Passwort-Kombination in einer .netrc Datei im folgenden Format vonnöten:
+	\begin{verbatim}
+	machine www4.cs.fau.de
+	login NUTZERNAME
+	password PASSWORT
+	\end{verbatim}
+\end{itemize}
+
+Unterstützt wird das Kompilieren von eigenständigen .c C-Programmen und .rs Rust-Programmen, als auch das Kompilieren von
+Cargo-Projekten. Cargo-Projekte bieten durch das Abhängigkeitsmanagement zusätzlich den Gebrauch von Rust-Bibliotheken, vor
+allem der octolib-Bibliothek, welche eigens für die Interaktion zwischen Rust und IRTSS entwickelt wurde. Daher werden sich die
+folgenden Prozesse primär mit dem Kompilierungsvorgang der Cargo-Projekte beschäftigen.
+
+\subsection{Struktur eines Cargo-Projekts}
+
+Cargo-Projekte die mit octorust kompiliert werden sollen müssen einige Eigenheiten im Vergleich zu normalen Cargo-Projekten aufweisen.
+Zum einen werden die Projektdaten nicht in eine Cargo.toml, sondern in ein OctoCargo.toml Datei eingegeben. In dieser OctoCargo.toml
+Datei muss außerdem der Abschnitt ``[dependencies]'' als letztes vorkommen. 
+Dies ist der Fall, da octorust aus dieser OctoCargo.toml die eigentlich Cargo.toml Datei generiert
+und dabei benötigte Abhängigkeiten einfügt. Außerdem muss in dieser OctoCargo.toml Datei das crate-type Attribut als
+\colorbox{lightgray}{[\char`"staticlib\char`"]} angegeben werden. Eine minimale OctoCargo.toml Datei sieht demnach wie folgt aus:
+\begin{verbatim}
+[package]
+name = "project_name"
+version = "project_version"
+authors = ["project_authors"]
+
+[lib]
+crate-type = ["staticlib"]
+
+[dependencies]
+\end{verbatim}
+
+
+Zusätzlich muss die Haupt-Quelldatei des Projekts mit \colorbox{lightgray}{\char`#![no\char`_std]} beginnen und anstelle der main()
+Funktion muss eine \colorbox{lightgray}{pub extern \char`"C\char`"} Funktion namens
+\colorbox{lightgray}{rust\char`_main\char`_ilet} als Startpunkt des Programms verwendet werden. Diese Funktion nimmt genau einen 
+Parameter entgegen welcher vom Typ u8 ist. Über diese  Funktion muss außerdem \colorbox{lightgray}{\char`#[no\char`_mangle]} stehen.
+Ein solches minimales Rust-Programm sähe also wie folgt aus:
+\begin{verbatim}
+#![no_std]
+
+#[no_mangle]
+pub extern "C" fn rust_main_ilet(claim: u8) {
+
+}
+\end{verbatim}
+
+\subsection{Kompilieren}
+
+Vor der Kompilierung des eigentlichen Cargo-Projekts werden zunächst alle Abhängigkeiten für die gewählte Architektur kompiliert.
+Für x86guest und x64native wird hierbei nur das korrekte Target-Tripel beim Kompilieren angegeben, x86\char`_64-unknown-linux-gnu für 
+x64native und i686-unknown-linux-gnu für x86guest. Soll jedoch für die leon Architektur kompiliert werden, generiert octorust
+zuerst eine wie in Kapitel 3.1 erläuterte JSON Datei, die dann als Target verwendet wird.
+Die Abhängigkeiten, welche in jedem von octorust kompilierten Projekt verwendet werden, sind libcore, libc und octolib. Diese
+Abhängigkeiten befinden sich nach einer erfolgreichen Installation alle im ~/.octorust Verzeichnis.
+
+Nachdem die Abhängigkeiten erfolgreich kompiliert wurden, wird das Cargo-Projekt selbst als statische Bibliothek kompiliert.
+Anschließend wird eine minimale C Datei generiert, welche die vom IRTSS benötigte main\char`_ilet Funktion implementiert und innerhalb
+dieser die rust\char`_main\char`_ilet Funktion aufruft. Im Anschluss daran wird dann noch die shutdown Funktion erwendet um die 
+Ausführung des Programms zu beenden. Diese generierte C Datei wird mithilfe eines passenden gcc Compilers als object-Datei kompiliert
+und anschließend mit dem IRTSS und der zuvor kompilierten statischen Rust-Bibliothek. Nun sollte die Kompilierung erfolgreich beendet
+sein, vorausgesetzt dass keine Compilerfehler aufgetreten sind.
+
+Im Anschluss an die Kompilierung wird, vorausgesetzt die ``--keep''-Option wurde nicht verwendet, jegliche temporäre Dateien
+gelöscht, welches die generierte Cargo.toml Datei, die minimale C Datei als auch die C object-Datei.
+
+\section{octolib}
 
 Im folgenden wurde eine Rust Bibliothek geschrieben, welche
 

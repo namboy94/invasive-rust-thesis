@@ -3,6 +3,9 @@
 \bibitem{mooresLawWikiDe}
 wikipedia.org, ``{Mooresches Gesetz},'' 2017.
 
+\bibitem{nvidia1080specs}
+Nvidia, ``{GeForce GTX 1080 Specifications},'' 2017.
+
 \bibitem{stackoverflowSurvey}
 stackoverflow.com, ``Developer survey results 2016,'' 2016.
 
@@ -17,5 +20,8 @@ debian.org, ``{Rust programs versus Java},'' 2017.
 
 \bibitem{rustVsPythonBenchmark}
 debian.org, ``{Rust programs versus Python 3},'' 2017.
+
+\bibitem{initialSparcSupportGithub}
+J.~Aparicio(japaric), ``{initial SPARC support},'' 2017.
 
 \end{thebibliography}
