@@ -303,10 +303,10 @@ INPUT build/thesis.toc
 OUTPUT build/thesis.toc
 INPUT intro.tex
 INPUT intro.tex
+INPUT /usr/share/texmf-dist/fonts/tfm/public/lm/ec-lmro12.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/lm/ec-lmssbx10.tfm
 INPUT basics.tex
 INPUT basics.tex
-INPUT /usr/share/texmf-dist/fonts/tfm/public/lm/ec-lmro12.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/lm/ec-lmssbx10.tfm
 INPUT /usr/share/texmf-dist/tex/latex/lm/t1lmtt.fd
 INPUT /usr/share/texmf-dist/tex/latex/lm/t1lmtt.fd

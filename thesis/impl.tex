@@ -189,7 +189,63 @@ gelöscht, welches die generierte Cargo.toml Datei, die minimale C Datei als auc
 
 \section{octolib}
 
-Im folgenden wurde eine Rust Bibliothek geschrieben, welche
+Zusätzlich zum octorust Programm wurde ebenfalls eine Rust-Bibliothek names octolib geschrieben. Diese Bibliothek soll
+die Interaktion zwischen Rust und dem IRTSS Betriebssystem ermöglichen und and die neue Programmiersprache anpassen. IRTSS
+bietet eine C-Schnittstelle an, welche man mithilfe der Foreign Function Interface und des libc-Crates aus Rust heraus ansprechen
+kann. Dieses Crate benötigt die Rust-Standardbibliothek nicht zwingend, daher kann man Teile dessen auch ohne Weiteres auf der 
+SPARC LEON Architektur benutzen.
+
+Die octolib Bibliothek wird beim Kompilieren als Abhängigkeit in die Cargo.toml Datei eingefügt und so dem Projekt hinzugefügt.
+Eine lokale Kopie der Bibliothek wird bei der Installation von octorust im ~/.octorust Verzeichnis erstellt.
+
+\subsection{Struktur}
+
+Octolib besteht aus einer Hauptbibliotheksdatei namens lib.rs, welche alle anderen Module innerhalb des Projekts einbindet. Diese
+Datei implementiert außerdem die in Kapitel 3.1 erwähnten Funktionen, so dass nicht jedes einzelne Projekt diese aufs Neue
+implementieren muss.
+
+Die Bibliothek bietet die folgenden Module:
+
+\begin{itemize}
+
+	\item{bindings}
+	
+	Dieses Modul enthält die direkten C-Rust Bindings zur C-Schnittstelle des IRTSS	
+	
+	\item{helper}
+	
+	Dieses Modul enthält diverse Hilfsfunktionen, beispielsweise eine ohne ``unsafe''-Block verwendbare print-Funktion, welche
+	von der C printf Funktion Gebrauch macht. Dies ist notwendig da Rust ohne die Standardbibliothek keine äquivalente Funktion
+	besitzt.
+	
+	\item{improvements}
+	
+	Rust-spezifische Abstraktionen, die es dem Programmierer erleichtern, Programme mit Rust für das IRTSS zu schreiben.
+	
+	\item{octo\char`_structs}
+	
+	Rust-äquivalente Structs zu denen, die in der C-Schnittstelle verwendet werden.
+	
+	\item{octo\char`_types}
+	
+	Rust-äquivalente Typen zu denen, die in der C-Schnittstelle verwendet werden.
+
+\end{itemize}
+
+\subsection{Direkte C-Rust Bindings}
+
+Im ersten Schritt wurden die Funktionen der C Schnittstelle direkt Eins-zu-Eins als Rust-Funktionen eingebunden. Dank der
+Foreign Function Interface ist dies ein relativ simples Unterfangen, es müssen lediglich die Parameter- und Rückgabetypen
+an die neue Programmiersprache angepasst werden. Für die meisten Typen gibt es direkte Äquivalente in Rust, jegliche anderen Typen
+stellt das libc-Crate zur Verfügung. Ein nennenswertes Beispiel eines Typs der nicht in Rust enthalten ist ist der
+Void Pointer (void*). Dieser kann mit dem Typen *mut c\char`_void aus dem libc-Crate emuliert werden.
+
+Um die Funktionen erfolgreich in die Rust-Bibliothek einbinden zu können, muss man einen ``extern''-Block erstellen und dort
+die Funktionsdefinitionen vornehmen. Da diese Funktionen jedoch importierte C-Funktionen ohne jegliche Sicherheitsgarantien
+sind, muss man bei jedem Gebrauch dieser Funktionen einen ``unsafe''-Block verwenden.
+
+Zusätzlich zu den Funktionsdefinitionen mussten die in IRTSS definierten structs und Typen ebenfalls portiert werden.
+Dank der #[repr(C)] Anweisung kann man in Rust Structs erstellen, welche kompatibel mit den C-Äquivalenten sind.
 
 \section{Rust-spezifische Verbesserungen}
 
