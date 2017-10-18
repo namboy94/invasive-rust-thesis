@@ -16,26 +16,32 @@
 \contentsline {section}{\numberline {2.3}Invasives Computing}{13}{section.2.3}
 \contentsline {chapter}{\numberline {3}Entwurf und Implementierung}{15}{chapter.3}
 \contentsline {section}{\numberline {3.1}Rust auf der SPARC LEON Architektur}{15}{section.3.1}
-\contentsline {section}{\numberline {3.2}Erstellung des octorust Hilfsprogramms}{16}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Struktur eines Cargo-Projekts}{18}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}Kompilieren}{19}{subsection.3.2.2}
-\contentsline {section}{\numberline {3.3}octolib}{20}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}Struktur}{20}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}Direkte C-Rust Bindings}{21}{subsection.3.3.2}
-\contentsline {section}{\numberline {3.4}Rust-spezifische Verbesserungen}{22}{section.3.4}
-\contentsline {chapter}{\numberline {4}Evaluation}{23}{chapter.4}
-\contentsline {section}{\numberline {4.1}Laufzeitverhalten und Dateigr\IeC {\"o}\IeC {\ss }e}{23}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Vergleich der Anlaufzeit}{23}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Berechnen von Primzahlen}{23}{subsection.4.1.2}
-\contentsline {subsection}{\numberline {4.1.3}M\IeC {\"u}ll-Ersteller}{24}{subsection.4.1.3}
-\contentsline {section}{\numberline {4.2}Sicherheit}{24}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Undefiniertes Verhalten}{24}{subsection.4.2.1}
-\contentsline {section}{\numberline {4.3}Abstraktionen}{24}{section.4.3}
-\contentsline {section}{\numberline {4.4}Minimales Infect}{25}{section.4.4}
-\contentsline {section}{\numberline {4.5}Cleanup}{25}{section.4.5}
-\contentsline {section}{\numberline {4.6}Closures}{25}{section.4.6}
-\contentsline {chapter}{\numberline {5}Fazit und Ausblick}{27}{chapter.5}
-\contentsline {section}{\numberline {5.1}Fazit}{27}{section.5.1}
-\contentsline {section}{\numberline {5.2}Ausblick}{27}{section.5.2}
+\contentsline {section}{\numberline {3.2}Erstellung des octorust Hilfsprogramms}{17}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Struktur eines OctoCargo-Projekts}{19}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Kompilieren}{20}{subsection.3.2.2}
+\contentsline {section}{\numberline {3.3}octolib}{21}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Struktur}{21}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Direkte C-Rust Bindings}{22}{subsection.3.3.2}
+\contentsline {subsubsection}{\nonumberline Structs und Typen}{22}{section*.6}
+\contentsline {subsection}{\numberline {3.3.3}Rust-spezifische Verbesserungen}{23}{subsection.3.3.3}
+\contentsline {subsubsection}{\nonumberline Constraints}{23}{section*.7}
+\contentsline {subsubsection}{\nonumberline AgentClaim}{23}{section*.8}
+\contentsline {subsubsection}{\nonumberline Closures}{24}{section*.9}
+\contentsline {chapter}{\numberline {4}Evaluation}{25}{chapter.4}
+\contentsline {section}{\numberline {4.1}Laufzeitverhalten, Kompilierungsdauer und Dateigr\IeC {\"o}\IeC {\ss }e}{25}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Vergleich der Anlaufzeit}{26}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Berechnen von Primzahlen}{26}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}M\IeC {\"u}ll-Ersteller}{27}{subsection.4.1.3}
+\contentsline {section}{\numberline {4.2}Sicherheit}{28}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Division durch 0}{29}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Puffer\IeC {\"u}berlauf}{29}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}Nicht Initialisierte Variablen}{29}{subsection.4.2.3}
+\contentsline {section}{\numberline {4.3}Abstraktionen}{29}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Minimales Infect}{30}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}Cleanup}{30}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}Closures}{30}{subsection.4.3.3}
+\contentsline {chapter}{\numberline {5}Fazit und Ausblick}{31}{chapter.5}
+\contentsline {section}{\numberline {5.1}Fazit}{31}{section.5.1}
+\contentsline {section}{\numberline {5.2}Ausblick}{31}{section.5.2}
 \select@language {ngerman}
 \select@language {ngerman}
