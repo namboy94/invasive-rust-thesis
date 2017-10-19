@@ -10,8 +10,8 @@ wird vor allem mit den bereits unterstützten Sprachen C und X10 verglichen.
 Zu Beginn werden das Laufzeitverhalten, die Kompilierungsdauer und die Dateigröße kompilierter Programme zwischen
 den drei Programmiersprachen verglichen.
 
-Es wurde ein Python-Script geschrieben, welches es ermöglicht, die unterschiedlichen Benchmark-Programme mit unterschiedlichen
-...
+Es wurde ein Python-Script geschrieben, welches es ermöglicht, die unterschiedlichen Benchmark-Programme nacheinander
+abzuarbeiten und währenddessen die Compilezeit, Dateigröße und Laufzeitdauer jedes Programms zu messen.
 
 Alle Programme wurden auf der folgenden Hardware/Software Konfiguration ausgeführt:
 
@@ -23,56 +23,143 @@ Alle Programme wurden auf der folgenden Hardware/Software Konfiguration ausgefü
 	\item{IRTSS: 2017-06-07-nightly}
 	\item{rustc: 1.19.0-nightly}
 	\item{jdk: openjdk 1.8.0\char`_131}
+	\item{octorust: Version 1.0.0}
+	\item{x10i: Commit}
 \end{itemize}
+
+Im Falle der Programmiersprache Rust wurden immer zwei Szenarien betrachtet: Einmal wenn mit Compiler-Optimierungen
+kompiliert wurde und einmal ohne. Die Variante ohne Optimierungen wird als ``Rust (Debug)'' kenntlich gemacht,
+wohingegen die Variante mit Optimierungen als ``Rust (Release)'' bezeichnet wird.
 
 \subsection{Vergleich der Anlaufzeit}
 
 Es wird überprüft, wie lange ein Programm, welches in einer der respektiven Programmiersprachen geschrieben wurde,
-benötigt, um zu starten und anschließend sofort wieder aufzuhören.
+benötigt, um die Ausführung zu starten und anschließend wieder aufzuhören.
 
-\begin{center}
-	\includegraphics[height=200px]{eval-screenshots/startup.png}  
-\end{center}
+\begin{figure}[hb]
+	\begin{center}
+		\begin{tabular}{lrrr}
+			\toprule
+			Sprache & Laufzeit & Compilezeit & Dateigröße \\
+			\midrule
+			C & 0 & 0 & 0 \\
+			Rust (Debug) & 0 & 0 & 0 \\
+			Rust (Release) & 0 & 0 & 0 \\
+			X10 & 0 & 0 & 0 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{
+		Diese Tabelle stellt die Messergebnisse des startup-Benchmarks dar. Dieser Benchmark simuliert das Starten und sofortige
+		Schließen eines Programms.
+	}
+	\label{fig:startup_table}
+\end{figure}
 
 Anhand dieser Werte kann man prinzipiell erkennen, dass die Anlaufzeiten von C und Rust sich sehr nahe sind, während X10
-hierfür ca. 2 Sekunden länger benötigt. Außerdem benötigt das X10 Programm weitaus länger um die Kompilierung auszuführen und
-weist eine deutlich größere Dateigröße auf.
+hierfür ca. 2 Sekunden länger benötigt.
+Außerdem benötigt das X10 Programm weitaus länger um die Kompilierung auszuführen, in diesem Fall dauert die Kompilierung eines
+X10 Programms X-mal so lange wie die eines Rust-Programms.
+Zudem sind die Dateigrößen der kompilierten X10-Programme in diesem Beispiel x-mal größer als im Falle eines Rust-Programms.
+C-Programme weisen hierbei die insgesamt kürzesten Kompilierungszeiten und Dateigrößen auf.
 
 \subsection{Berechnen von Primzahlen}
 
 Um die Rechenleistung der verschiedenen Programmiersprachen bei einem intensiveren Problem zu vergleichen, wurden
-Programme geschrieben welche Primzahlen berechnen. Hierbei wurden zwei unterschiedliche Ansätze verwendet: Zum einen
+Programme geschrieben, welche Primzahlen berechnen. Hierbei wurden zwei unterschiedliche Ansätze verwendet: Zum einen
 eine naive Berechnung, welche jede Zahl individuell auf Teilbarkeit mit kleineren Zahlen prüft und andererseits
 das Sieb von Eratosthenes, eine effiziente Methode zum Berechnen von Primzahlen.
 
-\begin{center}
-	\includegraphics[height=200px]{eval-screenshots/primes-naive.png}
-	\includegraphics[height=200px]{eval-screenshots/primes-eratosthenes.png}
-\end{center}
+Im Falle des Siebs von Eratosthenes kann Rust keine Quadratwurzeloperation durchführen, da diese die Standardbibliothek
+benötigen. Daher wurden in allen Sprachen anstelle eine Quadratwurzelfunktion feste Zahlen verwendet, um den Vergleich
+zwischen den Sprachen gerecht zu gestalten. Da jedoch nur eine Quadratwurzeloperation für das Sieb des Eratosthenes
+benötigt wird, wäre dies ohnehin aller Wahrscheinlichkeit nach kein entscheidender Faktor bei der Laufzeit.
 
-Hier erkennt man bereits einige Leistungsunterschiede zwischen den Programmiersprachen. Während C die unangefochten
-beste Laufzeit aufweist, hinkt Rust nicht signifikant hinterher, während die Lauzeit des X10-Programms auch nach Abzug
-der größeren Anlaufzeit schlechter als die beiden Systemsprachen abschneidet.
+\begin{figure}[hb]
+	\begin{center}
+		\begin{tabular}{lrrr}
+			\toprule
+			Sprache & Laufzeit & Compilezeit & Dateigröße \\
+			\midrule
+			C & 0 & 0 & 0 \\
+			Rust (Debug) & 0 & 0 & 0 \\
+			Rust (Release) & 0 & 0 & 0 \\
+			X10 & 0 & 0 & 0 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{
+		Diese Tabelle stellt die Ergebnisse des naive-primes-Benchmarks dar. Dieser Benchmark berechnet die ersten 50000 Primzahlen
+		indem er für jede Zahl individuell alle kleinere Zahlen auf Teilbarkeit prüft.
+	}
+	\label{fig:primes_naive_table}
+\end{figure}
+
+\begin{figure}[hb]
+	\begin{center}
+		\begin{tabular}{lrrr}
+			\toprule
+			Sprache & Laufzeit & Compilezeit & Dateigröße \\
+			\midrule
+			C & 0 & 0 & 0 \\
+			Rust (Debug) & 0 & 0 & 0 \\
+			Rust (Release) & 0 & 0 & 0 \\
+			X10 & 0 & 0 & 0 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{
+		Diese Tabelle stellt die Ergebnisse des eratosthenes-primes-Benchmarks dar. Dieser Benchmark berechnet die ersten 1690000
+		Primzahlen mithilfe des Siebs von Eratosthenes.
+	}
+	\label{fig:primes_eratosthenes_table}
+\end{figure}
+
+
+Hier erkennt man bereits einige Leistungsunterschiede zwischen den Programmiersprachen. Während C eindeutig das
+beste Laufzeitverhalten aufweist, hinkt Rust nicht signifikant hinterher, während das Laufzeitverhalten des X10-Programms auch
+nach Abzug der größeren Anlaufzeit schlechter als die der beiden Systemsprachen abschneidet.
 
 
 \subsection{Müll-Ersteller}
 
 X10 verwaltet den Speicher mithilfe eines Garbage Collectors, wobei C und Rust ohne einen solchen auskommen.
 Während Garbage Collector ein sehr hilfreiches Werkzeug sind, um den Programmieraufwand zu verringern, so kommt dies
-allerdings auch auf Kosten der Laufzeiteffizienz, vor allem die Garbage-Collector-Pause ist hier ein nicht zu unterschätzender
+allerdings auch auf Kosten der Laufzeiteffizienz. Vor allem die Garbage-Collector-Pausen sind hierbei ein nicht zu unterschätzender
 Faktor.
 
 Um diese Leistungsdifferenz zu veranschaulichen, wurde ein Benchmark-Programm geschrieben, welche kontinuierlich
-Objekte auf dem Heap erstellt, welche anschließend wieder aus dem gültigen Anwendungsbereich verschwindet.
+Objekte auf dem Heap erstellt, welche anschließend wieder aus dem gültigen Anwendungsbereich verschwindet. In C muss der
+Speicher, in dem diese Objekte gespeichert werden, manuell befreit werden, in Rust werden diese automatisch ungültig
+sobald sie den gültigen Anwendugsbereich verlassen und bei X10 kümmert sich der Garbage Collector darum.
 
-\begin{center}
-	\includegraphics[height=300px]{eval-screenshots/garbageonly.png}
-\end{center}
+Die erstellten Objekte sind in diesem Fall Arrays von Integer-Zahlenwerten. In Rust sind das Äquivalent
+zu Arrays Slices und in X10 heißen diese Rails.
 
-Wie man an den Ergebnissen des Benchmarks erkennen kann, benötigt X10 deutlich länger um die selbe Anzahl und gleich große
-Objekte zu erstellen als C oder Rust. Dies weist darauf hin dass der Garbage Collector unter Umständen einen signifikanten
+\begin{figure}[hb]
+	\begin{center}
+		\begin{tabular}{lrrr}
+			\toprule
+			Sprache & Laufzeit & Compilezeit & Dateigröße \\
+			\midrule
+			C & 0 & 0 & 0 \\
+			Rust (Debug) & 0 & 0 & 0 \\
+			Rust (Release) & 0 & 0 & 0 \\
+			X10 & 0 & 0 & 0 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{
+		Diese Tabelle stellt die Ergebnisse des garbageonly-Benchmarks dar. Dieser Benchmark erstellt insgesamt 1000000
+		Arrays mit einer Größe von 5000.
+	}
+	\label{fig:garbageonly_table}
+\end{figure}
+
+Wie man an den Ergebnissen des Benchmarks erkennen kann, benötigt X10 deutlich länger um die selbe Anzahl an gleich großen
+Objekten zu erstellen als C oder Rust es tun. Dies weist darauf hin, dass der Garbage Collector unter Umständen einen signifikanten
 Einfluss auf das Laufzeitverhalten haben kann. C und Rust haben hier also einen Vorteil, vor allem Rust, denn
-diese Sprache bietet eine ähnliche Speichersicherheit wie es Sprachen mit Garbage Collector bieten.
+bei dieser Sprache muss der Speicher nicht manuell wieder freigegeben werden, wie es in C der Fall ist.
 
 
 \section{Sicherheit}

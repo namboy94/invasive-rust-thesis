@@ -19,37 +19,39 @@ Warning--entry type for "nvidia1080specs" isn't style-file defined
 --line 64 of file bib.bib
 Warning--entry type for "initialSparcSupportGithub" isn't style-file defined
 --line 71 of file bib.bib
+Warning--entry type for "closureWikiDe" isn't style-file defined
+--line 78 of file bib.bib
 Warning--I didn't find a database entry for "("
-You've used 8 entries,
+You've used 9 entries,
             1876 wiz_defined-function locations,
-            507 strings with 4029 characters,
-and the built_in function-call counts, 990 in all, are:
-= -- 80
-> -- 32
+            510 strings with 4075 characters,
+and the built_in function-call counts, 1111 in all, are:
+= -- 90
+> -- 36
 < -- 0
-+ -- 16
-- -- 8
-* -- 34
-:= -- 147
-add.period$ -- 8
-call.type$ -- 8
-change.case$ -- 8
++ -- 18
+- -- 9
+* -- 38
+:= -- 164
+add.period$ -- 9
+call.type$ -- 9
+change.case$ -- 9
 chr.to.int$ -- 0
-cite$ -- 8
-duplicate$ -- 32
-empty$ -- 145
-format.name$ -- 8
-if$ -- 249
+cite$ -- 9
+duplicate$ -- 36
+empty$ -- 163
+format.name$ -- 9
+if$ -- 280
 int.to.chr$ -- 0
-int.to.str$ -- 8
+int.to.str$ -- 9
 missing$ -- 0
-newline$ -- 27
-num.names$ -- 8
-pop$ -- 56
+newline$ -- 30
+num.names$ -- 9
+pop$ -- 63
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 32
+skip$ -- 36
 stack$ -- 0
 substring$ -- 0
 swap$ -- 0
@@ -58,7 +60,7 @@ text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
-while$ -- 8
-width$ -- 9
-write$ -- 58
-(There were 9 warnings)
+while$ -- 9
+width$ -- 10
+write$ -- 65
+(There were 10 warnings)

@@ -292,19 +292,50 @@ Um Zugriff auf die ``constraints\char`_t'' Struktur zu erhalten, muss die ``to\c
 
 \subsubsection{Closures}
 
-Closures
+Rust Closures können nicht ohne Weiteres einer C-Schnittstelle als Parameter übergeben werden. Somit ist es mit den direkten
+C-Rust bindings nicht möglich, Closures zu verwenden, um Code auf den Rechenelementen auszuführen. Dies wäre jedoch eine
+wünschenswerte Funktionalität. Da Closures aus der Funktion selbst als auch ihrem Erstellungskontext\cite{closureWikiDe}
+bestehen, ist es nicht möglich die Closure direkt zu einer normalen Rust Funktion zu konvertieren. Stattdessen erstellt
+man einen Pointer auf die Datenregion, welche die Closure repräsentiert und übergibt diesen dann einer
+``extern \char`"C\char`"'' Funktion, welche aus diesem Pointer die Closure zurückgewinnt.
+Diese ``extern \char`"C\char`"''-Funktion kann dann der C-Schnittstelle zusammen mit dem Pointer
+auf die Closure-Daten übergeben werden.
+
+Die Erstellung des Closure-Pointers wird direkt in der später genauer erläuterten ``infect''-Methode der ``AgentClaim''-Struktur
+erledigt, während es zur Rückkonvertierung eine ``extern \char`"C\char`"''-Funktion namens execute\char`_closure erstellt wurde.
 
 \subsubsection{AgentClaim}
 
 Die größte Abstraktion in der octolib Bibliothek ist die ``AgentClaim'' Struktur. Diese bietet zunächst einmal eine Abstraktionsschicht
-um die `agentclaim\char`_t` Struktur aus der C-Schnittstelle und verschiedene Methoden um diese zu verwenden.
+über die `agentclaim\char`_t` Struktur aus der C-Schnittstelle und verschiedene Methoden um diese zu verwenden.
 
-Der Konstruktor 
+Der Konstruktor nimmt als einzigen Parameter eine ``Constraints''-Struktur entgegen, welche verwendet wird um die
+Ressourcen des Claims zu definieren. Mit diesen Constraints wird dann eine interne ``agentclaim\char`_t''-Struktur initialisiert,
+welche für alle folgenden Methodenaufrufe verwendet wird.
 
+Eine praktische Methode fürs Debugging ist ``set\char`_verbose''. Diese Methode erlaubt es, die Ausführlichkeit der auf
+die Kommandozeile gedruckten Informationen zu beeinflussen.
 
-infect
+Die ``reinvade''-Methode elaubt es, eine ``Reinvade''-Operation auf dem Claim auszuführen. Diese Methode nimmt einen
+optionalen Parameter an, mit dem man neue Constraints setzen kann. Werden neue Constraints gesetzt, werden die alten Constraints
+aus dem Speicher gelöscht. 
 
-Implizites retreat
+Die wohl wichtigste Methode der ``AgentClaim''-Struktur ist die ``infect''-Methode. Mit dieser kann eine ``Infect''-Operation
+auf dem Claim ausgeführt werden. Dieser Methode wird eine Funktion oder eine Closure als Parameter übergeben, welche dann auf den
+Rechenelementen des Claims ausgeführt werden. Zusätzlich können ebenfalls Parameterdaten für die einzelnen Recheneinheiten
+übergeben werden.
+In der ``infect''-Methode werden Signale verwendet, um die Kommunikation zwischen verschiedenen Rechenelementen zu verwalten.
+Für jedes Tile und Rechenelement wird iteriert und ein ilet aus der übergegebenen Funktion generiert, welches dann der C-Schnittstelle 
+übergeben wird und so dann ausgeführt wird. Anschließend wartet die Methode dann auf den erfolgreichen Abschluss aller Ilets.
+%TODO Formulierung! Besser Verständlich machen!
 
+Zusätzlich zur normalen ``infect''-Methode gibt es auch eine ``infect\char`_async''-Methode, welche nicht auf das Ende der
+Ausführung aller Rechenelemente wartet, sondern stattdessen wird das Signal, mit dem die Rechenelemente signalisieren dass sie fertig
+ausgeführt wurden, als Rückgabewert verwendet. Anschließend kann der Nutzer dann mithilfe dieses Signals manuell auf die
+Ausführung der Rechenelemente warten.
 
-
+Das bereits in Kapitel 2 erwähnte Drop-Trait für Rust Strukturen wird für die ``AgentClaim''-Struktur implementiert.
+Verlässt eine Instanz der ``AgentClaim''-Struktur den gültigen Anwendungsbereich, wird eine ``Retreat''-Operation auf der
+internen ``agentclaim\char`_t''-Struktur ausgeführt und zusätzlich die Contraints des Claims gelöscht. Dieses implizite Retreat
+stellt sicher, dass die vom Claim verwendeten Ressourcen nach dem Gebrauch wieder freigegeben werden und somit anderen
+Programmteilen zur Verfügung stehen.
