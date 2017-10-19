@@ -92,7 +92,7 @@ Gleichzeitig wird ein Verzeichniss names .octorust
 im Heimverzeichniss des derzeitigen Nutzers erstellt, in dem IRTSS-builds, die octolib Rust-Bibliothek, welche später 
 genauer erläutert wird, als auch ein SPARC-V8 gcc, insofern dass ein
 solcher nicht bereits installiert ist und im Pfad gefunden werden kann.
-Zudem werden für die SPARC-v8 Architektur die libcore, libc und liballoc Bibliotheken kompiliert und in den
+Zudem werden für alle unterstützten Architekturen die libcore, libc und liballoc Bibliotheken kompiliert und in den
 Installationspfad des derzeit verwendeten Rustup-Toolchains kopiert.
 
 Octorust bietet die folgenden Optionen:
@@ -153,26 +153,11 @@ Cargo-Projekten. Cargo-Projekte bieten durch das Abhängigkeitsmanagement zusät
 allem der octolib-Bibliothek, welche eigens für die Interaktion zwischen Rust und IRTSS entwickelt wurde. Daher werden sich die
 folgenden Prozesse primär mit dem Kompilierungsvorgang der Cargo-Projekte beschäftigen.
 
-\subsection{Struktur eines OctoCargo-Projekts}
+\subsection{Struktur eines invasiven Cargo-Projekts}
 
-Cargo-Projekte die mit octorust kompiliert werden sollen müssen einige Eigenheiten im Vergleich zu normalen Cargo-Projekten aufweisen.
-Zum einen werden die Projektdaten nicht in eine Cargo.toml, sondern in ein OctoCargo.toml Datei eingegeben. In dieser OctoCargo.toml
-Datei muss außerdem der Abschnitt ``[dependencies]'' als letztes vorkommen. 
-Dies ist der Fall, da octorust aus dieser OctoCargo.toml die eigentlich Cargo.toml Datei generiert
-und dabei benötigte Abhängigkeiten einfügt. Außerdem muss in dieser OctoCargo.toml Datei das crate-type Attribut als
-``staticlib'' angegeben werden, damit das Projekt als statische Bibliothek mit dem IRTSS Betriebssystem verlinkt werden kann.
-Eine minimale OctoCargo.toml Datei sieht demnach wie folgt aus:
-\begin{verbatim}
-[package]
-name = "project_name"
-version = "project_version"
-authors = ["project_authors"]
-
-[lib]
-crate-type = ["staticlib"]
-
-[dependencies]
-\end{verbatim}
+Wie normale Cargo-Projekte besteht ein invasives Cargo-Projekt aus mindestens einem ``src'' Verzeichnis, einer Haupt-Bibliotheksdatei
+und einer ``Cargo.toml'' Datei. Bei invasiven Cargo-Projekte muss das ``crate-type'' Attribut immer als ``staticlib'' angegeben werden,
+damit das Projekt als statische Bibliothek kompiliert werden kann, welche dann mit dem IRTSS Betriebssystem verlinkt werden kann.
 
 Zusätzlich muss die Haupt-Quelldatei des Projekts mit ``\char`#![no\char`_std]'' beginnen und anstelle der main()
 Funktion muss eine ``pub extern \char`"C\char`"'' Funktion namens ``rust\char`_main\char`_ilet'' als Startpunkt des Programms
@@ -182,8 +167,7 @@ Diese Funktion nimmt genau einen Parameter entgegen, welcher vom Typ u8 ist.
 aufrufbar ist.
 Außerdem sollte die octolib Bibliothek mit einem ``extern crate octolib;'' eingebunden werden.
 
-
-Die Haupt-Quelldatei eines OctoCargo Projekts sähe demnach wie folgt aus:
+Die Haupt-Quelldatei eines invasiven Cargo-Projekts sähe demnach wie folgt aus:
 \begin{verbatim}
 #![no_std]
 
@@ -306,18 +290,21 @@ C-Schnittstelle eine in Rust definierte ``Constraints'' Struktur.
 
 Um Zugriff auf die ``constraints\char`_t'' Struktur zu erhalten, muss die ``to\char`_constraints\char`_t'' Methode aufgerufen werden.
 
+\subsubsection{Closures}
+
+Closures
+
 \subsubsection{AgentClaim}
 
-Die größte Abstraktion in der octolib Bibliothek ist die ``AgentClaim'' Struktur. Diese bietet prinzipiell
+Die größte Abstraktion in der octolib Bibliothek ist die ``AgentClaim'' Struktur. Diese bietet zunächst einmal eine Abstraktionsschicht
+um die `agentclaim\char`_t` Struktur aus der C-Schnittstelle und verschiedene Methoden um diese zu verwenden.
 
+Der Konstruktor 
 
-AgentClaim / Constraints Structs
 
 infect
 
 Implizites retreat
 
-\subsubsection{Closures}
 
-Closures
 
