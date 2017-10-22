@@ -1,7 +1,5 @@
 \chapter{Evaluation}\label{sec:eval}
 
-%TODO Speedup Berechnung, Tabellen statt grafiken
-
 Im folgenden wird der Gebrauch von Rust im Zusammenhang mit dem invasiven Computing evaluiert. Hierbei
 wird vor allem mit den bereits unterstützten Sprachen C und X10 verglichen.
 
@@ -15,17 +13,17 @@ abzuarbeiten und währenddessen die Compilezeit, Dateigröße und Laufzeitdauer 
 
 Alle Programme wurden auf der folgenden Hardware/Software Konfiguration ausgeführt:
 
-\begin{itemize}
-	\item{CPU: Intel Core i5-5200U @ 2.2GHZ x 2}
-	\item{RAM: 8GB}
-	\item{OS: Antergos Linux, Kernel 4.12.13-1-ARCH}
-	\item{gcc: 6.3.0}
-	\item{IRTSS: 2017-06-07-nightly}
-	\item{rustc: 1.19.0-nightly}
-	\item{jdk: openjdk 1.8.0\char`_131}
-	\item{octorust: Version 1.0.0}
-	\item{x10i: Commit}
-\end{itemize}
+\begin{description}
+	\item[CPU] Intel Core i5-5200U @ 2.2GHZ x 2
+	\item[RAM] 8GB
+	\item[OS] Antergos Linux, Kernel 4.12.13-1-ARCH
+	\item[gcc] 6.3.0
+	\item[IRTSS] 2017-06-07-nightly
+	\item[rustc] 1.19.0-nightly
+	\item[jdk] openjdk 1.8.0\char`_131
+	\item[octorust] Version 1.0.0
+	\item[x10i] Commit
+\end{description}
 
 Im Falle der Programmiersprache Rust wurden immer zwei Szenarien betrachtet: Einmal wenn mit Compiler-Optimierungen
 kompiliert wurde und einmal ohne. Die Variante ohne Optimierungen wird als ``Rust (Debug)'' kenntlich gemacht,

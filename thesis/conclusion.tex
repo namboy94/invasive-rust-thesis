@@ -1,14 +1,32 @@
 \chapter{Fazit und Ausblick}\label{sec:conclusion}
 
-
-Zusammenfassend ist 
+Im folgenden werden die Ergebnisse der Evaluation gewertet und ein Ausblick auf die Zukunft der Programmiersprache Rust
+im Bezug zum invasiven Computing geboten.
 
 \section{Fazit}
 
+Betrachtet man die Ergebnisse der Evaluation, so erkennt man, dass Rust in gewissen Aspekten C oder X10 vorzuziehen ist.
+
+Zum einen eliminiert Rust einige Fehlerquellen, welche in C zu undefiniertem Verhalten führen können. In Rust muss der
+Programmierer nicht selbst auf solche Fehler achten und wird teils bereits vom Compiler auf Fehler hingewiesen.
+
+Des Weiteren weist Rust meist ein besseres Laufzeitverhalten auf als X10 es tut, vor allem in Situationen
+in denen der Garbage-Collector notwendig wird. Ein Garbage Collector ist zudem für Situationen in denen Pausen nicht
+erwünscht sind, beispielsweise bei Echtzeitsystemen, ein Problem, denn diese verletzt die Verfügbarkeit des Systems.
+
+Negativ zu betrachten ist die starke Abhängigkeit von der C-Schnittstelle, welche die Sicherheit von Rust teils aufgibt.
+Die Funktionen der C-Schnittstelle bieten nämlich keine Garantien über die Sicherheit und die häufige Nutzung von
+Void-Zeigern zum Übertragen von Daten ist ebenfalls ein Problem.
+
 \section{Ausblick}
 
-Standardbibliothek
+Da Rust noch eine relativ junge Programmiersprache ist, existieren noch viele Bibliotheken für diese nicht. Zwar können mithilfe
+der Foreign Function Interface Bibliotheken, die in anderen Sprachen geschrieben worden sind, eingebunden werden, diese bieten jedoch
+nicht die Sicherheitsgarantien wie Rust es tut. In dieser Hinsicht sollte sich die Lage jedoch in der Zukunft verbessern, wenn Rust
+weiterhin gerne von Entwicklern genutzt wird und eventuell großflächiger zum Einsatz kommt.
 
-Echter Support
-
-Crates.io
+Eine weitere Möglichkeit in der Zukunf ist die Portierung der Standarbibliothek auf die SPARC-V8 Architektur. Die Standardbibliothek
+bietet einige hilfreiche Konstrukte und Funktionen die das Programmieren erleichtern und sicherer machen. Möglich wäre es, dass die 
+Entwickler der Rust Programmiersprache selbst die SPARC-V8 Architektur in der Zukunft unterstützen und so die
+Standarbibliothek portiert wird, alternativ wäre es möglich dass die Standarbibliothek sogar im Rahmen des invasiven Computing
+portiert wird, sollte genug Interesse daran bestehen.

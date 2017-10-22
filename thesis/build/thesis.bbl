@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{mooresLawWikiDe}
 wikipedia.org, ``{Mooresches Gesetz},'' 2017.
@@ -6,11 +6,21 @@ wikipedia.org, ``{Mooresches Gesetz},'' 2017.
 \bibitem{nvidia1080specs}
 Nvidia, ``{GeForce GTX 1080 Specifications},'' 2017.
 
+\bibitem{teich11msoc}
+J.~Teich, J.~Henkel, A.~Herkersdorf, D.~Schmitt-Landsiedel,
+  W.~Schr{\"o}der-Preikschat, and G.~Snelting, ``Invasive computing: An
+  overview,'' in {\em Multiprocessor System-on-Chip -- Hardware Design and Tool
+  Integration} (M.~H{\"u}bner and J.~Becker, eds.), pp.~241--268, Springer,
+  Berlin, Heidelberg, 2011.
+
 \bibitem{stackoverflowSurvey}
 stackoverflow.com, ``Developer survey results 2016,'' 2016.
 
 \bibitem{servoWikiDe}
 wikipedia.org, ``{Servo (Software)},'' 2017.
+
+\bibitem{rustWikiDe}
+wikipedia.org, ``{Rust (Programmiersprache)},'' 2017.
 
 \bibitem{rustVsCBenchmark}
 debian.org, ``{Rust programs versus C gcc},'' 2017.
@@ -20,6 +30,43 @@ debian.org, ``{Rust programs versus Java},'' 2017.
 
 \bibitem{rustVsPythonBenchmark}
 debian.org, ``{Rust programs versus Python 3},'' 2017.
+
+\bibitem{whatIsOwnership}
+rust lang.org, ``{What Is Ownership?},'' 2017.
+
+\bibitem{ownership}
+rust lang.org, ``{Ownership},'' 2017.
+
+\bibitem{linearTypePain}
+A.~Beingessner, ``The pain of real linear types in rust,'' 2017.
+
+\bibitem{dropTrait}
+rust lang.org, ``{Drop},'' 2017.
+
+\bibitem{rustTypes}
+rust lang.org, ``{Types},'' 2017.
+
+\bibitem{substructuralTypesWikiEn}
+wikipedia.org, ``{Substructural type system},'' 2017.
+
+\bibitem{rustWikiEn}
+wikipedia.org, ``{Rust (programming language)},'' 2017.
+
+\bibitem{sunWikiDe}
+wikipedia.org, ``{Sun Microsystems},'' 2017.
+
+\bibitem{sparcWikiDe}
+wikipedia.org, ``{SPARC-Architektur},'' 2017.
+
+\bibitem{leonWikiDe}
+wikipedia.org, ``Leon,'' 2017.
+
+\bibitem{invasicWikiOverview}
+T.~C. R. C.~I. Computing, ``{Overview of invasive Computation},'' 2017.
+
+\bibitem{invasicHome}
+T.~C. R. C.~I. Computing, ``{Welcome to the pages of the TCRC 89 "Invasive
+  Computing" (InvasIC)},'' 2017.
 
 \bibitem{initialSparcSupportGithub}
 J.~Aparicio(japaric), ``{initial SPARC support},'' 2017.
