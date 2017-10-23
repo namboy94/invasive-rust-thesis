@@ -67,8 +67,8 @@ Der Anfang eines zu kompilierenden Programms muss also beispielsweise wie folgt 
 \end{verbatim}
 
 Um dann das Programm zu kompilieren, verwendet man entweder den "`rustc"' Befehl bei eigenständigen "`.rs"' Dateien oder den
-"`cargo"' Befehl für Cargo Projekte. Beiden Befehlen muss dann wie auch beim Kompilieren von libcore die Speizifikations-JSON-Datei
-als Argument für die "`-{}-target"'-Option übergeben werden. 
+"`cargo build"' Befehl für Cargo Projekte. Beiden Befehlen muss dann wie auch beim Kompilieren von libcore die 
+Spezifikations-JSON-Datei als Argument für die "`-{}-target"'-Option übergeben werden. 
 
 \section{Erstellung des octorust Hilfsprogramms}
 
@@ -133,7 +133,7 @@ Octorust bietet die folgenden Optionen:
 	\end{verbatim}
 \end{description}
 
-Unterstützt wird das Kompilieren von eigenständigen .c C-Programmen und .rs Rust-Programmen, als auch das Kompilieren von
+Unterstützt wird das Kompilieren von eigenständigen C-Quelldateien und Rust-Quelldateien, als auch das Kompilieren von
 Cargo-Projekten. Cargo-Projekte bieten durch das Abhängigkeitsmanagement zusätzlich den Gebrauch von Rust-Bibliotheken, vor
 allem der octolib-Bibliothek, welche eigens für die Interaktion zwischen Rust und IRTSS entwickelt wurde. Daher werden sich die
 folgenden Prozesse primär mit dem Kompilierungsvorgang der Cargo-Projekte beschäftigen.
@@ -141,18 +141,19 @@ folgenden Prozesse primär mit dem Kompilierungsvorgang der Cargo-Projekte besch
 \subsection{Struktur eines invasiven Cargo-Projekts}
 
 Wie normale Cargo-Projekte besteht ein invasives Cargo-Projekt aus mindestens einem "`src"' Verzeichnis, einer Haupt-Bibliotheksdatei
-und einer "`Cargo.toml"' Datei. Bei invasiven Cargo-Projekte muss das "`crate-type"' Attribut immer als "`staticlib"' angegeben werden,
-damit das Projekt als statische Bibliothek kompiliert werden kann, welche dann mit dem IRTSS Betriebssystem verlinkt werden kann.
+und einer "`Cargo.toml"' Datei. Bei invasiven Cargo-Projekten muss das "`crate-type"' Attribut immer als
+"`staticlib"' angegeben werden,
+damit das Projekt als statische Bibliothek kompiliert wird, welche dann mit dem IRTSS Betriebssystem verlinkt werden kann.
 
 Zusätzlich muss die Haupt-Quelldatei des Projekts mit "`\char`#![no\char`_std]"' beginnen und anstelle der main()
 Funktion muss eine "`pub extern \char`"C\char`""' Funktion namens "`rust\char`_main\char`_ilet"' als Startpunkt des Programms
 verwendet werden.
 Diese Funktion nimmt genau einen Parameter entgegen, welcher vom Typ u8 ist.
-Über diese  Funktion muss außerdem "`\char`#[no\char`_mangle]"' stehen, damit die Funktion aus einem C Kontext heraus
+Über dieser  Funktion muss außerdem "`\char`#[no\char`_mangle]"' stehen, damit die Funktion aus einem C Kontext heraus
 aufrufbar ist.
 Außerdem sollte die octolib Bibliothek mit einem "`extern crate octolib;"' eingebunden werden.
 
-Die Haupt-Quelldatei eines invasiven Cargo-Projekts sähe demnach wie folgt aus:
+Die Haupt-Quelldatei eines invasiven Cargo-Projekts sähe demnach minimal wie folgt aus:
 \begin{verbatim}
 #![no_std]
 
@@ -167,19 +168,20 @@ pub extern "C" fn rust_main_ilet(claim: u8) {
 \subsection{Kompilieren}
 
 Vor der Kompilierung wird im Falle, dass "`leon' als Zielarchitektur ausgewählt wurde, zuerst eine wie in Kapitel 3.1 erläuterte
-JSON-Spezifikationsdatei generiert, in der der Pfad zum SPARc-v8 gcc Compiler automatisch eingetragen wird. Für die anderen beiden
+JSON-Spezifikationsdatei generiert, in der der Pfad zum SPARc-V8 gcc Compiler automatisch eingetragen wird. Für die anderen beiden
 Zielarchitekturen ist ein solcher Schritt nicht nötig, da diese offiziell unterstützt werden. 
 Nachdem diese Spezifikationsdatei generiert wurde, wird das Projekt mithilfe des "`cargo"'-Befehls als statische Bibliothek 
 kompiliert. Wurde das Projekt erfolgreich kompiliert, wird anschließend eine minimale C Datei generiert,
 welche die vom IRTSS benötigte main\char`_ilet Funktion implementiert und innerhalb
-dieser die rust\char`_main\char`_ilet Funktion aufruft. Im Anschluss daran wird dann noch die "`shutdown"' Funktion verwendet um die 
-Ausführung des Programms zu beenden. Diese generierte C Datei wird mithilfe eines passenden gcc Compilers als object-Datei kompiliert
-und anschließend mit dem IRTSS und der zuvor kompilierten statischen Rust-Bibliothek verlinkt. Nun sollte eine ausführbare Datei
-existieren, welche im Falle der "`x86guest"' Architektur nativ ausführbar ist oder im Falle von "`x64native"' und "`leon"'
-mithilfe eines Emulators wie "`qemu"'.
+dieser die rust\char`_main\char`_ilet Funktion aufruft. Im Anschluss daran wird dann noch die "`shutdown"' Funktion aufgerufen um die 
+Ausführung des Programms zu beenden. Diese generierte C Datei wird mithilfe eines passenden gcc Compilers als Objekt-Datei kompiliert
+und anschließend mit dem IRTSS Betriebssystem und der zuvor kompilierten statischen Rust-Bibliothek verlinkt.
+Nun sollte eine ausführbare Datei
+existieren, welche auf einem x86 Rechner im Falle der "`x86guest"' Architektur nativ ausführbar ist oder im Falle von
+"`x64native"' und "`leon"' mithilfe eines Emulators wie "`qemu"'.
 
-Im Anschluss an die Kompilierung werden, vorausgesetzt die "`--keep"'-Option wurde nicht verwendet, jegliche temporäre Dateien
-gelöscht, beispielsweise die generierte Cargo.toml Datei, die statische Rust-Bibliothek, die minimale C Datei oder auch die C
+Im Anschluss an die Kompilierung werden, vorausgesetzt die "`-{}-keep"'-Option wurde nicht verwendet, jegliche temporäre Dateien
+gelöscht, beispielsweise die statische Rust-Bibliothek, die minimale C Datei oder auch die C
 Objektdatei.
 
 \section{octolib}
@@ -187,10 +189,15 @@ Objektdatei.
 Zusätzlich zum octorust Programm wurde ebenfalls eine Rust-Bibliothek names octolib geschrieben. Diese Bibliothek soll
 die Interaktion zwischen Rust und dem IRTSS Betriebssystem ermöglichen und and die neue Programmiersprache anpassen. IRTSS
 bietet eine C-Schnittstelle an, welche man mithilfe der Foreign Function Interface und der libc Bibliothek aus Rust heraus ansprechen
-kann. Die libc Bibliothek bietet die Möglichkeit, Komponenten die die Standardbibliothek benötigen auszulassen, daher ist sie
-auch auf der SPARC-v8 Architektur benutzbar.
+kann. Die libc Bibliothek bietet die Möglichkeit, Komponenten, welche die Standardbibliothek benötigen, auszulassen, daher ist sie
+auch auf der SPARC-V8 Architektur benutzbar.
 
 Die octolib Bibliothek wird vor dem Kompilieren als Abhängigkeit in die Cargo.toml Datei eingefügt und so dem Projekt hinzugefügt.
+Hierfür wird mithilfe des "`toml"' Python Moduls der derzeitige Inhalt der Cargo.toml Datei eingelesen, der
+Pfad zur octolib Bibliothek in diese Daten injiziert und anschließend wird die Datei mit den neuen Daten überschrieben.
+Eine Kopie der ursprünglichen Daten werden vorerst noch im Hauptspeicher behalten und nachdem die Kompilierung beendet wurde,
+wobei hier egal ist ob diese erfolgreich war oder nicht, werden die alten Daten wieder in die Cargo.toml Datei
+geschrieben, um zu vermeiden dass die Cargo.toml Datei eine Konfiguration enthält, die auf lokale Gegebenheiten basieren.
 Damit die Bibliothek für jedes zu kompilierende Programm auffindbar ist, wird eine lokale Kopie während der Installation des
 "`octorust"'-Programms im "`~/.octorust"' Verzeichnis erstellt.
 
@@ -199,19 +206,18 @@ Damit die Bibliothek für jedes zu kompilierende Programm auffindbar ist, wird e
 Octolib besteht aus einer Hauptbibliotheksdatei namens "`lib.rs"', welche alle anderen Module innerhalb des Projekts einbindet. Diese
 Datei implementiert außerdem die in Kapitel 3.1 erwähnten Funktionen "`eh\char`_personality"', "`eh\char`_unwind\char`_resume"' und
 "`panic\char`_fmt"', so dass nicht jedes einzelne Projekt diese aufs Neue implementieren muss. Sobald die octolib Bibliothek
-mit der Anweisung "`extern crate octolib"' ins Projekt eingebunden wurde, sind diese Funktionen ebenfalls vorhanden.
+mit der Anweisung "`extern crate octolib;"' ins Projekt eingebunden wurde, sind diese Funktionen ebenfalls vorhanden.
 
 Die Bibliothek bietet die folgenden Module:
 
 \begin{description}
 
 	\item[bindings] 
-	Dieses Modul enthält die direkten C-Rust Bindings zur C-Schnittstelle des IRTSS	.
+	Dieses Modul enthält die direkten C-Rust Bindings zur C-Schnittstelle des IRTSS.
 	
 	\item[helper]
-	Dieses Modul enthält eine Sammlung an Hilfsfunktionen, beispielsweise eine ohne "`unsafe"'-Block verwendbare
-	print-Funktion, welche von der C printf Funktion Gebrauch macht. Dies ist notwendig da Rust ohne die Standardbibliothek
-	keine äquivalente Funktion besitzt.
+	Dieses Modul enthält eine Sammlung an Hilfsfunktionen, die nicht direkt mit dem IRTSS in Verbindung stehen,
+	aber trotzdem bei der Pogrammierung nützlich sein können
 	
 	\item[improvements]
 	Rust-spezifische Abstraktionen, die es dem Programmierer erleichtern, Programme mit Rust für das IRTSS zu schreiben.
@@ -247,7 +253,22 @@ Diese Structs sind teils von Platform-spezifischen Konstanten abhängig, welche 
 \char`#[cfg(target\char`_arch = "arch")] Anweisung für unterschiedliche Architekturen definieren kann.
 benutzerdefinierte Typen lassen sich in Rust durch Schlüsselwort "`type"' erstellen.
 
+\subsubsection{Das Helper-Modul}
+
+Das helper-Modul enthält Adapter für C-Funktionen, für die es in Rust ohne Zugriff zur Standardbibliothek keine Alternative existiert.
+So werden beispielsweise mehrere Adapter um die "`printf"'-Funktion geboten, welche je eine andere Anzahl an
+zusätzlichen Parametern angeben, um diese Variablen ausdrucken zu können.
+
+Beachtet werden muss bei diesen print-Funktionen, dass die überreichten Strings manuell Null-terminiert werden müssen. Um
+"`Hello World"' zu drucken, muss man also wie folgt vorgehen:
+
+\begin{verbatim}
+print("Hello World\n\0");
+\end{verbatim}
+
 \subsection{Rust-spezifische Verbesserungen}
+
+%TODO Bei den Basics: Constraints, Claim, ilet, Tile
 
 Im folgenden werden verschiedene Abstraktionen über die direkten C-Rust Bindings erstellt, welche das Programmieren
 vereinfachen und die Stärken von Rust ausnutzen sollen.
@@ -255,34 +276,37 @@ vereinfachen und die Stärken von Rust ausnutzen sollen.
 \subsubsection{Constraints}
 
 Die "`Constraints"' Struktur ist eine leichte, objektorientierte Abstraktion für die Constraints, mit denen die Anzahl Ressourcen, die
-einem Claim zur Verfügung stehen, limitiert werden.
+einem Claim zur Verfügung stehen, spezifiziert werden.
 Es bietet einen Konstruktor, welcher eine neue "`constraints\char`_t"' Struktur mithile der "`agent\char`_constr\char`_create"'
 Funktion aus der C-Schnittstelle erstellt und anschließend einige Standardwerte setzt. Dem Konstruktor werden
 zudem 2 Parameter übergeben, welche die minimale und maximale Anzahl an Prozessorelementen spezifizieren.
 
-Alle Parameter der Constraints lassen sich nachträglich durch Methoden der Struktur ändern. Hierbei profitiern vor allem die Methoden
-die "`bool"'-Werte als Parametertypen besitzen, denn diese werden in den direkten C-Rust Bindings statt mit "`bool"'-Werten mit
+Alle Parameter der Constraints lassen sich nachträglich durch Methoden der Struktur ändern. Hierbei profitieren vor allem die Methoden,
+welche boolesche Werte als Parametertypen besitzen, denn diese werden in den direkten C-Rust Bindings statt mit "`bool"'-Werten mit
 u8-Werten aufgerufen. Dies liegt daran, dass es in C keinen "`bool"' oder ähnlichen Typen gibt, dort werden Zahlenwerte auf den
-Wert 0 geprüft.
+Wert 0 geprüft. Dies wird in den Methoden dieser Struktur jedoch abstrahiert, so dass man in Rust den "`bool"'-Typ verwenden kann.
 
 Außerdem unterstützt die Methode "`merge\char`_constraints"' anstelle einer "`constraints\char`_t"' Struktur aus der
-C-Schnittstelle eine in Rust definierte "`Constraints"' Struktur.
+C-Schnittstelle eine in Rust definierte "`Constraints"' Struktur. Möchte man hierbei trotzdem lieber eine
+"`constraints\char`_t"'-Struktur verwenden, so kann stattdessen die "`merge\char`_constraints\char`_t"' Methode verwendet werden.
 
-Um Zugriff auf die "`constraints\char`_t"' Struktur zu erhalten, muss die "`to\char`_constraints\char`_t"' Methode aufgerufen werden.
+Um Zugriff auf die interne "`constraints\char`_t"' Struktur zu erhalten, kann die
+"`to\char`_constraints\char`_t"' Methode aufgerufen werden. Hiernach ist die Constraints-Struktur selbst nicht mehr verwendbar,
+da die interne "`constraints\char`_t"'-Variable nicht mehr im Besitz des zugehörigen Speichers ist.
 
 \subsubsection{Closures}
 
 Rust Closures können nicht ohne Weiteres einer C-Schnittstelle als Parameter übergeben werden. Somit ist es mit den direkten
-C-Rust bindings nicht möglich, Closures zu verwenden, um Code auf den Rechenelementen auszuführen. Dies wäre jedoch eine
+C-Rust Bindings nicht möglich, Closures zu verwenden, um Code auf den Rechenelementen auszuführen. Dies wäre jedoch eine
 wünschenswerte Funktionalität. Da Closures aus der Funktion selbst als auch ihrem Erstellungskontext\cite{closureWikiDe}
 bestehen, ist es nicht möglich die Closure direkt zu einer normalen Rust Funktion zu konvertieren. Stattdessen erstellt
-man einen Pointer auf die Datenregion, welche die Closure repräsentiert und übergibt diesen dann einer
-"`extern \char`"C\char`""' Funktion, welche aus diesem Pointer die Closure zurückgewinnt.
-Diese "`extern \char`"C\char`""'-Funktion kann dann der C-Schnittstelle zusammen mit dem Pointer
+man einen Zeiger auf die Datenregion, welche die Closure repräsentiert und übergibt diesen dann einer
+"`extern \char`"C\char`""' Funktion, welche aus diesem Zeiger die Closure zurückgewinnt.
+Diese "`extern \char`"C\char`""'-Funktion kann dann der C-Schnittstelle zusammen mit dem Zeiger
 auf die Closure-Daten übergeben werden.
 
-Die Erstellung des Closure-Pointers wird direkt in der später genauer erläuterten "`infect"'-Methode der "`AgentClaim"'-Struktur
-erledigt, während es zur Rückkonvertierung eine "`extern \char`"C\char`""'-Funktion namens execute\char`_closure erstellt wurde.
+Die Erstellung des Closure-Zeigers wird direkt in der später genauer erläuterten "`infect"'-Methode der "`AgentClaim"'-Struktur
+erledigt, während zur Rückkonvertierung eine "`extern \char`"C\char`""'-Funktion namens "`execute\char`_closure"' erstellt wurde.
 
 \subsubsection{AgentClaim}
 
@@ -291,31 +315,47 @@ Die größte Abstraktion in der octolib Bibliothek ist die "`AgentClaim"' Strukt
 
 Der Konstruktor nimmt als einzigen Parameter eine "`Constraints"'-Struktur entgegen, welche verwendet wird um die
 Ressourcen des Claims zu definieren. Mit diesen Constraints wird dann eine interne "`agentclaim\char`_t"'-Struktur initialisiert,
-welche für alle folgenden Methodenaufrufe verwendet wird.
+welche für alle folgenden Methodenaufrufe verwendet wird. Es wird also bereits im Konstruktor implizit die
+"`Invade"'-Phase des invasiven Computing ausgeführt.
+%TODO Evtl noch new_from_constraints_t
 
 Eine praktische Methode fürs Debugging ist "`set\char`_verbose"'. Diese Methode erlaubt es, die Ausführlichkeit der auf
-die Kommandozeile gedruckten Informationen zu beeinflussen.
+die Kommandozeile gedruckten Informationen der "`AgentClaim"'-Struktur zu beeinflussen.
 
-Die "`reinvade"'-Methode elaubt es, eine "`Reinvade"'-Operation auf dem Claim auszuführen. Diese Methode nimmt einen
-optionalen Parameter an, mit dem man neue Constraints setzen kann. Werden neue Constraints gesetzt, werden die alten Constraints
-aus dem Speicher gelöscht. 
+Die "`reinvade"'-Methode elaubt es, eine "`Reinvade"'-Operation auf dem Claim auszuführen. Diese erlaubt es,
+die von der internen "`agentclaim\char`_t"'-Struktur verwendeten Constraints zu aktualisieren.  Diese Methode nimmt einen
+optionalen Parameter an, mit dem man komplett neue Constraints setzen kann.
+Werden neue Constraints gesetzt, werden die alten Constraints mit der "`agent\char`_constr\char`_delete"'-Funktion aus dem Speicher
+gelöscht. 
 
-Die wohl wichtigste Methode der "`AgentClaim"'-Struktur ist die "`infect"'-Methode. Mit dieser kann eine "`Infect"'-Operation
+Die wohl wichtigste Methode der "`AgentClaim"'-Struktur ist die "`infect"'-Methode. Mit dieser kann eine invasive "`Infect"'-Operation
 auf dem Claim ausgeführt werden. Dieser Methode wird eine Funktion oder eine Closure als Parameter übergeben, welche dann auf den
 Rechenelementen des Claims ausgeführt werden. Zusätzlich können ebenfalls Parameterdaten für die einzelnen Recheneinheiten
-übergeben werden.
-In der "`infect"'-Methode werden Signale verwendet, um die Kommunikation zwischen verschiedenen Rechenelementen zu verwalten.
-Für jedes Tile und Rechenelement wird iteriert und ein ilet aus der übergegebenen Funktion generiert, welches dann der C-Schnittstelle 
-übergeben wird und so dann ausgeführt wird. Anschließend wartet die Methode dann auf den erfolgreichen Abschluss aller Ilets.
-%TODO Formulierung! Besser Verständlich machen!
+übergeben werden. Diese Parameterdaten werden als ein Array von Void-Zeiger Daten übergeben. Die Anzahl der Elemente des Arrays
+müssen mit den vom Claim reservierten Rechenelementen übereinstimmen, ansonsten kann es zu Fehlern oder sogar zum Absturz
+des Programms kommen.
 
-Zusätzlich zur normalen "`infect"'-Methode gibt es auch eine "`infect\char`_async"'-Methode, welche nicht auf das Ende der
-Ausführung aller Rechenelemente wartet, sondern stattdessen wird das Signal, mit dem die Rechenelemente signalisieren dass sie fertig
-ausgeführt wurden, als Rückgabewert verwendet. Anschließend kann der Nutzer dann mithilfe dieses Signals manuell auf die
-Ausführung der Rechenelemente warten.
+In der "`infect"'-Methode werden Signal-Strukturen aus der C-Schnittstelle verwendet, um die Kommunikation zwischen verschiedenen 
+Rechenelementen zu verwalten.
+Um dies zu vereinfachen, wird die übergebene Funktion oder Closure nochmals von einer Closure umgeben, welche eine Referenz auf 
+eine in der "`infect"'-Methode erstellten Signal-Struktur besitzt und über dieses Signal signalisiert, wann diese Closure
+die Ausführung ihrer Aufgabe beendet hat. Hierdurch ist es möglich, nach der Initialisierung der Ilets auf die
+vollständige Abarbeitung dieser zu warten oder alternativ das Signal, mit dem die einzelnen Ilets kommunizieren, als
+Rückgabeparameter zu verwenden. Um beide dieser Varianten zu bieten, gibt es zusätzlich zur "`infect"'-Methode, welche
+auf die vollständige Ausführung der Ilets wartet, die "`infect\char`_async"'-Methode, welche die "`simple\char`_signal"'-Struktur,
+mit der die Ilets das Ende ihrer Ausführung signalisieren, als Rückgabewert verwendet. Anschließend kann der Nutzer mit der 
+"`simple\char`_signal\char`_wait"'-Funktion aus der C-Schnittstelle auf die vollständige Ausführung aller Ilets warten.
+Die interne Closure, welche die Kommunikation über Signale implementiert, wird anschließend zu einem Void-Zeiger konvertiert,
+welche den Ilets dann als Datenparameter übergeben wird.
 
-Das bereits in Kapitel 2 erwähnte Drop-Trait für Rust Strukturen wird für die "`AgentClaim"'-Struktur implementiert.
-Verlässt eine Instanz der "`AgentClaim"'-Struktur den gültigen Anwendungsbereich, wird eine "`Retreat"'-Operation auf der
-internen "`agentclaim\char`_t"'-Struktur ausgeführt und zusätzlich die Contraints des Claims gelöscht. Dieses implizite Retreat
+Für jedes %Tile und
+Rechenelement wird iteriert und ein Ilet initialisiert. Diese Ilets erhalten die "`execute\char`_closure"'-Funktion als ihren
+Funktionsparameter und den Closure-Zeiger als ihren ersten Datenparameter. Wurden der "`infect"'-Methode zusätzliche Datenparameter
+übergeben, so werden diese als zweite Datenparameter den Ilets übergeben. Nachdem ein Ilet initialisiert wurde, wird
+die eigentliche "`Infect"'-Operation durchgeführt.
+
+Das bereits in Kapitel 2.1.2 erwähnte Drop-Trait für Rust-Strukturen wird für die "`AgentClaim"'-Struktur implementiert.
+Verlässt eine Instanz der "`AgentClaim"'-Struktur den Geltungsbereich, wird eine "`Retreat"'-Operation auf der
+internen "`agentclaim\char`_t"'-Struktur ausgeführt und zusätzlich die Constraints des Claims gelöscht. Dieses implizite Retreat
 stellt sicher, dass die vom Claim verwendeten Ressourcen nach dem Gebrauch wieder freigegeben werden und somit anderen
 Programmteilen zur Verfügung stehen.
