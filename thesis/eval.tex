@@ -3,7 +3,84 @@
 Im folgenden wird der Gebrauch von Rust im Zusammenhang mit dem invasiven Computing evaluiert. Hierbei
 wird vor allem mit den bereits unterstützten Sprachen C und X10 verglichen.
 
-\section{Laufzeitverhalten, Kompilierungsdauer und Dateigröße}
+Alle Programme wurden auf der folgenden Hardware/Software Konfiguration kompiliert und ausgeführt:
+
+\begin{figure}[hb]
+	\begin{center}
+		\begin{tabular}{ll}
+			\midrule
+			CPU & Intel Core i5-5200U @ 2.2GHZ x 2 \\
+			Hauptspeicher & 8GB \\
+			Betriebssystem & Antergos Linux, Kernel 4.12.13-1-ARCH \\
+			gcc & 6.3.0 \\
+			IRTSS & 2017-06-07-nightly \\
+			rustc & 1.19.0-nightly \\
+			JDK & openjdk 1.8.0\char`_131 \\
+			octorust & Version 1.0.0 \\
+			x10i & Commit 31183335a89917f489046da746c5181174a7bdb3 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{
+		Dies ist die Hardware- und Software-Konfiguration des Rechners, auf der die nachfolgenden Programme ausgeführt wurden.
+	}
+	\label{fig:specs_table}
+\end{figure}
+
+Bei Zeitangaben handelt es sich immer um Sekunden, bei Dateigrößen um Bytes.
+
+\section{Kompilierungsdauer und Dateigröße}
+
+Zu Beginn werden die Kompilierungsdauer und anschließende Dateigröße bei Gebrauch der unterschiedlichen
+unterstützten Programmiersprachen verglichen. Hierbei wurde ein simples Programm geschrieben, welches lediglich started und
+anschließend sofort die Ausführung wieder beendet.
+
+\begin{figure}[hb]
+	\begin{center}
+		\begin{tabular}{lrrrr}
+			\toprule
+			Sprache & Mittel & Median & Standardabweichung & MAD \\
+			\midrule
+			C          & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
+			C (opt)    & 0,4766 & 0,48 & 0,0091 & 0,0100 \\
+			Rust       & 0,4786 & 0,47 & 0,0159 & 0,0100 \\
+			Rust (opt) & 0,4780 & 0,47 & 0,0175 & 0,0100 \\
+			X10        & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
+			X10 (opt)  & 2,3886 & 2,38 & 0,0047 & 0,0200 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{
+		Diese Tabelle stellt die Messergebnisse der Kompilierungsdauer des startup-Benchmarks dar. Die Messwerte
+		sind in Sekunden angegeben.
+	}
+	\label{fig:startup_table}
+\end{figure}
+
+\begin{figure}[hb]
+	\begin{center}
+		\begin{tabular}{lrrrr}
+			\toprule
+			Sprache & Mittel & Median & Standardabweichung & MAD \\
+			\midrule
+			C          & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
+			C (opt)    & 0,4766 & 0,48 & 0,0091 & 0,0100 \\
+			Rust       & 0,4786 & 0,47 & 0,0159 & 0,0100 \\
+			Rust (opt) & 0,4780 & 0,47 & 0,0175 & 0,0100 \\
+			X10        & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
+			X10 (opt)  & 2,3886 & 2,38 & 0,0047 & 0,0200 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{
+		Diese Tabelle stellt die Messergebnisse der Dateigrößen des startup-Benchmarks dar. Die Messwerte sind in
+		Bytes angegeben
+	}
+	\label{fig:startup_table}
+\end{figure}
+
+
+\section{Laufzeitverhalten}
 
 Zu Beginn werden das Laufzeitverhalten, die Kompilierungsdauer und die Dateigröße kompilierter Programme zwischen
 den drei Programmiersprachen verglichen.
@@ -15,7 +92,7 @@ Alle Programme wurden auf der folgenden Hardware/Software Konfiguration ausgefü
 
 \begin{figure}[hb]
 	\begin{center}
-		\begin{tabular}{lr}
+		\begin{tabular}{ll}
 			\midrule
 			CPU & Intel Core i5-5200U @ 2.2GHZ x 2 \\
 			Hauptspeicher & 8GB \\
@@ -46,20 +123,22 @@ benötigt, um die Ausführung zu starten und anschließend wieder aufzuhören.
 
 \begin{figure}[hb]
 	\begin{center}
-		\begin{tabular}{lrrr}
+		\begin{tabular}{lrrrr}
 			\toprule
-			Sprache & Laufzeit & Compilezeit & Dateigröße \\
+			Sprache & Mittel & Median & Standardabweichung & MAD \\
 			\midrule
-			C & 0 & 0 & 0 \\
-			Rust (Debug) & 0 & 0 & 0 \\
-			Rust (Release) & 0 & 0 & 0 \\
-			X10 & 0 & 0 & 0 \\
+			C          & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
+			C (opt)    & 0,4766 & 0,48 & 0,0091 & 0,0100 \\
+			Rust       & 0,4786 & 0,47 & 0,0159 & 0,0100 \\
+			Rust (opt) & 0,4780 & 0,47 & 0,0175 & 0,0100 \\
+			X10        & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
+			X10 (opt)  & 2,3886 & 2,38 & 0,0047 & 0,0200 \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
 	\caption{
-		Diese Tabelle stellt die Messergebnisse des startup-Benchmarks dar. Dieser Benchmark simuliert das Starten und sofortige
-		Schließen eines Programms.
+		Diese Tabelle stellt die Messergebnisse der Laufzeit des startup-Benchmarks dar.
+		Dieser Benchmark simuliert das Starten und sofortige Schließen eines Programms.
 	}
 	\label{fig:startup_table}
 \end{figure}
@@ -195,6 +274,10 @@ In C ist es möglich, uninitialiserte Variablen zu verwenden, dies führt allerd
 In Rust hingegen wird dies bereits vom Compiler verhindert, da er den Gebrauch von uninitialisierten Variablen verbietet.
 Ein Rust-Programm welches also uninitialisierte Variablen verwendet kompiliert also gar nicht und kann so natürlich auch nicht
 zu undefiniertem Verhalten führen.
+
+\section{Leichtigkeit des Programmierens}
+
+minimal-infect
 
 
 %\section{Abstraktionen}
