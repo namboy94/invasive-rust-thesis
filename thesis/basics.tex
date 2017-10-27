@@ -119,6 +119,31 @@ verspricht, bereits zur Compile-Zeit sichergestellt. Zusätzlich fällt die Notw
 zu einer besseren Laufzeitseffizienz und Determinismus im Vergleich zu Sprachen die einen Garbage Collector verwenden beitragen.
 Durch das Ownership-System entstehen keine zusätzlichen Laufzeitkosten\cite{whatIsOwnership}.
 
+%\section{Sicherheit}
+
+%Im folgenden wird die Sicherheit bezüglich undefiniertem Verhalten als Folge von fehlerhaften Speicherzugriffen analysiert.
+%Hierbei ist vor allem der Vergleich zwischen Rust und C interessant, da einige von Rusts primären Eigenschaften die
+%Risiken der C-Programmierung beseitigen sollen.
+
+%\subsection{Division durch 0}
+
+%Dividiert man in C einen Wert durch die Zahl 0, kann es zu undefiniertem Verhalten führen, welches auf jeden Fall unerwünscht
+%ist. Versucht man dies in Rust, so bricht das Programm sofort ab, indem die "`panic\char`_fmt"'-Funktion aufgerufen wird und es
+%kann nicht zu undefiniertem Verhalten kommen.
+
+%\subsection{Pufferüberlauf}
+
+%Ein weiterer Fall, der in C zu undefiniertem Verhalten führt, sind Pufferüberläufe. Diese geschehen, wenn man beispielsweise
+%in einem Array der Größe n versucht, auf das n+1te Element zuzugreifen. Wie bereits im letzten Vergleich kann dies in 
+%Rust nicht geschehen, da das Programm mit einem Aufruf der "`panic\char`_fmt"'-Funktion die Ausführung beendet.
+
+%\subsection{Nicht Initialisierte Variablen}
+
+%In C ist es möglich, uninitialiserte Variablen zu verwenden, dies führt allerdings ebenfalls zu undefiniertem Verhalten.
+%In Rust hingegen wird dies bereits vom Compiler verhindert, da er den Gebrauch von uninitialisierten Variablen verbietet.
+%Ein Rust-Programm welches also uninitialisierte Variablen verwendet kompiliert also gar nicht und kann so natürlich auch nicht
+%zu undefiniertem Verhalten führen.
+
 \subsubsection{Typsystem}
 
 Rust verfügt über ein statisches, typsicheres Typsystem, welches sich an Typsystemen aus funktionalen Sprachen, beispielsweise Haskell, anlehnt\cite{rustWikiDe}. Dies bedeutet dass jede Variable einen eindeutigen Typ besitzt und keinen

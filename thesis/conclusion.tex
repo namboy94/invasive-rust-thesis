@@ -1,42 +1,59 @@
 \chapter{Fazit und Ausblick}\label{sec:conclusion}
 
-Im folgenden werden die Ergebnisse der Evaluation bewertet und ein Ausblick auf die Zukunft der Programmiersprache Rust
-im Bezug zum invasiven Computing geboten.
+Im folgenden werden die Ergebnisse der Evaluation bewertet
+und ein Ausblick auf die Zukunft der Programmiersprache Rust im Bezug zum invasiven Computing geboten.
 
 \section{Fazit}
 
-Betrachtet man die Ergebnisse der Evaluation, so erkennt man, dass Rust in gewissen Aspekten C oder X10 vorzuziehen ist.
+Betrachtet man die Ergebnisse der Evaluation, so erkennt man,
+dass Rust in gewissen Aspekten C oder X10 vorzuziehen ist.
 
-Zum einen eliminiert Rust einige Fehlerquellen, welche in C zu undefiniertem Verhalten führen können. In Rust muss der
-Programmierer nicht selbst auf solche Fehler achten und wird teils bereits vom Compiler auf Fehler hingewiesen.
-Dies erlaubt es, sicherere und weniger fehleranfällige Programme zu schreiben.
+Zum einen eliminiert Rust einige Fehlerquellen, welche in C zu undefiniertem Verhalten führen können.
+In Rust muss der Programmierer nicht selbst auf solche Fehler achten und wird teils bereits vom Compiler auf Fehler
+hingewiesen. Dies erlaubt es, sicherere und weniger fehleranfällige Programme zu schreiben.
 
-Des Weiteren weist Rust meist ein besseres Laufzeitverhalten auf als X10 es tut, vor allem in Situationen
-in denen der Garbage-Collector notwendig wird. Ein Garbage Collector ist zudem für Situationen, in denen Pausen nicht
-erwünscht sind, beispielsweise bei Echtzeitsystemen, ein Problem, denn diese verletzt die Verfügbarkeitsbedingung des Systems.
-Außerdem weist das Kompilieren mit octorust weitaus kürzere Kompilierungsdauern als der x10i-Compiler auf, welches bei
-der Entwicklung von Programmen unter Umständen ein nicht insignifikantes Zeitersparnis mit sich bringen kann. Zum Gebrauch auf
-Geräten mit sehr limitiertem Speicherplatz wäre Rust ebenfalls X10 vorzuziehen, da kompilierte Rust-Programme weniger Speicherplatz
-in Anspruch nehmen. Allerdings führt C in dieser Hinsicht weiterhin.
+Des Weiteren weist Rust in Situationen, in denen häufig Objekte erstellt und wieder den Geltungsbereich verlassen,
+ein besseres Laufzeitverhalten auf als X10 es tut. Außerdem eignet sich X10 wegen des Garbage Collectors nicht für 
+Situationen, in denen Pausen jeglicher Art nicht erwünscht sind, beispielsweise bei Echtzeitsystemen. In diesem
+Einsatzgebiet ist die Verfügbarkeit des Systems wichtig, daher wäre eine Garbage Collector Pause inakzeptabel.
+Rust wäre hier die bessere Alternative.
 
-Negativ zu betrachten ist die starke Abhängigkeit von der C-Schnittstelle, welche die Sicherheit von Rust teils aufgibt.
-Die Funktionen der C-Schnittstelle bieten nämlich keine Garantien über die Sicherheit und die häufige Nutzung von
-Void-Zeigern zum Übertragen von Daten ist ebenfalls ein Problem, welches zu Fehlern führen kann.
+Außerdem weist das Kompilieren mit octorust weitaus kürzere Kompilierungsdauern als der x10firm-Compiler auf,
+welches bei der Entwicklung von Programmen unter Umständen ein nicht insignifikantes Zeitersparnis
+mit sich bringen kann. 
+Zum Gebrauch auf Geräten mit sehr limitiertem Speicherplatz wäre Rust ebenfalls X10 
+vorzuziehen, da kompilierte Rust-Programme weniger Speicherplatz in Anspruch nehmen.
+
+\textcolor{blue}{Speicherplatz rausnehmen}
+
+Rust bietet beim Programmieraufwand kaum Vorteile gegenüber X10, einzig das implizite "`Retreat"' wäre hier zu 
+erwähnen. Vergleicht man Rust allerdings mit C, so erkennt man eine deutliche Reduktion im Aufwand.
+
+Negativ zu betrachten wäre die starke Abhängigkeit von der C-Schnittstelle vom IRTSS Betriebssystem,
+welche die Sicherheit von Rust teils aufgibt. Die Funktionen der C-Schnittstelle bieten nämlich keine Garantien 
+bezüglich der Sicherheit und die häufige Nutzung von Void-Zeigern zum Übertragen von Daten ist ebenfalls ein Problem, 
+welches zu Fehlern führen kann.
 
 \section{Ausblick}
 
-Da Rust noch eine relativ junge Programmiersprache ist, existieren noch viele Bibliotheken für diese nicht. Zwar können mithilfe
-der Foreign Function Interface Bibliotheken, die in anderen Sprachen geschrieben worden sind, eingebunden werden, diese bieten jedoch
-nicht die Sicherheitsgarantien wie Rust es tut. In dieser Hinsicht sollte sich die Lage jedoch in der Zukunft verbessern, wenn Rust
+Da Rust noch eine relativ junge Programmiersprache ist, existieren noch viele Bibliotheken für diese nicht.
+Zwar können mithilfe der Foreign Function Interface Bibliotheken,
+die in anderen Sprachen geschrieben worden sind, eingebunden werden, diese bieten jedoch
+nicht die Sicherheitsgarantien wie Rust es tut.
+In dieser Hinsicht sollte sich die Lage jedoch in der Zukunft verbessern, wenn Rust
 weiterhin gerne von Entwicklern genutzt wird und eventuell großflächiger zum Einsatz kommt.
 
-Eine weitere Möglichkeit in der Zukunft ist die Portierung der Standarbibliothek auf die SPARC-V8 Architektur. Die Standardbibliothek
-bietet einige hilfreiche Konstrukte und Funktionen, die das Programmieren erleichtern und sicherer machen. Möglich wäre es, dass die 
-Entwickler der Rust Programmiersprache selbst die SPARC-V8 Architektur in der Zukunft unterstützen und so die
-Standarbibliothek portiert wird, alternativ wäre es möglich dass die Standarbibliothek im Rahmen des invasiven Computing
-portiert wird, sollte genug Interesse daran bestehen.
+Eine weitere Möglichkeit in der Zukunft ist die Portierung der Standarbibliothek auf die SPARC-V8 Architektur.
+Die Standardbibliothek bietet einige hilfreiche Konstrukte und Funktionen,
+die das Programmieren erleichtern und sicherer machen.
+Möglich wäre es, dass die Entwickler der Rust Programmiersprache selbst die SPARC-V8 Architektur
+in der Zukunft unterstützen und so die Standarbibliothek portiert wird, alternativ wäre es möglich dass die 
+Standarbibliothek im Rahmen des invasiven Computing portiert wird, sollte genug Interesse daran bestehen.
 
-Um die starke Abhängigkeit von IRTSS' C-Schittstelle zu verringern, können weitere Abstraktionen erstellt werden, welche von den
-besonderen Eigenschaften der Rust-Programmiersprache Gebrauch machen. Dass dies möglich ist, hat die Implementierung des X10-Compilers
-x10i bewiesen, denn dieser spricht die exakt selbe C-Schnittstelle an, bietet jedoch robuste Abstraktionen über diese und erlaubt so
-das Entwickeln von X10-Programmen ohne dass der Programmierer sich mit dieser befassen muss.
+Um die starke Abhängigkeit von IRTSS' C-Schittstelle zu verringern,
+können weitere Abstraktionen erstellt werden, welche von den
+besonderen Eigenschaften der Rust-Programmiersprache Gebrauch machen.
+Dass dies möglich ist, hat die Implementierung des X10-Compilers x10firm bewiesen,
+denn dieser verwendet die exakt selbe C-Schnittstelle an,
+bietet jedoch robuste Abstraktionen über diese und erlaubt so
+das Entwickeln von X10-Programmen ohne dass der Programmierer sich mit der C-Schnittstelle befassen muss.
