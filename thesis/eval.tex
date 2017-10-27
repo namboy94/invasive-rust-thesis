@@ -3,7 +3,7 @@
 Im folgenden wird der Gebrauch von Rust im Zusammenhang mit dem invasiven Computing evaluiert. Hierbei
 wird vor allem mit den bereits unterstützten Sprachen C und X10 verglichen.
 
-Alle Programme wurden auf der folgenden Hardware/Software Konfiguration kompiliert und ausgeführt:
+Jedes der folgenden Programme wurde auf der folgenden Hardware/Software Konfiguration kompiliert und ausgeführt:
 
 \begin{figure}[hb]
 	\begin{center}
@@ -11,7 +11,8 @@ Alle Programme wurden auf der folgenden Hardware/Software Konfiguration kompilie
 			\midrule
 			CPU & Intel Core i5-5200U @ 2.2GHZ x 2 \\
 			Hauptspeicher & 8GB \\
-			Betriebssystem & Antergos Linux, Kernel 4.12.13-1-ARCH \\
+			Betriebssystem & Ubuntu 16.04.3 LTS \\
+			Linux Kernel & Version 4.4.0-97-generic \\
 			gcc & 6.3.0 \\
 			IRTSS & 2017-06-07-nightly \\
 			rustc & 1.19.0-nightly \\
@@ -22,18 +23,22 @@ Alle Programme wurden auf der folgenden Hardware/Software Konfiguration kompilie
 		\end{tabular}
 	\end{center}
 	\caption{
-		Dies ist die Hardware- und Software-Konfiguration des Rechners, auf der die nachfolgenden Programme ausgeführt wurden.
+		Dies ist die Hard- und Software Konfiguration des Rechners, auf der die nachfolgenden Programme kompiliert und ausgeführt wurden.
 	}
 	\label{fig:specs_table}
 \end{figure}
 
-Bei Zeitangaben handelt es sich immer um Sekunden, bei Dateigrößen um Bytes.
+Es wurde für jede Programmiersprache einmal eine Version mit Compileroptimierungen betrachtet und einmal ohne diese.
+Bei Zeitangaben handelt es sich immer um Sekunden, bei Dateigrößen um Bytes. Laufzeit- und Kompilierungsdauermessungen wurden mithilfe
+des Benchmarking-Programms temci durchgeführt. Alle Messungen wurden 50 mal durchgeführt.
+Um die statistische Relevanz der Ergebnisse zu evaluiren, wurden zu jeder Messung das arithmetische Mittel, der Median, die Standardabweichung und
+doe mittlere absolute Abweichung vom Median (MAD).
 
 \section{Kompilierungsdauer und Dateigröße}
 
 Zu Beginn werden die Kompilierungsdauer und anschließende Dateigröße bei Gebrauch der unterschiedlichen
-unterstützten Programmiersprachen verglichen. Hierbei wurde ein simples Programm geschrieben, welches lediglich started und
-anschließend sofort die Ausführung wieder beendet.
+unterstützten Programmiersprachen verglichen. Hierbei wurde ein simples Programm geschrieben, welches lediglich die Ausführung startet und
+anschließend sofort wieder beendet.
 
 \begin{figure}[hb]
 	\begin{center}
@@ -51,8 +56,8 @@ anschließend sofort die Ausführung wieder beendet.
 		\end{tabular}
 	\end{center}
 	\caption{
-		Diese Tabelle stellt die Messergebnisse der Kompilierungsdauer des startup-Benchmarks dar. Die Messwerte
-		sind in Sekunden angegeben.
+		Diese Tabelle stellt die Messergebnisse der Kompilierungsdauer des startup-Benchmarks dar. Die Werte
+		des Mittel und des Median sind in Sekunden angegeben
 	}
 	\label{fig:startup_table}
 \end{figure}
@@ -61,7 +66,7 @@ anschließend sofort die Ausführung wieder beendet.
 	\begin{center}
 		\begin{tabular}{lrrrr}
 			\toprule
-			Sprache & Mittel & Median & Standardabweichung & MAD \\
+			Sprache & Dateigröße \\
 			\midrule
 			C          & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
 			C (opt)    & 0,4766 & 0,48 & 0,0091 & 0,0100 \\
@@ -74,52 +79,24 @@ anschließend sofort die Ausführung wieder beendet.
 	\end{center}
 	\caption{
 		Diese Tabelle stellt die Messergebnisse der Dateigrößen des startup-Benchmarks dar. Die Messwerte sind in
-		Bytes angegeben
+		Bytes angegeben.
 	}
 	\label{fig:startup_table}
 \end{figure}
 
+Anhand dieser Ergebnisse kann man feststellen, dass die Kompilierungsdauer bei Rust oder C Programmen im Vergleich zu
+X10 Programmen sehr gering sind.
+Außerdem sind die Dateigrößen der X10 Programme größer als die der Rust und C Programme.
 
 \section{Laufzeitverhalten}
 
-Zu Beginn werden das Laufzeitverhalten, die Kompilierungsdauer und die Dateigröße kompilierter Programme zwischen
-den drei Programmiersprachen verglichen.
-
-Es wurde ein Python-Script geschrieben, welches es ermöglicht, die unterschiedlichen Benchmark-Programme nacheinander
-abzuarbeiten und währenddessen die Compilezeit, Dateigröße und Laufzeitdauer jedes Programms zu messen.
-
-Alle Programme wurden auf der folgenden Hardware/Software Konfiguration ausgeführt:
-
-\begin{figure}[hb]
-	\begin{center}
-		\begin{tabular}{ll}
-			\midrule
-			CPU & Intel Core i5-5200U @ 2.2GHZ x 2 \\
-			Hauptspeicher & 8GB \\
-			Betriebssystem & Antergos Linux, Kernel 4.12.13-1-ARCH \\
-			gcc & 6.3.0 \\
-			IRTSS & 2017-06-07-nightly \\
-			rustc & 1.19.0-nightly \\
-			JDK & openjdk 1.8.0\char`_131 \\
-			octorust & Version 1.0.0 \\
-			x10i & Commit 31183335a89917f489046da746c5181174a7bdb3 \\
-			\bottomrule
-		\end{tabular}
-	\end{center}
-	\caption{
-		Dies ist die Hardware/Software Konfiguration des Rechners, auf der die nachfolgenden Programme ausgeführt wurden.
-	}
-	\label{fig:specs_table}
-\end{figure}
-
-Im Falle der Programmiersprache Rust wurden immer zwei Szenarien betrachtet: Einmal wenn mit Compiler-Optimierungen
-kompiliert wurde und einmal ohne. Die Variante ohne Optimierungen wird als ``Rust (Debug)'' kenntlich gemacht,
-wohingegen die Variante mit Optimierungen als ``Rust (Release)'' bezeichnet wird.
+Nun wird das Laufzeitverhalten der einzelnen Programmiersprachen in verschiedenen Situationen miteinander verglichen.
 
 \subsection{Vergleich der Anlaufzeit}
 
 Es wird überprüft, wie lange ein Programm, welches in einer der respektiven Programmiersprachen geschrieben wurde,
-benötigt, um die Ausführung zu starten und anschließend wieder aufzuhören.
+benötigt, um die Ausführung zu starten und anschließend wieder aufzuhören. Es wurde das exakt selbe Programm verwendet,
+welches in Kapitel 4.1 verwendet wurde.
 
 \begin{figure}[hb]
 	\begin{center}
@@ -144,13 +121,8 @@ benötigt, um die Ausführung zu starten und anschließend wieder aufzuhören.
 \end{figure}
 
 Anhand der Werte in Tabelle \ref{fig:startup_table} kann man prinzipiell erkennen, dass die Anlaufzeiten von C und Rust sich sehr nahe
-sind, während X10 hierfür merklich länger benötigt.
-%TODO insert value
-Außerdem benötigt das X10 Programm weitaus länger um die Kompilierung auszuführen, in diesem Fall dauert die Kompilierung eines
-X10 Programms X-mal so lange wie die eines Rust-Programms.
-%TODO insert value
-Zudem sind die Dateigrößen der kompilierten X10-Programme in diesem Beispiel x-mal größer als im Falle eines Rust-Programms.
-C-Programme weisen hierbei die insgesamt kürzesten Kompilierungszeiten und Dateigrößen auf.
+sind, während X10 hierfür im Schnitt 2 Sekunden länger benötigt.
+
 
 \subsection{Berechnen von Primzahlen}
 
@@ -160,54 +132,112 @@ eine naive Berechnung, welche jede Zahl individuell auf Teilbarkeit mit kleinere
 das Sieb von Eratosthenes, eine effiziente Methode zum Berechnen von Primzahlen.
 
 Im Falle des Siebs von Eratosthenes kann Rust keine Quadratwurzeloperation durchführen, da diese die Standardbibliothek
-benötigen. Daher wurden in allen Sprachen anstelle eine Quadratwurzelfunktion feste Zahlen verwendet, um den Vergleich
+benötigen. Daher wurden in allen Sprachen anstelle einer Quadratwurzelfunktion feste Zahlen verwendet, um den Vergleich
 zwischen den Sprachen gerecht zu gestalten. Da jedoch nur eine Quadratwurzeloperation für das Sieb des Eratosthenes
 benötigt wird, wäre dies ohnehin aller Wahrscheinlichkeit nach kein entscheidender Faktor bei der Laufzeit.
 
 \begin{figure}[hb]
 	\begin{center}
-		\begin{tabular}{lrrr}
+		\begin{tabular}{lrrrr}
 			\toprule
-			Sprache & Laufzeit & Compilezeit & Dateigröße \\
+			Sprache & Mittel & Median & Standardabweichung & MAD \\
 			\midrule
-			C & 0 & 0 & 0 \\
-			Rust (Debug) & 0 & 0 & 0 \\
-			Rust (Release) & 0 & 0 & 0 \\
-			X10 & 0 & 0 & 0 \\
+			C          & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
+			C (opt)    & 0,4766 & 0,48 & 0,0091 & 0,0100 \\
+			Rust       & 0,4786 & 0,47 & 0,0159 & 0,0100 \\
+			Rust (opt) & 0,4780 & 0,47 & 0,0175 & 0,0100 \\
+			X10        & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
+			X10 (opt)  & 2,3886 & 2,38 & 0,0047 & 0,0200 \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
 	\caption{
-		Diese Tabelle stellt die Ergebnisse des naive-primes-Benchmarks dar. Dieser Benchmark berechnet die ersten 50000 Primzahlen
-		indem er für jede Zahl individuell alle kleinere Zahlen auf Teilbarkeit prüft.
+		Diese Tabelle stellt die Ergebnisse des naive-primes-Benchmarks dar. Dieser Benchmark überprüft die ersten 50000 natürlichen Zahlen
+		darauf, ob es sich bei ihnen um Primzahlen handelt, indem er für jede Zahl individuell alle kleinere Zahlen auf Teilbarkeit prüft.
 	}
 	\label{fig:primes_naive_table}
 \end{figure}
 
 \begin{figure}[hb]
 	\begin{center}
-		\begin{tabular}{lrrr}
+		\begin{tabular}{lrrrr}
 			\toprule
-			Sprache & Laufzeit & Compilezeit & Dateigröße \\
+			Sprache & Mittel & Median & Standardabweichung & MAD \\
 			\midrule
-			C & 0 & 0 & 0 \\
-			Rust (Debug) & 0 & 0 & 0 \\
-			Rust (Release) & 0 & 0 & 0 \\
-			X10 & 0 & 0 & 0 \\
+			C          & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
+			C (opt)    & 0,4766 & 0,48 & 0,0091 & 0,0100 \\
+			Rust       & 0,4786 & 0,47 & 0,0159 & 0,0100 \\
+			Rust (opt) & 0,4780 & 0,47 & 0,0175 & 0,0100 \\
+			X10        & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
+			X10 (opt)  & 2,3886 & 2,38 & 0,0047 & 0,0200 \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
 	\caption{
-		Diese Tabelle stellt die Ergebnisse des eratosthenes-primes-Benchmarks dar. Dieser Benchmark berechnet die ersten 1690000
-		Primzahlen mithilfe des Siebs von Eratosthenes.
+		Diese Tabelle stellt die Ergebnisse des eratosthenes-primes-Benchmarks dar. Dieser Benchmark überprüft mithilfe
+		des Siebs von Eratosthenes die ersten 1690000 natürlichen Zahlen darauf, ob es sich bei ihnen um Primzahlen handelt.
 	}
 	\label{fig:primes_eratosthenes_table}
 \end{figure}
 
-Hier erkennt man bereits einige Leistungsunterschiede zwischen den Programmiersprachen. Während C eindeutig das
-beste Laufzeitverhalten aufweist, sind die Werte bei optimiertem Rust nicht signifikant schlechter,
-während das Laufzeitverhalten des X10-Programms auch nach Abzug der größeren Anlaufzeit schlechter
-als die der beiden Systemsprachen abschneidet.
+Die Werte in den Tabellen \ref{fig:primes_naive_table} und \ref{fig:primes_eratosthenes_table} erkennt man keine entscheidenden
+Vorteile für eine der verwendeten Programmiersprachen, wenn man die compileroptimierten Versionen betrachtet. Im Falle der
+unoptimierten Versionen schneidet Rust eindeutig am Schlechtesten ab.
+
+\subsection{Paralleles Berechnen von Primzahlen}
+
+Um auch die invasiven Aspekte des Sprachen zu evaluieren, wurden X10, C und Rust Programme geschrieben, welche Primzahlen in einer parallelen
+Art und Weise berechnen. Hierfür wird die Menge an Zahlen, welche überprüft werden sollen, ob es sich bei ihnen um Primzahlen handelt,
+gleichermaßen in Partitionen getrennt. Die Anzahl und Größe der Partitionen hängen von der Anzahl verfügbarer Rechenelemente ab.
+
+Jedes der Rechenelemente berechnet dann die ihm zugewiesene Menge an Zahlen naiv, indem die Zahl mit jeder kleineren Zahl auf Teilbarkeit geprüft wird.
+
+\begin{figure}[hb]
+	\begin{center}
+		\begin{tabular}{lrrrr}
+			\toprule
+			Sprache & Mittel & Median & Standardabweichung & MAD \\
+			\midrule
+			C          & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
+			C (opt)    & 0,4766 & 0,48 & 0,0091 & 0,0100 \\
+			Rust       & 0,4786 & 0,47 & 0,0159 & 0,0100 \\
+			Rust (opt) & 0,4780 & 0,47 & 0,0175 & 0,0100 \\
+			X10        & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
+			X10 (opt)  & 2,3886 & 2,38 & 0,0047 & 0,0200 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{
+		Diese Tabelle stellt die Laufzeitergebnisse des sequentiellen Ergebnisses des parallel-primes-Benchmarks dar,
+		es wurde also die zu verwendende Anzahl an Rechenelementen auf 1 gesetzt.
+		Dieser Benchmark überprüft die ersten 500000 natürlichen Zahlen darauf, ob es sich bei ihnen um Primzahlen handelt.
+	}
+	\label{fig:primes_parallel_one_table}
+\end{figure}
+
+\begin{figure}[hb]
+	\begin{center}
+		\begin{tabular}{lrrrr}
+			\toprule
+			Sprache & Mittel & Median & Standardabweichung & MAD \\
+			\midrule
+			C          & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
+			C (opt)    & 0,4766 & 0,48 & 0,0091 & 0,0100 \\
+			Rust       & 0,4786 & 0,47 & 0,0159 & 0,0100 \\
+			Rust (opt) & 0,4780 & 0,47 & 0,0175 & 0,0100 \\
+			X10        & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
+			X10 (opt)  & 2,3886 & 2,38 & 0,0047 & 0,0200 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{
+		Diese Tabelle stellt die Laufzeitergebnisse des parallel-primes-Benchmarks dar, wenn 8 Rechenelemente verwendet werden.
+		Dieser Benchmark überprüft die ersten 500000 natürlichen Zahlen darauf, ob es sich bei ihnen um Primzahlen handelt.
+	}
+	\label{fig:primes_parallel_eight_table}
+\end{figure}
+
+TODO
 
 
 \subsection{Müll-Ersteller}
@@ -226,20 +256,22 @@ daher wurden diese in diesem Benchmark verwendet.
 
 \begin{figure}[hb]
 	\begin{center}
-		\begin{tabular}{lrrr}
+		\begin{tabular}{lrrrr}
 			\toprule
-			Sprache & Laufzeit & Compilezeit & Dateigröße \\
+			Sprache & Mittel & Median & Standardabweichung & MAD \\
 			\midrule
-			C & 0 & 0 & 0 \\
-			Rust (Debug) & 0 & 0 & 0 \\
-			Rust (Release) & 0 & 0 & 0 \\
-			X10 & 0 & 0 & 0 \\
+			C          & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
+			C (opt)    & 0,4766 & 0,48 & 0,0091 & 0,0100 \\
+			Rust       & 0,4786 & 0,47 & 0,0159 & 0,0100 \\
+			Rust (opt) & 0,4780 & 0,47 & 0,0175 & 0,0100 \\
+			X10        & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
+			X10 (opt)  & 2,3886 & 2,38 & 0,0047 & 0,0200 \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
 	\caption{
 		Diese Tabelle stellt die Ergebnisse des garbageonly-Benchmarks dar. Dieser Benchmark erstellt insgesamt 1000000
-		Arrays mit einer Größe von 5000.
+		int-Arrays mit einer Größe von 5000 Elementen.
 	}
 	\label{fig:garbageonly_table}
 \end{figure}
@@ -250,46 +282,46 @@ Einfluss auf das Laufzeitverhalten haben kann. C und Rust haben hier also einen 
 bei dieser Sprache muss der Speicher nicht manuell wieder freigegeben werden, wie es in C der Fall ist. So kann
 es dann nicht aus Versehen zu Speicherlecks kommen.
 
-\section{Sicherheit}
-
-Im folgenden wird die Sicherheit bezüglich undefiniertem Verhalten als Folge von fehlerhaften Speicherzugriffen analysiert.
-Hierbei ist vor allem der Vergleich zwischen Rust und C interessant, da einige von Rusts primären Eigenschaften die
-Risiken der C-Programmierung beseitigen sollen.
-
-\subsection{Division durch 0}
-
-Dividiert man in C einen Wert durch die Zahl 0, kann es zu undefiniertem Verhalten führen, welches auf jeden Fall unerwünscht
-ist. Versucht man dies in Rust, so bricht das Programm sofort ab, indem die "`panic\char`_fmt"'-Funktion aufgerufen wird und es
-kann nicht zu undefiniertem Verhalten kommen.
-
-\subsection{Pufferüberlauf}
-
-Ein weiterer Fall, der in C zu undefiniertem Verhalten führt, sind Pufferüberläufe. Diese geschehen, wenn man beispielsweise
-in einem Array der Größe n versucht, auf das n+1te Element zuzugreifen. Wie bereits im letzten Vergleich kann dies in 
-Rust nicht geschehen, da das Programm mit einem Aufruf der "`panic\char`_fmt"'-Funktion die Ausführung beendet.
-
-\subsection{Nicht Initialisierte Variablen}
-
-In C ist es möglich, uninitialiserte Variablen zu verwenden, dies führt allerdings ebenfalls zu undefiniertem Verhalten.
-In Rust hingegen wird dies bereits vom Compiler verhindert, da er den Gebrauch von uninitialisierten Variablen verbietet.
-Ein Rust-Programm welches also uninitialisierte Variablen verwendet kompiliert also gar nicht und kann so natürlich auch nicht
-zu undefiniertem Verhalten führen.
-
-\section{Leichtigkeit des Programmierens}
-
-minimal-infect
+Ohne eine genaue Messung des Speicherverhaltens ist es jedoch nicht eindeutig möglich, zu behaupten, dass dieser
+Laufzeitunterschied aufgrund des Garbage Collectors geschieht.
 
 
-%\section{Abstraktionen}
+%\section{Sicherheit}
 
-%Es werden nun die implementierten Abstraktionen der octolib Bibliothek mit den Implementierungen in C und X10 verglichen.
+%Im folgenden wird die Sicherheit bezüglich undefiniertem Verhalten als Folge von fehlerhaften Speicherzugriffen analysiert.
+%Hierbei ist vor allem der Vergleich zwischen Rust und C interessant, da einige von Rusts primären Eigenschaften die
+%Risiken der C-Programmierung beseitigen sollen.
 
-%\subsection{Minimales Infect}
+%\subsection{Division durch 0}
 
-%\subsection{Cleanup}
+%Dividiert man in C einen Wert durch die Zahl 0, kann es zu undefiniertem Verhalten führen, welches auf jeden Fall unerwünscht
+%ist. Versucht man dies in Rust, so bricht das Programm sofort ab, indem die "`panic\char`_fmt"'-Funktion aufgerufen wird und es
+%kann nicht zu undefiniertem Verhalten kommen.
 
-%\subsection{Closures}
+%\subsection{Pufferüberlauf}
 
-%Closures bieten eine praktische Art und Weise, anonyme Funktionen zu nutzen
+%Ein weiterer Fall, der in C zu undefiniertem Verhalten führt, sind Pufferüberläufe. Diese geschehen, wenn man beispielsweise
+%in einem Array der Größe n versucht, auf das n+1te Element zuzugreifen. Wie bereits im letzten Vergleich kann dies in 
+%Rust nicht geschehen, da das Programm mit einem Aufruf der "`panic\char`_fmt"'-Funktion die Ausführung beendet.
+
+%\subsection{Nicht Initialisierte Variablen}
+
+%In C ist es möglich, uninitialiserte Variablen zu verwenden, dies führt allerdings ebenfalls zu undefiniertem Verhalten.
+%In Rust hingegen wird dies bereits vom Compiler verhindert, da er den Gebrauch von uninitialisierten Variablen verbietet.
+%Ein Rust-Programm welches also uninitialisierte Variablen verwendet kompiliert also gar nicht und kann so natürlich auch nicht
+%zu undefiniertem Verhalten führen.
+
+\section{Komplexität des Programmierens}
+
+Im Folgenden wird überprüft, wie komplex das Erstellen eines invasiven Programms in jeder der betrachteten Programmiersprachen ist.
+
+\subsection{Minimales Invade, Infect, Retreat}
+
+Es wurde ein Programm geschrieben, welches zuerst eine "`Invade"'-Operation durchführt und anschließend eine simple `"Hello World"'
+Funktion auf jede der reservierten Rechenelemente in der "`Infect"'-Phase ausführt. Das Programm wartet, bis alle Rechenlemente mit der
+Ausführung beendet sind und gibt anschließend alle Ressourcen in der "`Retreat"'-Phase wieder frei.
+
+
+
 
 
