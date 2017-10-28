@@ -35,8 +35,59 @@ zum anderen ohne. Bei Messungen der Ausführungszeit wurde die Wall-Clock-Time i
 Jedes Programm, dessen Laufzeit
 überprüft wird, wird mithilfe des "`temci"'-Benchmarkprogramms fünfzig mal ausgeführt.
 
-Um die statistische Relevanz der Ergebnisse zu evaluieren, wurden zu jeder Messung der Laufzeit das arithmetische
-Mittel, der Median, die Standardabweichung und die mittlere absolute Abweichung vom Median (MAD) berechnet.
+Um die statistische Relevanz der Ergebnisse zu evaluieren, wurden zu jeder Messung der Laufzeit
+das arithmetische Mittel (Abbildung \ref{formula:mean}),
+der Median (Abbildung \ref{formula:median}),
+die Median Absolute Deviation (Abbildung \ref{formula:mad}),
+die korrigierte empirische Standardabweichung (Abbildung \ref{formula:std_deviation}) und
+den zugehörigen empirischen Variationskoeffizienten (Abbildung \ref{formula:variation_coefficient}) berechnet.
+
+\begin{figure}
+	\caption{Das Arithmetische Mittel}
+	\begin{equation}
+		\label{formula:mean}
+		\bar{x} = \frac{1}{n} \sum_{i=1}^n{x_i}
+	\end{equation}
+\end{figure}
+
+\begin{figure}
+	\caption{Der Median}
+	\begin{equation}
+		\label{formula:median}
+		\tilde{x} =
+		\begin{cases}
+			x_{\frac{n + 1}{2}} & n \text{ ungerade} \\
+			\frac{1}{2}(x_\frac{n}{2} + x_{\frac{n}{2} + 1}) & n \text{ gerade} \\
+		\end{cases}
+	\end{equation}
+\end{figure}
+
+\begin{figure}
+	\caption{Die empirische Standardabweichung}
+	\begin{equation}
+		\label{formula:std_deviation}
+		s = \sqrt{\frac{1}{n - 1}}
+	\end{equation}
+\end{figure}
+
+\begin{figure}
+	\caption{Der empirische Variationskoeffizient}
+	\begin{equation}
+		\label{formula:variation_coefficient}
+		s = \frac{s}{\bar{x}}
+	\end{equation}
+\end{figure}
+
+\begin{figure}
+	\caption{Die Median Absolute Deviation}
+	\begin{equation}
+		\label{formula:mad}
+		E(n) = \frac{1}{n} \sum_{i=1}^n{|x_i - \tilde{x}|}
+	\end{equation}
+\end{figure}
+
+
+
 
 \section{Kompilierungsdauer und Dateigröße}\label{sec:compile_time_filesize}
 
@@ -50,19 +101,19 @@ anschließend sofort wieder beendet.
 			\toprule
 			Sprache & Mittel & Median & Standardabweichung & MAD \\
 			\midrule
-			C          & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
-			C (opt)    & 0,4766 & 0,48 & 0,0091 & 0,0100 \\
-			Rust       & 0,4786 & 0,47 & 0,0159 & 0,0100 \\
-			Rust (opt) & 0,4780 & 0,47 & 0,0175 & 0,0100 \\
-			X10        & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
-			X10 (opt)  & 2,3886 & 2,38 & 0,0047 & 0,0200 \\
+			C          & 0.5564 & 0.5600 & 0.0138 & 2.4829\% & 0.0100 \\
+			C (opt)    & 0.5586 & 0.5600 & 0.0134 & 2.3993\% & 0.0100 \\
+			Rust       & 0.8174 & 0.8200 & 0.0164 & 2.0051\% & 0.0100 \\
+			Rust (opt) & 0.8116 & 0.8100 & 0.0136 & 1.6765\% & 0.0100 \\
+			X10        & 82.864 & 83.075 & 1.3321 & 1.6076\% & 1.1600 \\
+			X10 (opt)  & 0 & 0 & 0 & 0 & 0 \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
 	\caption{
 		Diese Tabelle stellt die Messergebnisse der Kompilierungsdauer des startup-Benchmarks dar. Die Werte
 		des Mittel und des Median sind in Sekunden angegeben.
-		\textcolor{red}{TODO Werte}
+		\textcolor{red}{TODO X10 opt Werte}
 	}
 	\label{fig:compile_table}
 \end{figure}
@@ -73,25 +124,26 @@ anschließend sofort wieder beendet.
 			\toprule
 			Sprache & Dateigröße \\
 			\midrule
-			C          & 0,0000 & 0,00 \\
-			C (opt)    & 0,4766 & 0,48 \\
-			Rust       & 0,4786 & 0,47 \\
-			Rust (opt) & 0,4780 & 0,47 \\
-			X10        & 0,0000 & 0,00 \\
-			X10 (opt)  & 2,3886 & 2,38 \\
+			C          & 0 & 0 \\
+			C (opt)    & 0 & 0 \\
+			Rust       & 0 & 0 \\
+			Rust (opt) & 0 & 0 \\
+			X10        & 0 & 0 \\
+			X10 (opt)  & 0 & 0 \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
 	\caption{
 		Diese Tabelle stellt die Messergebnisse der Dateigrößen des startup-Benchmarks dar. Die Messwerte sind in
 		der Anzahl Bytes, welche die ausführbare Datei ausmachen, angegeben.
+		\textcolor{red}{TODO Werte}
 	}
 	\label{fig:filesize_table}
 \end{figure}
 
 Anhand der Ergebnisse in Tabelle \ref{fig:compile_table} kann man feststellen,
 dass die Kompilierungsdauer bei Rust oder C Programmen im Vergleich zu
-X10 Programmen sehr gering sind. X10 Programme benötigen im Schnitt X Sekunden mehr um kompiliert zu werden.
+X10 Programmen gering sind. X10 Programme benötigen im Schnitt über 80 Sekunden länger um kompiliert zu werden.
 Außerdem sind die Dateigrößen der X10 Programme größer als die der Rust und C Programme,
 jedoch nicht im selben Maße wie die Kompilierungsdauer.
 
@@ -114,31 +166,29 @@ der Kompilierungsdauer und Dateigröße verwendet wurde.
 
 \begin{figure}[hb]
 	\begin{center}
-		\begin{tabular}{lrrrr}
+		\begin{tabular}{lrrrrr}
 			\toprule
-			Sprache & Mittel & Median & Standardabweichung & MAD \\
+			Sprache    & $\bar{x}$ & $\title{x}$ & $s$ & $V$ & $MAD$ \\
 			\midrule
-			C          & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
-			C (opt)    & 0,4766 & 0,48 & 0,0091 & 0,0100 \\
-			Rust       & 0,4786 & 0,47 & 0,0159 & 0,0100 \\
-			Rust (opt) & 0,4780 & 0,47 & 0,0175 & 0,0100 \\
-			X10        & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
-			X10 (opt)  & 2,3886 & 2,38 & 0,0047 & 0,0200 \\
+			C          & 0.3916 & 0.3800 & 0.0214 & 5.4687\% & 0.0100 \\
+			C (opt)    & 0.3900 & 0.3800 & 0.0208 & 5.3334\% & 0.0100 \\
+			Rust       & 0.3820 & 0.3800 & 0.0139 & 3.6258\% & 0.0100 \\
+			Rust (opt) & 0.4026 & 0.3800 & 0.0459 & 11.408\% & 0.0100 \\
+			X10        & 1.7738 & 1.7800 & 0.0255 & 1.4357\% & 0.0150 \\
+			X10 (opt)  & 1.7506 & 1.7500 & 0.0234 & 1.3380\% & 0.0200 \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
 	\caption{
 		Diese Tabelle stellt die Messergebnisse der Laufzeit des startup-Benchmarks dar.
 		Dieser Benchmark simuliert das Starten und sofortige Schließen eines Programms.
-		\textcolor{red}{TODO Werte}
 	}
 	\label{fig:startup_table}
 \end{figure}
 
 Anhand der Werte in Tabelle \ref{fig:startup_table} kann man prinzipiell erkennen,
 dass die Anlaufzeiten von C und Rust sich sehr nahe sind, während X10 hierfür im Schnitt 2 Sekundenlänger benötigt.
-
-\textcolor{red}{TODO Auf Statistische Mittel eingehen}
+Auch wenn man die Varianz der Werte in Betracht zieht, bleibt diese Diskrepanz bestehen.
 
 
 \subsection{Berechnen von Primzahlen}\label{sec:primes_calc}
@@ -157,16 +207,16 @@ benötigt wird, wäre dies ohnehin aller Wahrscheinlichkeit nach kein entscheide
 
 \begin{figure}[hb]
 	\begin{center}
-		\begin{tabular}{lrrrr}
+		\begin{tabular}{lrrrrr}
 			\toprule
-			Sprache & Mittel & Median & Standardabweichung & MAD \\
+			Sprache    & $\bar{x}$ & $\title{x}$ & $s$ & $V$ & $MAD$ \\
 			\midrule
-			C          & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
-			C (opt)    & 0,4766 & 0,48 & 0,0091 & 0,0100 \\
-			Rust       & 0,4786 & 0,47 & 0,0159 & 0,0100 \\
-			Rust (opt) & 0,4780 & 0,47 & 0,0175 & 0,0100 \\
-			X10        & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
-			X10 (opt)  & 2,3886 & 2,38 & 0,0047 & 0,0200 \\
+			C          & 4.2094  & 4.2000  & 0.0219 & 0.5201\% & 0.0100 \\
+			C (opt)    & 4.2202  & 4.2300  & 0.0277 & 0.6572\% & 0.0150 \\
+			Rust       & 61.6462 & 61.6050 & 0.2849 & 0.4621\% & 0.1200 \\
+			Rust (opt) & 4.9692  & 4.9650  & 0.0319 & 0.6413\% & 0.0250 \\
+			X10        & 10.583  & 10.550  & 0.1368 & 1.2923\% & 0.0200 \\
+			X10 (opt)  & 5.9694  & 5.9700  & 0.0719 & 1.2039\% & 0.0300 \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
@@ -175,23 +225,22 @@ benötigt wird, wäre dies ohnehin aller Wahrscheinlichkeit nach kein entscheide
 		Dieser Benchmark überprüft die ersten 50000 natürlichen Zahlen darauf,
 		ob es sich bei ihnen um Primzahlen handelt,
 		indem er für jede Zahl individuell alle kleinere Zahlen auf Teilbarkeit prüft.
-		\textcolor{red}{TODO Werte}
 	}
 	\label{fig:primes_naive_table}
 \end{figure}
 
 \begin{figure}[hb]
 	\begin{center}
-		\begin{tabular}{lrrrr}
+		\begin{tabular}{lrrrrr}
 			\toprule
-			Sprache & Mittel & Median & Standardabweichung & MAD \\
+			Sprache    & $\bar{x}$ & $\title{x}$ & $s$ & $V$ & $MAD$ \\
 			\midrule
-			C          & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
-			C (opt)    & 0,4766 & 0,48 & 0,0091 & 0,0100 \\
-			Rust       & 0,4786 & 0,47 & 0,0159 & 0,0100 \\
-			Rust (opt) & 0,4780 & 0,47 & 0,0175 & 0,0100 \\
-			X10        & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
-			X10 (opt)  & 2,3886 & 2,38 & 0,0047 & 0,0200 \\
+			C          & 0.5626 & 0.5600 & 0.0191 & 3.4031\% & 0.0100 \\
+			C (opt)    & 0.5620 & 0.5600 & 0.0199 & 3.5405\% & 0.0100 \\
+			Rust       & 0.8362 & 0.8300 & 0.0138 & 1.6544\% & 0.0100 \\
+			Rust (opt) & 0.4984 & 0.4900 & 0.0210 & 4.2196\% & 0.0100 \\
+			X10        & 2.3508 & 2.3400 & 0.0347 & 1.4782\% & 0.0200 \\
+			X10 (opt)  & 1.9892 & 1.9900 & 0.0274 & 1.3771\% & 0.0200 \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
@@ -199,21 +248,22 @@ benötigt wird, wäre dies ohnehin aller Wahrscheinlichkeit nach kein entscheide
 		Diese Tabelle stellt die Ergebnisse des eratosthenes-primes-Benchmarks dar.
 		Dieser Benchmark überprüft mithilfe des Siebs von Eratosthenes die ersten 1690000 natürlichen Zahlen darauf,
 		ob es sich bei ihnen um Primzahlen handelt.
-		\textcolor{red}{TODO Werte}
 	}
 	\label{fig:primes_eratosthenes_table}
 \end{figure}
 
 Mit den Werten in den Tabellen \ref{fig:primes_naive_table} und \ref{fig:primes_eratosthenes_table} lassen sich keine
 eindeutigen Aussage darüber treffen, welche der Programmiersprachen die Aufgabe am effizientesten
-absolviert hat, vorausgesetzt, es werden die Versionen mit Compiler-Optimierungen betrachtet.
+absolviert hat, vorausgesetzt, es werden die Versionen mit Compiler-Optimierungen betrachtet. Es existiert
+jedoch eine Tendenz, dass C und Rust eine bessere Laufzeit als X10 aufweisen.
+Allerdings muss dabei auch die längere Anlaufzeit von X10 Programmen beachtet werden.
+Zieht man diese ab, kann X10 ohne Weiteres mit der Leistung von C und Rust mithalten.
 
-Werden hingegen die Versionen ohne Compiler-Optimierungen betrachtet, gibt es deutliche Unterschiede zwischen den
-Sprachen. Während C eine vergleichbare Laufzeit zur optimierten Version aufweist, erhöht sich die Laufzeit der X10
-und Rust-Programme merklich. Vor allem das unoptimierte Rust-Programm weist in Tabelle
-\ref{fig:primes_naive_table} eine deutlich schlechter Laufzeit als alle anderen Varianten auf.
-
-\textcolor{red}{TODO Auf Statistische Mittel eingehen}
+Werden allerdings die Versionen ohne Compiler-Optimierungen betrachtet, kann es deutliche Unterschiede zwischen den
+Sprachen geben. In Tabelle \ref{fig:primes_naive_table} ist beispielsweise zu erkennen, dass die unoptimierte
+Version des Rust Programms weitaus länger Zeit zur Ausführung benötigt als jegliche anderen betrachteten
+Konfigurationen. Auch im Falle von X10 verschlechtert sich das Laufzeitverhalten, wenn auch nicht so
+sehr wie im Falle von Rust.
 
 \subsection{Paralleles Berechnen von Primzahlen}
 
@@ -344,16 +394,16 @@ Das Äquivalent zu Arrays in X10 sind Rails, daher wurden in der X10 Implementie
 
 \begin{figure}[hb]
 	\begin{center}
-		\begin{tabular}{lrrrr}
+		\begin{tabular}{lrrrrr}
 			\toprule
-			Sprache & Mittel & Median & Standardabweichung & MAD \\
+			Sprache    & $\bar{x}$ & $\title{x}$ & $s$ & $V$ & $MAD$ \\
 			\midrule
-			C          & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
-			C (opt)    & 0,4766 & 0,48 & 0,0091 & 0,0100 \\
-			Rust       & 0,4786 & 0,47 & 0,0159 & 0,0100 \\
-			Rust (opt) & 0,4780 & 0,47 & 0,0175 & 0,0100 \\
-			X10        & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
-			X10 (opt)  & 2,3886 & 2,38 & 0,0047 & 0,0200 \\
+			C          & 0.3894   & 0.3800 & 0.0191 & 4.9058\% & 0.0100 \\
+			C (opt)    & 0.3876   & 0.3800 & 0.0197 & 5.0953\% & 0.0100 \\
+			Rust       & 29.5478  & 29.480 & 0.2671 & 0.9038\% & 0.0400 \\
+			Rust (opt) & 5.1024   & 5.1000 & 0.0258 & 0.5048\% & 0.0200 \\
+			X10        & 339.345  & 338.19 & 2.3484 & 0.6920\% & 0.3900 \\
+			X10 (opt)  & 227.8816 & 226.09 & 2.8234 & 1.2390\% & 1.0300 \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
@@ -365,14 +415,15 @@ Das Äquivalent zu Arrays in X10 sind Rails, daher wurden in der X10 Implementie
 \end{figure}
 
 Wie man an den Ergebnissen der Tabelle \ref{fig:garbageonly_table} erkennen kann,
-benötigt X10 im vergleich zu Rust oder C deutlich länger, um die selbe Anzahl an gleich großen Objekten zu erstellen. 
+benötigt X10 im Vergleich zu Rust oder C deutlich länger, um die selbe Anzahl an gleich großen Objekten zu erstellen. 
 Dies könnte eine Konsequenz des Garbage Collectors sein, es lässt sich jedoch ohne eine genaue Messung des
-Speicherverhaltens keine eindeutige Aussage diesbezüglich Treffen.
+Speicherverhaltens keine eindeutige Aussage diesbezüglich treffen.
 
 Bei häufiger Erstellung von neuen Objekten weisen Rust und C allerdings trotzdem durch die gemessene Laufzeit
 einen nennenswerten Vorteil gegenüber X10 auf. Im Falle von Rust muss der Programmierer obendrein
 den Speicher nicht selbst wieder freigeben, denn dies geschieht implizit sobald eine Variable
-den Geltungsbereich verlässt. Somit weist Rust gegenüber C ebenfalls einen Vorteil auf.
+den Geltungsbereich verlässt. Somit weist Rust gegenüber C ebenfalls trotzt der schlechteren Laufzeit
+einen Vorteil auf.
 
 \section{Aufwand des Programmierens}
 
@@ -501,7 +552,9 @@ der "`agent\char`_claim\char`_invade"'-Funktion initialisiert werden.
 
 Nach dieser "`Invade"'-Operation muss man in C manuell über alle Rechenelemente iterieren, dabei
 "`simple\char`_ilet"'-Strukturen für diese erstellen und anschließend mit der "`proxy\char`_infect"'-Funktion
-die Ausführung beginnen. Damit der Hauptfaden auf das Ausführungsende der einzelnen Rechenelemente wartet, muss
+die Ausführung beginnen. Als Ilet-Funktion muss eine volle C Funktion verwendet werden,
+da die Sprache keine Closures oder ähnliche Konstrukte bietet.
+Damit der Hauptfaden auf das Ausführungsende der einzelnen Rechenelemente wartet, muss
 man manuell Signalstrukturen verwenden.
 
 Nachdem die Recheneinheiten signalisiert haben, dass sie ihre Ausführung beendet haben, muss man noch manuell
@@ -558,11 +611,12 @@ void main_ilet(claim_t claim) {
 
 \subsubsection{Vergleich}
 
-Die Vorgehensweisen bei Rust und X10 sind nahezu identisch. Der einzige nenneswerte Unterschied hierbei ist es, dass
+Die Vorgehensweisen bei Rust und X10 sind nahezu identisch. Der einzige nennenswerte Unterschied hierbei ist es, dass
 man in Rust keine explizite "'Retreat"'-Operation initialisieren muss.
 Das C Programm ist im Vergleich zu den beiden anderen Programmiersprachen hingegen komplexer und somit auch
 fehleranfälliger. Zudem benötigt ein solches C Programm ungefähr doppelt so viele 
-Codezeilen wie die äquivalenten Rust oder X10 Programme.
+Codezeilen wie die äquivalenten Rust oder X10 Programme. Obendrein ist es in C nicht möglich, Closures oder
+ähnliche Konstrukte zu verwenden, Rust und X10 unterstützen dies jedoch.
 
 \textcolor{blue}{Code rauslassen}
 
