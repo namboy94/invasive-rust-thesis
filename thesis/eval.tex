@@ -1,5 +1,10 @@
 \chapter{Evaluation}\label{sec:eval}
 
+%Dies kann in Benchmarks zumeist auch bestätigt werden\cite{rustVsCBenchmark}. 
+%Benchmarks, welche Rust mit
+%höheren Programmiersprachen wie Java\cite{rustVsJavaBenchmark} oder Python\cite{rustVsPythonBenchmark} vergleichen,
+%weisen meist eine bessere Leistung von Rust auf.
+
 Im Folgenden wird der Gebrauch von Rust im Zusammenhang mit dem invasiven Computing evaluiert. Hierbei
 wird vor allem mit den bereits unterstützten Sprachen C und X10 verglichen.
 
@@ -97,9 +102,9 @@ anschließend sofort wieder beendet.
 
 \begin{figure}[hb]
 	\begin{center}
-		\begin{tabular}{lrrrr}
+		\begin{tabular}{lrrrrr}
 			\toprule
-			Sprache & Mittel & Median & Standardabweichung & MAD \\
+			Sprache    & $\bar{x}$ & $\title{x}$ & $s$ & $V$ & $MAD$ \\
 			\midrule
 			C          & 0.5564 & 0.5600 & 0.0138 & 2.4829\% & 0.0100 \\
 			C (opt)    & 0.5586 & 0.5600 & 0.0134 & 2.3993\% & 0.0100 \\

@@ -1,43 +1,54 @@
 \chapter{Einführung}\label{sec:intro}
 
-Das Mooresche Gesetz besagt, dass sich die 
-"`Komplexität integrierter Schaltkreise mit minimalen Komponentenkosten regelmäßig verdoppelt"'\cite{mooresLawWikiDe}.
-Diese Beobachtung wurde im Jahre 1965 von Gordon Moore formuliert und erwies sich seither größtenteils als
-korrekt\cite{mooresLawWikiDe}.
-Dieser Trend wird sich mit den derzeit verwendeten Fertigungsmethoden jedoch nicht unendlich fortsetzen können und eventuell an
-physische Grenzen stoßen. Um zukünftig trotzdem eine verbesserte Rechenleistung zu erzielen, wird unter anderem auf
-Parallelrechner gesetzt. Der Grundgedanke dahinter ist es, mehrere Recheneinheiten zu verwenden, welche gemeinsam ein Problem
-abarbeiten und somit nicht eine Verbesserung der einzelnen Recheneinheiten benötigen, um eine verbesserte Leistung aufzuweisen.
+Gordon Moore hat im Jahre 1965 das Mooresche Gesetz formuliert, welches besagt, dass sich die Integrationsdichte
+von integrierten Schaltkreisen in regelmäßigen Intervallen verdoppelt\cite{mooresLawPastPresentFuture}.
+Diese Beobachtung erwies sich bisher größtenteils als korrekt, allerdings wird es nach und nach wahrscheinlicher,
+dass die heutigen Fertigungsmethoden diesen Trend nicht unendlich fortführen können, da diese eventuell an
+physische Grenzen stoßen werden.
 
-Der Trend zum parallelen Rechnen kann bereits seit einiger Zeit beobachtet werden; so sind moderne PCs oder Smartphones
-generell alle mit Mehrkernsystemen ausgestattet. Bei Grafikprozessoren kommen mittlerweile bereits Tausende einzelne Kerne
-zum Einsatz, so hat beispielsweise die Nvidia GTX 1080 GPU laut Spezifikation \cite{nvidia1080specs} 2560 Kerne verbaut.
+Um zukünftig trotzdem eine verbesserte Rechenleistung zu erzielen, wird unter anderem auf Parallelrechner gesetzt.
+Der Grundgedanke dahinter ist es, mehrere Recheneinheiten zu verwenden, welche gemeinsam eine Aufgabe
+lösen und somit nicht eine Verbesserung der einzelnen Recheneinheiten benötigen, um eine verbesserte Leistung
+aufzuweisen.
 
-Durch den Einsatz von parallelem Rechnen entstehen jedoch auch Kosten für den Programmierer, denn das Rechnersystem wird
-hierdurch komplexer. Der Programmierer muss sicherstellen, dass durch die gleichzeitige Verarbeitung durch die einzelnen
-Recheneinheiten keine Fehler entstehen, es muss also die Kommunikation zwischen den Prozessorelementen gesteuert werden, um mögliche
-Fehler zu vermeiden. Außerdem muss der Programmierer auch die vorliegenden Hardwareressourcen beachten.
+Der Trend zum parallelen Rechnen kann bereits seit einiger Zeit beobachtet werden,
+so sind moderne PCs oder Smartphones generell alle mit Mehrkernsystemen ausgestattet.
+Bei Grafikprozessoren kommen mittlerweile bereits Tausende einzelner Rechenkerne zum Einsatz,
+so hat beispielsweise die Nvidia GTX 1080 GPU laut Spezifikation \cite{nvidia1080specs} 2560 Kerne verbaut.
 
-Um die zusätzliche Komplexität des parallelen Rechnens für den Programmierer zu verringern, müssen neue Techniken oder
-Programmierparadigmen entwickelt werden. Eine solche Idee ist das invasive Computing, welches es einem Programmierer
-erlaubt, die Ressourcen in Parallelen Systemen besser zu nutzen. Vor allem bei Systemen mit vielen Kernen ist dieses Paradigma
-eine interessanter Lösungsansatz. So kann man beispielsweise auf einer Nvidia GTX 1080 GPU mit insgesamt 2560 Kernen ein Programm
-ausführen, welches dann ein Problem bearbeitet welches auf genau 1000 dieser Kerne ausgeführt wird. Gleichzeitig kann dann anderes
-Problem auf einer weiteren Untermenge der Kerne ausgeführt werden.
+Durch den Einsatz von parallelem Rechnen entstehen jedoch auch Kosten für den Programmierer,
+denn das Rechnersystem wird hierdurch komplexer.
+Der Programmierer muss sicherstellen, dass durch die gleichzeitige Verarbeitung durch die einzelnen
+Recheneinheiten keine Fehler entstehen, es muss also die Kommunikation zwischen den Prozessorelementen gesteuert 
+werden, um mögliche Fehler zu vermeiden.
+Außerdem muss der Programmierer auch die vorliegenden Hardwareressourcen beachten.
 
-Das Invasive Computing unterstützt derzeit nur die Programmiersprachen C, C++ und X10. Eine interessante Addition hierzu wäre
-die Sprache Rust, welche einen Fokus auf die Sicherheit vor schwerwiegenden Programmierfehlern, die vor allem durch
-fehlerhafte Speicherzugriffe ausgelößt werden, legt.
+Um die zusätzliche Komplexität des parallelen Rechnens für den Programmierer zu verringern,
+müssen neue Techniken oder Programmierparadigmen entwickelt werden.
+Eine solche wäre das invasive Computing, welches es einem Programmierer erlaubt,
+die Ressourcen in parallelen Systemen besser zu nutzen.
+Vor allem bei Systemen mit vielen Kernen ist dieses Paradigma eine interessanter Lösungsansatz.
+So kann man beispielsweise auf einer Nvidia GTX 1080 GPU mit insgesamt 2560 Kernen ein Programm
+ausführen, welches dann ein Problem bearbeitet, welches auf genau 1000 dieser Kerne ausgeführt wird.
+Gleichzeitig kann dann anderes Problem auf einer weiteren Untermenge der Kerne ausgeführt werden.
 
-Damit man Rust im Kontext des invasiven Computing verwenden kann, werden im Laufe dieser Arbeit zunächst die Grundlagen der
-Programmiersprache Rust, des invasiven Computing und der Prozessorarchitektur SPARC-V8, welche für das
-invasive Betriebssystem IRTSS bedeutsam ist, erarbeitet. Im Anschluss daran werden Werkzeuge zum Erstellen von invasiven
-Rust Programmen entwickelt, welche das Ziel verfolgen, Rust effektiv in Verbindung mit diesem Programmierparadigma zu verwenden.
-Anschließend muss der tatsächliche Wert dessen evaluiert undcd bewertet werden.
+Das Invasive Computing unterstützt derzeit nur die Programmiersprachen C, C++ und X10. Eine interessante Addition 
+hierzu wäre die Sprache Rust, welche einen Fokus auf die Sicherheit vor schwerwiegenden Programmierfehlern, die vor 
+allem durch fehlerhafte Speicherzugriffe ausgelöst werden, legt.
 
-\section{Verwandte Arbeiten}
+Damit man Rust im Kontext des invasiven Computing verwenden kann,
+werden im Laufe dieser Arbeit zunächst die Grundlagen der Programmiersprache Rust,
+des invasiven Computing und der Prozessorarchitektur SPARC-V8, welche für das
+invasive Betriebssystem IRTSS bedeutsam ist, erarbeitet. 
+Im Anschluss daran werden Werkzeuge zum Erstellen von invasiven
+Rust Programmen entwickelt, welche das Ziel verfolgen,
+Rust effektiv in Verbindung mit diesem Programmierparadigma zu verwenden.
+Anschließend muss der tatsächliche Wert dessen evaluiert und bewertet werden.
 
-Eine verwandte Arbeit ist "`Invasive Computing—An Overview"'\cite{teich11msoc} von Jürgen Teich, Jörg Henkel, Andreas Herkersdorf,
-Doris Schmitt-Landsiedel, Wolfgang Schröder-Preikschat und Gregor Snelting.
-Diese illustriert die Grundkonzepte hinter dem invasiven Computing, befasst sich jedoch im Gegensatz zu dieser Arbeit nicht mit der
-Programmiersprache Rust.
+%\section{Verwandte Arbeiten}
+
+%Eine verwandte Arbeit ist "`Invasive Computing—An Overview"'\cite{teich11msoc}
+%von Jürgen Teich, Jörg Henkel, Andreas Herkersdorf, Doris Schmitt-Landsiedel, Wolfgang Schröder-Preikschat
+%und Gregor Snelting.
+%Diese illustriert die Grundkonzepte hinter dem invasiven Computing, befasst sich jedoch im Gegensatz zu dieser Arbeit 
+%nicht mit der Programmiersprache Rust.

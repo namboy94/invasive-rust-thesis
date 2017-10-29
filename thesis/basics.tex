@@ -1,103 +1,114 @@
-\chapter{Grundlagen und Verwandte Arbeiten}\label{sec:basics}
+\chapter{Grundlagen}\label{sec:basics}
 
-Im Folgenden Kapitel werden die Grundlagen der Programmiersprache Rust, der Rechnerarchitektur SPARC-V8 und des invasiven Computing
-behandelt, welche zum Verständnis dieser Arbeit beitragen.
+Im folgenden Kapitel werden die Grundlagen der Programmiersprache Rust, der Rechnerarchitektur SPARC-V8 und des 
+invasiven Computing behandelt, welche zum Verständnis dieser Arbeit beitragen.
 
 \section{Rust}
 
-Rust ist eine Programmiersprache, welche von Mozilla Research entwickelt wird\cite(rustWikDe).
-Die Entwicklung der Sprache begann als persönliches Projekt des Mozilla-Mitarbeiters Graydon Hoare und wird
-seit 2009 von Mozilla offiziell unterstützt \cite(rustWikDe). 2010 erschien die erste öffentliche Version der Sprache und
-im Jahr 2015 wurde die erste stabile Version veröffentlicht \cite(rustWikDe). 
-Sie erfreut sich in der jüngsten Vergangenheit wachsende Beliebtheit bei Programmierern aller Art. So wurde
-bei einer Umfrage der Webseite stackoverflow.com Rust im Jahre 2016 als beliebteste Programmiersprache bei Entwicklern
-ermittelt\cite{stackoverflowSurvey}.
+Rust ist eine relativ neue Programmiersprache, welche wie beispielsweise C++ direkte Kontrolle über die
+unterliegende Hardware bieten soll. Dies bedeutet in der Praxis, dass diese Sprache nicht von einem Garbage
+Collector Gebrauch macht, wie es Sprachen wie zum Beispiel X10 tun. Im Gegensatz zu C++ bietet Rust jedoch
+standardmäßig Speichersicherheit und garantieren somit dass Programme keine Speicherfehler beinhalten.
+\cite{theRustLanguage}
 
-Das wohl derzeit prominenteste Projekt, welches Rust verwendet, ist der Servo Layout-Engine, welcher gemeinsam von
-Mozilla und Samsung entwickelt wird\cite{servoWikiDe}. Dieser Layout-Engine soll nach und nach im Mozilla Firefox Webbrowser
-integriert werden und hierbei eine bessere Leistung als vorhergehende Technologien vorweisen\cite{servoWikiDe}.
+Rust erfreut sich in der jüngsten Vergangenheit wachsende Beliebtheit bei Programmierern aller Art. So wurde
+bei einer Umfrage der Webseite stackoverflow.com Rust im Jahre 2016 als beliebteste Programmiersprache bei 
+Entwicklern ermittelt\cite{stackoverflowSurvey}.
+
+Das wohl derzeit prominenteste Projekt, welches Rust verwendet, ist der Servo Web Browser Engine. Dieses Projekt
+wurde von Mozilla Research initialisiert, erhält jedoch ebenfalls Beiträge von Freiwilligen
+als auch von Unternehmen wie Samsung.
+Diese Software soll nach und nach im Mozilla Firefox Webbrowser integriert werden und hierbei eine bessere
+Leistung uns Sicherheit als vorhergehende Technologien vorweisen\cite{engineeringServo}.
 
 \subsection{Motivation}
 
-Eine der Kernziele der Rust Programmiersprache ist es, sichere Speicherzugriffe zu gewährleisten\cite{rustWikiDe}.
-Dies wird mithilfe des sogenannten Ownership-Systems und einem besonderen, typsicheren Typsystem, wie es bei funktionalen
-Programmiersprachen oft der Fall ist, \cite{rustWikiDe} erreicht. 
-Das Ownership-System ermöglicht es, fehlerhafte Speicherzugriffe, welche ein ernsthaftes
-Sicherheitsrisiko darstellen, zu vermeiden. Fehlerhafte Speicherzugriffe können zu undefiniertem Verhalten führen,
-welches wiederum auch gezielt als Angriffsvektor genutzt werden kann.
-Diese Speichersicherheit wird in Rust erreicht, anders als bei den meisten anderen Sprachen mit automatischer
-Speicherverwaltung, ohne dabei von einem Garbage Collector Gebrauch
-zu machen\cite{rustWikiDe}. Dies macht Rust zu einer interessanten Alternative zu Systemsprachen
-wie C, welche nicht sicher bezüglich der Speicherverwaltung sind, als auch zu Sprachen mit Garbage Collector wie X10, welche durch
-den Garbage Collector wiederum andere Nachteile vorweisen.
+Eine der Kernziele der Rust Programmiersprache ist es, sichere Speicherzugriffe zu gewährleisten, ohne
+für diesen Zweck einen Garbage Collector zu verwenden. Fehlerhafte Speicherzugriffe können undefiniertes
+Verhalten auslösen, welches ein Sicherheitsrisiko darstellen kann, denn diese Fehler können gezielt ausgenutzt
+werden, um Schadcode auszuführen.\cite{engineeringServo}\cite{undefinedBehaviour}
 
-Ein weiteres Ziel der Sprache ist die Leistung. Rust soll vergleichbare Leistungen bezüglich des Laufzeitverhaltens wie andere
-Systemsprachen wie C oder C++ erreichen.
-Dies kann in Benchmarks zumeist auch bestätigt werden\cite{rustVsCBenchmark}. 
-Benchmarks, welche Rust mit
-höheren Programmiersprachen wie Java\cite{rustVsJavaBenchmark} oder Python\cite{rustVsPythonBenchmark} vergleichen,
-weisen meist eine bessere Leistung von Rust auf.
+Außerdem soll Rust paralleles Rechnen unterstützen und so möglichst effizient moderne Hardware verwenden.
+Hierfür sollen gewisse häufig auftretende Fehler in der Parallelprogrammierung gänzlich entfallen.
+\cite{theRustLanguage}
 
-Das effiziente Einbinden mit anderen Sprachen ist eine zusätzliche Motivation hinter der Programmiersprache.
-So kann Rust beispielsweise mithilfe der sogenannten "`Foreign Function Interface"' (FFI)
-Funktionen, welche in anderen Programmiersprachen, beispielsweise C, geschrieben sind, benutzen. Außerdem ist es möglich,
-Rust Code aus anderen Programmiersprachen, inklusive höheren Programmiersprachen wie Python oder Ruby, aufzurufen.
+Rust lehnt sich konzeptionell und syntaktisch an C-ähnliche Sprachen an, enthält jedoch auch Konzepte aus der
+funktionalen Programmierung. Zusätzlich werden Sprachkonzepte und Abstraktionen geboten, welche
+ansonsten zumeist in höheren Programmiersprachen geboten werden. Hierdurch soll der Einstieg für
+Programmierer, die zuvor keine oder nur wenige Erfahrungen mit Systemsprachen gemacht haben, erleichtert werden.
+\cite{engineeringServo}
 
-Nebenläufigkeit ist ein weiteres Ziel der Sprache. Mithilfe des Architektur der Sprache soll es zwischen einzelnen Threads
-nicht zu kritischen Wettläufen kommen, welches eines der Hauptfehlerquellen bei parallelem Programmieren beseitigt.
+Diese zusätzliche Sicherheiten und Nutzerfreundlichkeiten sollen jedoch keine Laufzeitkonsequenzen mit sich ziehen,
+denn Rust soll in dieser Hinsicht ähnliche Ergebnisse wie andere Systemsprachen, beispielsweise C oder C++,
+aufweisen. Außerdem soll Rust es vereinfachen, mehrere Programmiersprachen miteinander zu verwenden. Es soll
+also möglich sein, Code aus anderen Sprachen aus einem Rust Kontext zu verwenden als auch umgekehrt.\cite{rustBook}
 
-Rust soll dem Programmierer zudem höhere Abstraktionen bieten, welche nicht oder nur gering die Effizienz des Programm
-beeinflussen. Diese sogenannten "`Zero-cost Abstractions"' erleichtern es Programmierern, welche nur wenig Erfahrung mit
-Systemsprachen vorweisen können, die Programmiersprache zu verwenden, ohne dabei auf Leistung verzichten zu müssen.
 
-\subsection{Grundlegende Eigenschaften der Sprache}
+\subsection{Das Typsystem}
 
-Im Folgenden werden die grundlegenden Eigenschaften der Programmiersprache Rust erläutert.
+Das signifikanteste Alleinstellungsmerkmal der Programmiersprache Rust ist ihr Typsystem. Dieses ermöglicht es
+erst, die versprochenen Sicherheitsgarantien ohne zusätzliche Konstrukte wie einen Garbage
+Collector zu realisieren.\cite{rustBook}
 
-\subsubsection{Das Ownership-System}
+\subsubsection{Ownership, Move-Semantik und Borrowing}
 
-Das signifikanteste Alleinstellungsmerkmal der Programmiersprache Rust ist das Ownership-System\cite{whatIsOwnership}.
-Erst hierdurch wird die Speichersicherheit ohne Garbage Collector möglich.
+Das Typsystem integriert das Konzept der \textit{Ownership (engl. Besitz)} ein.
+Dies ist die zentrale Besonderheit von Rusts Typsystem.
+Der Grundgedanke hierhinter ist es, dass der Zugriff auf eine Speicherregion einer Variable exklusiv
+zur Verfügung gestellt wird. Diese Variable wird auch\textit{Owner (engl. Besitzer)} genannt.
+Zu jedem Zeitpunkt darf die Speicherregion nur einen \textit{Owner} haben.
+Sobald dieser \textit{Owner} den Geltungsbereich verlässt, wird die zugehörige Speicherregion freigegeben.
+Dies ist der Mechanismus, der es in Rust erlaubt, Speicher ohne manuelle Befreiung oder Nutzung eine
+Garbage Collectors zu verwalten.\cite{rustBook}
 
-Die Grundlage des Ownership-Systems ist die Bindung von Speicher an eine Variable\cite{whatIsOwnership}.
-Sobald eine Variable initialisiert wird, wird Speicher für diese alloziert.
-Sobald diese Variable sich allerdings nicht mehr im Geltungsbereich befindet,
-wird dieser Speicher automatisch wieder freigegeben\cite{whatIsOwnership}.
-Dies wird im folgenden Beispiel veranschaulicht\cite{ownership}:
+Die \textit{Ownership} einer Speicherregion kann mithilfe der \textit{Move}-Semantik den Besitzer wechseln.
+Die kann bei Funktionsaufrufen oder auch bei einer Zuweisung geschehen. Beispiele hierfür sind in Abbildung
+\ref{code:move_semantics} zu sehen.\cite{rustBook}
 
-\begin{verbatim}
-    fn foo() {
-        let v = vec![1, 2, 3]; // Alloziert Speicher
-    }
+\begin{lstlisting}[float,caption={Beispieldarstellung der \textit{Move}-Semantik},label=code:move_semantics]
+let x = 5;    // Owner: x
+let y = x;    // Owner: y, x nun ungueltig
+let z = f(y)  // Ownership an f uebergeben,
+              // Speicherbereich ist nun befreit,
+              //   da f den Geltungsbereich verlassen hat
+              // y ist ungueltig
+\end{lstlisting}\cite{rustBook}
 
-    fn main() {
-        foo();
-        // Speicher ist bereits hier wieder freigegeben
-    }
-\end{verbatim}
+Zusätzlich zur \textit{Move}-Semantik können in Rust Referenzen zu Variablen verwendet werden. Dies wird im Kontext
+von Rust häufig als \textit{borrowing (engl. ausleihen)} bezeichnet. Verwendet man eine Referenz auf eine Variable,
+ist der \textit{Owner} des Speicherbereichs weiterhin die originale Variable. Es gibt zwei unterschiedliche
+Typen von Referenzen, veränderliche und unveränderliche Referenzen. Standardmäßig werden in Rust unveränderliche
+Referenzen verwendet. Diese erlauben es nicht, den Wert des Speicherbereichs zu verändern, sondern nur auszulesen.
+Es gibt keine Limitierung bei der Anzahl unveränderlicher Referenzen eine Variable besitzen kann. Im Gegensatz
+hierzu kann nur eine veränderliche Referenz auf die Variable existieren. Dies ermöglicht es, bereits zur
+Compile-Zeit gewisse Wettlaufsituationen, \textit{Race Conditions}, in der Parallelprogrammierung auszuschließen. 
 
-Außerdem erlaubt es Rust keinen zwei Variablen auf denselben Speicher zu zeigen\cite{whatIsOwnership}.
-So wird beispielsweise bei einer Zuweisung einer
-Variable zu einer anderen der "`Besitz"' des Speichers auf die neue Variable übertragen und die alte Variable kann nun nicht mehr
-verwendet werden. Dies geschieht auch wenn die Variable als Parameter in einem Funktionsaufrauf verwendet wird.
-Dieses Verhalten ist als "`Move"'-Semantik bekannt. Eine Veranschaulichung dessen folgt\cite{ownership}:
+\subsubsection{Strukturen, Implementierungen und Traits}
 
-\begin{verbatim}
-    fn foo(v: Vec<i32>) {
-        // Details unwichtig
-    }
+Zum Erstellen von benutzerdefinierten Typen bietet Rust Strukturen (\texttt{\textsc{\textbf{struct}}}),
+Implementierungen (\texttt{\textsc{\textbf{impl}}}) und Traits (\texttt{\textsc{\textbf{trait}}}).
 
-    fn main() {
-	
-        let v = vec![1, 2, 3];
-        let w = v;  // v ist ab jetzt nicht mehr benutzbar!
-        foo(w);     // w ist ab jetzt nicht mehr benutzbar!
+Strukturen in Rust spezifizieren benutzerdefinierte Datentypen, welche verwandte Daten vereinen. Das Konzept
+ähnelt den Strukturen in C. Anders wie in C kann man jedoch mithilfe von Implementierungen Methoden und assozierte
+Funktionen für diese Strukturen definieren.
+Diese Möglichkeit erlaubt es eine objektorientierte Herangehensweise in Rust zu verwenden.
+Implementierungen erlauben das Definieren von Methoden, welche auf einer initiierten Struktur aufgerufen werden
+und eine Referenz auf \texttt{\textsc{\textbf{self}}}, also der Struktur selbst, als Parameter entgegennehmen.
+Zusätzlich können Funktionen definiert werden, welche keinen solchen Parameter entgegennehmen und somit auch mit
+nicht initiierten Strukturen verwendet werden kann. Dies ähnelt statischen Methoden in objektorientierten
+Sprachen.
 
-    }
-\end{verbatim}
+Traits sind ein Sprachkonstrukt in Rust, welches das Verhalten von Typen abstrakt definieren können. Sie ähneln sich
+hierbei Interfaces aus anderen Sprachen. 
 
-Durch dieses Verhalten wird sichergestellt, dass eine Variable exklusiven Zugriff auf die allozierten Speicherbereiche besitzt,
-wodurch fehlerhafte Speicherzugriffe vermieden werden.
+Die \textit{}
+
+AFFINE et LINEARE TYPEN
+
+OWNERSHIP
+
+TRAITS, STRUCTS, IMPLS
+
 
 Eine Ausnahme hierzu bilden Type, welche das "`Copy-Trait"' oder das "`Clone-Trait"'
 implementieren\cite{ownership}\cite{linearTypePain}.
@@ -212,46 +223,64 @@ Als Compiler-Backend wird LLVM verwendet. Durch diese wird Rust vor der Überset
 LLVM-IR übersetzt. Dadurch ist es möglich, Rust-Code auf allen von LLVM unterstützen Rechnerarchitekturen laufen zu lassen.
 
 
-\section{SPARC-V8}
+\section{SPARC und SPARC-V8}
 
-SPARC (\textbf{S}calable \textbf{P}rocessor \textbf{ARC}hitecture) ist eine Mikroprozessorarchitektur, welche von Sun Microsystems und 
-seit 2010\cite{sunWikiDe}, nach der Übernahme von Sun Microsystems, von Oracle entwickelt wird\cite{sparcWikiDe}. Sie kommt
-kommerziell derzeit größtenteils in Produkten von Oracle zum Einsatz\cite{sparcWikiDe}.
+SPARC (\textbf{S}calable \textbf{P}rocessor \textbf{ARC}hitecture) ist eine Rechnerarchitektur, welche auf das
+RISC (Reduced Instruction Set Computing) Konzept aufbaut. Eines der Ziele der SPARC Architektur ist es, skalierbar
+zu sein und so in unterschiedlichsten Umgebungen zum Einsatz zu kommen. So können SPARC Prozessoren in
+Mikrocontrollern bis hin zu Supercomputern verwendet werden. Die Architektur wird an unterschiedliche
+Halbleiter-Unternehmen lizensiert, mit dem Ziel durch konkurrierende Kräfte Innovation bezüglich Leistung oder
+Kosten zu fördern.\cite{sparc}
 
-Die aktuelle 32-bit Variante der SPARC-Architektur wird als SPARC-V8 bezeichnet\cite{sparcWikiDe}.
-Die Byte-Reihenfolge von SPARC-V8 ist komplett Big-Endian\cite{sparcWikiDe}.
+SPARC-V8 ist eine auf SPARC basierende Architektur. Es handelt sich hierbei um eine Allzweckarchitektur mit einem
+32-bit breiten Datenpfad.\cite{sparcv8Eval}
 
 \subsection{LEON}
 
-Die ursprünglich von der European Space Agency (ESA) und anschließend von Aeroflex Gaisler entwickelten LEON-Prozessoren
-basieren auf der SPARC-V8 Architektur\cite{leonWikiDe}. 
-Der erste LEON Prozessor war das erste vollständige Mikroprozessor-Design welches unter einer
-Open-Source Lizenz, in diesem Fall der GNU Lesser General Public License, veröffentlicht wurde\cite{leonWikiDe}.
-Die beiden anschließenden Iterationen
-der Prozessorfamilie, LEON2 und LEON3 wurden ebenfalls unter Open-Source Lizenzen verfügbar gestellt\cite{leonWikiDe}.
-Deren Nachfolger, LEON4, ist jedoch nicht mehr unter einer freien Lizenz verfügbar\cite{leonWikiDe}.
+Die ursprünglich von der European Space Agency (ESA) und anschließend von Gaisler Research entwickelten
+LEON-Prozessoren basieren auf der SPARC-V8 Architektur.
+Das Hauptziel der LEON-Prozessoren war es, fehlertolerante Nachfolger zu älteren SPARC-V7-basierten
+Prozessoren, die zu dem Zeitpunkt bei der ESA Verwendung fanden, zu bieten.\cite{gaislerLeon}
+Es handelt sich bei ihnen um stark konfigurierbare
+Implementierungen der SPARC-V8 Architektur in der Hardwarebeschreibungssprache
+VHDL (Very High Speed Integrated Circuit Hardware Description Language).
+Unterschiedliche Iterationen dieser Prozessorfamilie sind unter Open-Source Lizenzen als VHDL-Designs verfügbar.
+So wurden die VHDL-Designs des LEON2 Prozessors unter der GNU LGPL Lizenz veröffentlicht.\cite{sparcv8Eval}
+Auch das Design des LEON3 Prozessors ist unter einer Open-Source Lizenz verfügbar\cite{}.
 
-Da die Designs der LEON, LEON2 und LEON3 Prozessoren als frei verfügbare VHDL-Designs\cite{leonWikiDe} zur Verfügung stehen, eignen 
-sich diese gut zur Verwendung in angepassten FPGAs oder ASICs\cite{leonWikiDe}.
+Die Kombination von stark konfigurierbaren Designs und der Open-Source Lizenz ermöglicht den Gebrauch der
+LEON VHDL Designs in domänenspezifischen, angepassten ASICs (Application-Specific Integrated Circuit),
+FPGAs (Field Programmable Gate Array) oder SOCs (System On Chip). Daher eignet sich die LEON Prozessorfamilie
+auch zum Einsatz im invasiven Computing, um deren neuartigen Konzepte möglichst effizient auszunutzen.
+\cite{sparcv8Eval}
 
 \section{Invasives Computing}
 
-Invasives Computing ist ein paralleles Programmiermodell, welches es ermöglicht, temporär Ressourcen auf einem Parallelrechner
-zu beanspruchen und anschließend wieder freizugeben. Hierbei gibt es drei wesentliche Phasen: die `Invade`, `Infect` und `Retreat` Phasen \cite{invasicWikiOverview}. 
+Invasives Computing beschreibt die Möglichkeit eines Programms auf einem Parallelrechner,
+dynamisch Hardwareressourcen zu reservieren, nutzen und anschließend wieder freizugeben.\cite{octopos}
 
-In der "`Invade"' Phase werden zunächst Ressourcen für das laufende Programm reserviert. Welche Ressourcen genau reserviert werden,
-werden durch sogenannte "`Constraints"' bestimmt\cite{invasicWikiOverview}.
-Anschließend wird in der "`Infect"' Phase die Funktion auf den reservierten Prozessorelementen ausgeführt\cite{invasicWikiOverview}.
-Werden die reservierten Ressourcen nicht mehr benötigt, so kann man diese in der "`Retreat' Phase wieder
-freigeben\cite{invasicWikiOverview}.
+Die drei fundamentalen Phasen des invasiven Computing sind die \textit{\textbf{Invade}}, \textit{\textbf{Infect}}
+und \textit{\textbf{Retreat}} Phasen. In der \textit{Invade} Phase werden zunächst die gewünschten
+Hardwareressourcen angefordert und anschließend reserviert. Diese Menge an Hardwareressourcen kann dann mithilfe
+eines \textit{Claims} verwaltet werden. Die zu reservierenden Ressourcen werden mithilfe von \textit{Constraints}
+angegeben.
+Sind die Ressourcen reserviert, kann die \textit{Infect}
+Phase beginnen. In dieser werden Ausführungsfaden erstellt,
+welche auf den reservierten Hardwareressourcen ausgeführt werden. Im Kontext des invasiven Computing wird ein solcher
+Faden als \textit{inasive-let} oder abgekürzt als \text{i-let} bezeichnet\cite{invasiveCommonTerms}.
+Benötigt das Programm die reservierten Ressourcen nicht mehr, können diese in der \textit{Retreat} Phade wieder
+freigegeben werden.\cite{octopos}
 
-Das Konzept des invasiven Computings wurde von einer Kollaboration von Wissenschaftlern der
-Friedrich-Alexander-Universität Erlangen-Nürnberg, dem Karlsruher Institut für Technologie und der 
-Technischen Universität München entwickelt\cite{invasicHome}.
-Im Rahmen des "`Transregional Collaborative Research Center Invasive Computing"'\cite{invasicHome}
-wird die Entwicklung dieses Programmiermodells vorangetrieben.
-Fördermittel erhält diese von der Deutschen Forschungsgemeinschaft\cite{invasicHome}.
+Für den praktischen Einsatz des invasiven Computings wurde ein Betriebssystem namens \textit{OctoPOS} entwickelt. 
+Dieses unterstützt die \textit{Invade}, \textit{Infect} und \textit{Retreat} Phasen auf der Systemebene.
+Zusätzlich hierzu existiert das \textit{Invasive Run-Time Support System (IRTSS)}. Diese Middleware
+\cite{invasiveRISC} fungiert als eine Hardware-Abstraktionsschicht und als
+Ressourcenverwalter \cite{invasiveManyCore}.
+\textit{OctoPOS} und \textit{IRTSS} bieten so eine Platform für das invasive Programmieren.\cite{octopos}
 
-Für den praktischen Einsatz des invasiven Computings wurde ein Betriebssystem namens IRTSS entwickelt. Dieses ist generell für den
-Einsatz auf FPGAs mit LEON Architektur konzipiert, bietet jedoch auch Versionen für die x86-Architektur. Derzeit ist es möglich,
-in den Programmiersprachen C, C++ und X10 Programme für den Einsatz mit IRTSS zu schreiben.
+Um das Konzept des invasiven Computing möglichst effizient auszunutzen, wurden speziell an das invasive Computing
+angepasste Hardware entwickelt, deren Prozessorkerne auf dem Design des LEON3 Prozessors basieren.
+Diese Hardware unterstützen gewisse invasive Grundfunktionen und entlastet somit das Betriebssystem und das IRTSS.
+\cite{invasiveArrays}
+
+Zurzeit unterstützen OctoPOS und IRTSS den Einsatz der Programmiersprachen C, C++ und X10.
