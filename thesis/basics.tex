@@ -66,12 +66,19 @@ Die kann bei Funktionsaufrufen oder auch bei einer Zuweisung geschehen. Beispiel
 \ref{code:move_semantics} zu sehen.\cite{rustBook}
 
 \begin{lstlisting}[float,caption={Beispieldarstellung der \textit{Move}-Semantik},label=code:move_semantics]
-let x = 5;    // Owner: x
-let y = x;    // Owner: y, x nun ungueltig
-let z = f(y)  // Ownership an f uebergeben,
-              // Speicherbereich ist nun befreit,
-              //   da f den Geltungsbereich verlassen hat
-              // y ist ungueltig
+let x = String::from("hello");;
+// Owner: x
+
+let y = x;
+// Owner: y
+// x ist nun ungueltig
+
+let z = f(y) 
+// Owner: -
+// Ownership wurde an f uebergeben,
+// da f aber bereits den Geltungsbereich verlassen hat
+// ist der Speicherbereich nun befreit.
+// y ist nun ungueltig
 \end{lstlisting}\cite{rustBook}
 
 Zusätzlich zur \textit{Move}-Semantik können in Rust Referenzen zu Variablen verwendet werden. Dies wird im Kontext
@@ -82,6 +89,7 @@ Referenzen verwendet. Diese erlauben es nicht, den Wert des Speicherbereichs zu 
 Es gibt keine Limitierung bei der Anzahl unveränderlicher Referenzen eine Variable besitzen kann. Im Gegensatz
 hierzu kann nur eine veränderliche Referenz auf die Variable existieren. Dies ermöglicht es, bereits zur
 Compile-Zeit gewisse Wettlaufsituationen, \textit{Race Conditions}, in der Parallelprogrammierung auszuschließen. 
+\cite{rustBook}
 
 \subsubsection{Strukturen, Implementierungen und Traits}
 
@@ -96,39 +104,71 @@ Implementierungen erlauben das Definieren von Methoden, welche auf einer initiie
 und eine Referenz auf \texttt{\textsc{\textbf{self}}}, also der Struktur selbst, als Parameter entgegennehmen.
 Zusätzlich können Funktionen definiert werden, welche keinen solchen Parameter entgegennehmen und somit auch mit
 nicht initiierten Strukturen verwendet werden kann. Dies ähnelt statischen Methoden in objektorientierten
-Sprachen.
+Sprachen.\cite{rustBook}
 
 Traits sind ein Sprachkonstrukt in Rust, welches das Verhalten von Typen abstrakt definieren können. Sie ähneln sich
-hierbei Interfaces aus anderen Sprachen. 
+hierbei Schnittstellen aus anderen Programmiersprachen. Zusätzlich zur benutzerdefinierten Spezifikation
+solcher Schnittstellen-ähnlichen Konstrukte bietet Rust vordefinierte Traits, welche das Verhalten der Typen
+bezüglich \textit{Ownership} und \textit{Move}-Semantik beeinflussen.\cite{rustBook}
 
-Die \textit{}
+Zum einen existiert das \textit{Drop}-Trait. Dieses Trait erlaubt es, das Verhalten eines Typen beim Verlassenen des
+Geltungsbereichs zu beeinflussen. In der \textit{drop}-Methode des Traits wird es ermöglicht, einen Destruktor
+für den Typ zu implementieren. Dieser kann aus unterschiedlichen Gründen benötigt oder hilfreich sein.
+Beispielsweise kann man diesen verwenden, um einen Referenzzähler zu dekrementieren, unbenutzte Netzwerkverbindungen
+zu trennen oder anderweitige Ressourcen freizugeben.\cite{rustBook}
 
-AFFINE et LINEARE TYPEN
+Außerdem gibt es die \textit{Copy}-Traits, welche es ermöglichen, anstelle der \textit{Move}-Semantik die
+\textit{Copy}-Semantik zu verwenden. Jedes mal, wenn ein Speicherbereich im Kontext der \textit{Move}-Sematik
+den \textit{Owner} wechseln würde, wird
+stattdessen eine bitweise Kopie der Daten erstellt. Primitive Datentypen wie \texttt{\textsc{\textbf{i32}}}
+verhalten sich standardmäßig genau so. Das \textit{Copy}-Trait kann jedoch nicht auf jeden Typ
+angewandt werden. Insbesondere kann das \textit{Drop}-Trait nicht gleichzeitig auf diesen Typ angewandt werden,
+da diese beim Verlassen des Geltungsbereichs einen Einfluss außerhalb ihres Speicherbereich haben können. \cite{rustBook}\cite{rustDocCopy}
 
-OWNERSHIP
+\subsubsection{Affine und Lineare Typen}
 
-TRAITS, STRUCTS, IMPLS
+TODO
+
+\subsection{Fehler- und Ausnahmebehandlung}
+
+In der Programmiersprache Rust werden Ausnahmen behandelt,
+in dem eine \textit{Option} oder \textit{Result} Aufzählung als
+Rückgabeparameter einer Funktion verwendet wird.
+Anhand dieser lässt es sich prüfen, ob eine Ausnahme beim Funktionsaufruf
+aufgetreten ist. Bei unbehandelten Ausnahmen wird für den aktiven Faden die
+\texttt{\textsc{\textbf{panic\char`_fmt"'}}}-Funktion aufgerufen.
+Bei Fehlern beendet Rust die Ausführung des Programms.
+
+\subsection{Architektur/Compiler}
+
+Der offizielle Rust Compiler heißt \texttt{\textsc{\textbf{rustc}}} und kann eigenständige Rust-Quelldateien
+kompilieren. Rust-Quelldateien haben per Konvention die Dateiendung \texttt{\textsc{\textbf{.rs}}}.\cite{rustBook}
+
+Als Lösung zum Abhängigkeitsmanagement und der Distribution wurde das Werkzeug \texttt{\textsc{\textbf{cargo}}} 
+entwickelt. Es ermöglicht es dem Programmierer, verwendete Bibliotheken in ein Projekt einzugliedern,
+indem diese in einer \texttt{\textsc{\textbf{Cargo.toml}}}-Konfigurationsdatei im Hauptverzeichnis
+des Projekts angegeben werden. Hierbei ist es möglich, Bibliotheken von der zentralen \textit{crates.io}
+Platform automatisch herunterladen zu lassen oder einen lokalen Dateipfad zu einer solchen
+Bibliothek anzugeben.
+Außerdem unterstützt \texttt{\textsc{\textbf{cargo}}} mehrere weiter hilfreiche Funktionen zum Testen oder
+Distribuieren der entwickelten Software. Kompilierte Software kann als ein sogenanntes \textit{Crate} bei
+\textit{crates.io} hochgeladen werden.\cite{rustBook}
+
+Um den Gebrauch von unterschiedlichen \texttt{\textsc{\textbf{rustc}}} und \texttt{\textsc{\textbf{cargo}}} Versionen 
+zu vereinfachen, wurde das Werkzeug \texttt{\textsc{\textbf{rustup}}} entwickelt. Dieses
+Hilfsprogramm ermöglicht es unterschiedliche Varianten des Rust-Compilers zu installieren und bei Belieben zu
+wechseln. Es bietet auch die Funktionalität, die benötigten Bibliotheken für unterstützte Architekturen
+herunterzuladen um Programme für andere Zielarchitekturen zu kompilieren.
+
+Sowohl \texttt{\textsc{\textbf{rustc}}} als auch \texttt{\textsc{\textbf{cargo}}} ermöglichen das Kompilieren für
+unterschiedliche Zielarchitekturen mithilfe der \texttt{\textsc{\textbf{rustc}}} und
+\texttt{\textsc{\textbf{-{}-target}}}-Option. Als Compiler-Backend wird LLVM verwendet.
+Rust-Code wird also vor der Übersetzung zu Maschinenbefehlen in die Zwischensprache
+LLVM-IR übersetzt und erst anschließend weiterverarbeitet. Somit ist es möglich, Rust-Programme für alle von LLVM
+unterstützen Rechnerarchitekturen zu kompilieren.
 
 
-Eine Ausnahme hierzu bilden Type, welche das "`Copy-Trait"' oder das "`Clone-Trait"'
-implementieren\cite{ownership}\cite{linearTypePain}.
-So können beispielsweise Variablen vom Typ i32, welches
-das "`Copy-Trait"' implementiert, beliebig oft wiederverwendet werden\cite{ownership}.
-In diesem Fall existieren trotzdem nicht mehrere Zeiger auf dieselbe Speicherregion, der Speicherinhalt wird stattdessen jedes
-Mal kopiert.
 
-Ein weiteres interessantes "`Trait"' welches ein Typ in Rust implementieren kann ist das "`Drop-Trait"'\cite{dropTrait}.
-Implementiert ein Typ dieses,
-so kann zusätzlicher Code ausgeführt werden, sobald eine Variable von dem Typ den Geltungsbereich verlässt\cite{dropTrait}.
-Dies kann hilfreich sein, um Abhängigkeiten zu behandeln, welche in einem nicht-trivialen Zusammenhang von der nun
-ungültigen Variable abhängen.
-Beispielsweise kann eine Netzwerkverbindung korrekt geschlossen werden sobald die dazugehörige Variable den
-Geltungsbereich verlässt.
-
-Das Ownership-System wird in der Praxis von Compiler durchgesetzt. So werden die Garantien, welche das Ownership-System
-verspricht, bereits zur Compile-Zeit sichergestellt. Zusätzlich fällt die Notwendigkeit für einen Garbage Collector weg, welches
-zu einer besseren Laufzeitseffizienz und Determinismus im Vergleich zu Sprachen die einen Garbage Collector verwenden beitragen.
-Durch das Ownership-System entstehen keine zusätzlichen Laufzeitkosten\cite{whatIsOwnership}.
 
 %\section{Sicherheit}
 
@@ -155,72 +195,7 @@ Durch das Ownership-System entstehen keine zusätzlichen Laufzeitkosten\cite{wha
 %Ein Rust-Programm welches also uninitialisierte Variablen verwendet kompiliert also gar nicht und kann so natürlich auch nicht
 %zu undefiniertem Verhalten führen.
 
-\subsubsection{Typsystem}
 
-Rust verfügt über ein statisches, typsicheres Typsystem, welches sich an Typsystemen aus funktionalen Sprachen, beispielsweise Haskell, anlehnt\cite{rustWikiDe}. Dies bedeutet dass jede Variable einen eindeutigen Typ besitzt und keinen
-anderen Typ annehmen kann. Rust erlaubt es zudem, per Typinferenz die explizite Angabe eines Typen bei der Variablendeklaration zu
-vermeiden\cite{rustWikiDe}.
-
-Es gibt wie in den meisten statischen Typsystemen eine Handvoll von primitiven Typen. In Rust gibt es die folgenden\cite{rustTypes}:
-
-\begin{description}
-	\item[Vorzeichenlose numerische Typen] u8, u16, u32, u64
-	\item[Vorzeichenbehaftete numerische Typen im Zweier-Komplement] i8, i16, i32, i64
-	\item[Platformabhängige numerische Typen] usize, isize
-	\item[Textuelle Typen] char, str
-\end{description}
-
-Zudem gibt es zusätzlich noch generische Konstrukte, nämlich Tupel, Arrays, Slices, Funktionszeiger, Referenzen und Zeiger, welche
-auf beliebige Typen anwendbar sind\cite{rustTypes}. Funktionen in Rust erlauben den Gebrauch für generische Typen, welches es
-ermöglicht, dass eine Implementierung einer solche Funktion auf mehrere Typen anwendbar ist.
-
-Rust borgt sich Ideen von substrukturellen Typsystemen\cite{linearTypePain}. Standardmäßig verhalten sich Variablen in Rust wie
-affine Typen, welches sicherstellt, dass die Variablen höchstens ein mal verwendet werden\cite{substructuralTypesWikiEn}.
-Dies wird in der Funktionsweise der "`Move"'-Semantik verdeutlicht\cite{linearTypePain}.
-Es ist jedoch auch möglich, durch den Gebrauch der "`Copy"'- oder "`Clone"'-Traits Variablen
-beliebig oft zu verwenden\cite{linearTypePain}.
-Außerdem ist es möglich, Variablen sich wie lineare Typen verhalten zu lassen, also erzwingen dass diese Variablen mindestens
-ein mal verwendet werden\cite{linearTypePain}.
-
-Rusts Objektmodell basiert auf Strukturen, Implementierungen und Traits\cite{rustWikiEn}.
-Strukturen (Schlüsselwort struct) ermöglichen die Deklaration von Feldern\cite{rustWikiEn}, 
-Traits (Schlüsselwort trait) bieten Polymorphie und Vererbung
-\cite{rustWikiEn} und Implementierungen (Schlüsselwort impl) erfüllen eine ähnliche Rolle wie Klassen in
-anderen Programmiersprachen\cite{rustWikiEn}.
-
-\subsubsection{Paradigmen}
-
-Unterschiedliche Programmierparadigmen nahmen einen Einfluss auf das Sprachdesign von Rust\cite{rustWikiDe}.
-Unter anderem sind Elemente der funktionalen, objektorientierten und nebenläufigen Programmierung anzutreffen\cite{rustWikiDe}.
-Dies ermöglicht es unterschiedlichsten Programmierern Rust zu benutzen als auch ein hohes Abstraktionsniveau zu
-bieten\cite{rustWikiDe}.
-
-\subsubsection{Fehler- und Ausnahmebehandlung}
-
-In der Programmiersprache Rust werden Ausnahmen behandelt, in dem die "`Option"' oder "`Result"' Aufzählung (enum) als
-Rückgabeparameter einer Funktion verwendet werden. Anhand dieser kann man dann prüfen, ob eine Ausnahme beim Funktionsaufruf
-aufgetreten ist. Bei unbehandelten Ausnahmen wird für den aktiven Faden (Thread) die "`panic\char`_fmt"'-Funktion aufgerufen.
-Bei Fehlern beendet Rust die Ausführung des Programms. 
-
-\subsection{Architektur/Compiler}
-
-Der offizielle Rust Compiler heißt rustc und kann eigenständige Rust-Quelldateien kompilieren. Rust-Quelldateien haben
-konventionsgemäß die Dateiendung "`.rs"'. Als Lösung zum Abhängigkeitsmanagement und der Distribution wurde das Werkzeug cargo 
-entwickelt. Es ermöglicht es dem Programmierer verwendete Bibliotheken in ein Projekt einzugliedern,
-indem diese in einer "`Cargo.toml"' Datei im Hauptverzeichniss
-des Projekts angegeben werden. Außerdem unterstützt "`cargo"' mehrere weiter hilfreiche Funktionen zum Testen oder
-Distribuieren der entwickelten Software. Kompilierte Software kann als ein sogenanntes "`Crate"' bei der
-von den Rust entwickelten Platform "`crates.io"' mithilfe von cargo hochgeladen werden.
-
-Rustc und cargo ermöglichen das Kompilieren für unterschiedliche Zielarchitekturen mithilfe der "`-{}-target"'-Option.
-
-Um den Gebrauch von unterschiedlichen rustc und cargo Versionen zu vereinfachen, wurde das Werkzeug rustup entwickelt. Dieses
-Hilfsprogramm ermöglicht es unterschiedliche Varianten des Rust-Compilers zu installieren und bei Belieben zu wechseln.
-Außerdem erleichtert es die Kompilierung für anderer Zielarchitekturen, indem es für unterstützte Architekturen eine
-vorkompilierte Standardbibliothek herunterladen kann.
-
-Als Compiler-Backend wird LLVM verwendet. Durch diese wird Rust vor der Übersetzung zu Maschinenbefehlen in die Zwischensprache
-LLVM-IR übersetzt. Dadurch ist es möglich, Rust-Code auf allen von LLVM unterstützen Rechnerarchitekturen laufen zu lassen.
 
 
 \section{SPARC und SPARC-V8}

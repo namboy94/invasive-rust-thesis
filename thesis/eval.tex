@@ -106,12 +106,12 @@ anschließend sofort wieder beendet.
 			\toprule
 			Sprache    & $\bar{x}$ & $\title{x}$ & $s$ & $V$ & $MAD$ \\
 			\midrule
-			C          & 0.5564 & 0.5600 & 0.0138 & 2.4829\% & 0.0100 \\
-			C (opt)    & 0.5586 & 0.5600 & 0.0134 & 2.3993\% & 0.0100 \\
-			Rust       & 0.8174 & 0.8200 & 0.0164 & 2.0051\% & 0.0100 \\
-			Rust (opt) & 0.8116 & 0.8100 & 0.0136 & 1.6765\% & 0.0100 \\
-			X10        & 82.864 & 83.075 & 1.3321 & 1.6076\% & 1.1600 \\
-			X10 (opt)  & 0 & 0 & 0 & 0 & 0 \\
+			C          &  0.5564 & 0.5600 & 0.0138 & 2.4829\% & 0.0100 \\
+			C (opt)    &  0.5586 & 0.5600 & 0.0134 & 2.3993\% & 0.0100 \\
+			Rust       &  0.8174 & 0.8200 & 0.0164 & 2.0051\% & 0.0100 \\
+			Rust (opt) &  0.8116 & 0.8100 & 0.0136 & 1.6765\% & 0.0100 \\
+			X10        & 82.8640 & 83.075 & 1.3321 & 1.6076\% & 1.1600 \\
+			X10 (opt)  &  0      & 0      & 0      & 0      & 0        \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
@@ -284,14 +284,14 @@ indem die Zahl mit jeder kleineren Zahl auf Teilbarkeit geprüft wird.
 	\begin{center}
 		\begin{tabular}{lrrrr}
 			\toprule
-			Sprache & Mittel & Median & Standardabweichung & MAD \\
+			Sprache & $\bar{x}$ & $\title{x}$ & $s$ & $V$ & $MAD$ \\
 			\midrule
-			C          & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
-			C (opt)    & 0,4766 & 0,48 & 0,0091 & 0,0100 \\
-			Rust       & 0,4786 & 0,47 & 0,0159 & 0,0100 \\
-			Rust (opt) & 0,4780 & 0,47 & 0,0175 & 0,0100 \\
-			X10        & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
-			X10 (opt)  & 2,3886 & 2,38 & 0,0047 & 0,0200 \\
+			C          & 30.6064 & 30.590 & 0.6380 & 2.0844\% & 0.6400 \\
+			C (opt)    & 30.4666 & 30.075 & 0.6262 & 2.0554\% & 0.1750 \\
+			Rust       & 476.9242 & 475.895 & 3.6647 & 0.7684\% & 1.3450 \\
+			Rust (opt) & 37.6212 & 37.330 & 0.6651 & 1.7679\% & 0.0200 \\
+			X10        & 67.9618 & 67.405 & 1.1505 & 1.6929\% & 0.0750 \\
+			X10 (opt)  & 31.4584 & 31.305 & 0.4181 & 1.3290\% & 0.0450 \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
@@ -308,14 +308,14 @@ indem die Zahl mit jeder kleineren Zahl auf Teilbarkeit geprüft wird.
 	\begin{center}
 		\begin{tabular}{lrrrr}
 			\toprule
-			Sprache & Mittel & Median & Standardabweichung & MAD \\
+			Sprache & $\bar{x}$ & $\title{x}$ & $s$ & $V$ & $MAD$ \\
 			\midrule
-			C          & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
-			C (opt)    & 0,4766 & 0,48 & 0,0091 & 0,0100 \\
-			Rust       & 0,4786 & 0,47 & 0,0159 & 0,0100 \\
-			Rust (opt) & 0,4780 & 0,47 & 0,0175 & 0,0100 \\
-			X10        & 0,0000 & 0,00 & 0,0000 & 0,0000 \\
-			X10 (opt)  & 2,3886 & 2,38 & 0,0047 & 0,0200 \\
+			C          & 13.8136 & 13.780 & 0.0935 & 0.6772\% & 0.0200 \\
+			C (opt)    & 13.7898 & 13.780 & 0.0912 & 0.6612\% & 0.0200 \\
+			Rust       & 242.656 & 242.48 & 0.7602 & 0.3133\% & 0.1200 \\
+			Rust (opt) & 17.883 & 17.870 & 0.0862 & 0.4823\% & 0.0300 \\
+			X10        & 46.3264 & 46.380 & 0.2348 & 0.5069\% & 0.2100 \\
+			X10 (opt)  & 16.8028 & 16.760 & 0.1181 & 0.7026\% & 0.0750 \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
@@ -329,8 +329,11 @@ indem die Zahl mit jeder kleineren Zahl auf Teilbarkeit geprüft wird.
 	\label{fig:primes_parallel_eight_table}
 \end{figure}
 
-Der Vergleich der Werte in Tabelle \ref{fig:primes_parallel_one_table} und \ref{fig:primes_parallel_eight_table} lässt nochmals, wie bereits in Kapitel \ref{sec:primes_calc}, darauf schließen, dass der Einsatz einer bestimmten
-Programmiersprache in diesem Fall nicht signifikant die Laufzeit beeinflusst.
+Der Vergleich der Werte in Tabelle \ref{fig:primes_parallel_one_table} und \ref{fig:primes_parallel_eight_table} 
+lässt nochmals, wie bereits in Kapitel \ref{sec:primes_calc}, darauf schließen, dass der Einsatz einer bestimmten
+Programmiersprache in diesem Fall nicht signifikant die Laufzeit beeinflusst. Es zeichnet sich jedoch ab, dass
+Rust sich bei dieser naiven Berechnung von Primzahlen hinsichtlich der Ausführungszeit schlechter verhält als
+die anderen beiden Sprachen.
 
 \textcolor{red}{TODO Auf Statistische Mittel eingehen}
 
@@ -358,14 +361,14 @@ Varianten berechnen.
 	\begin{center}
 		\begin{tabular}{lrrrr}
 			\toprule
-			Sprache & Speedup & Effizienz \\
+			Sprache & $S_\bar{x}(8)$ & $S_\tilde{x}(8)$ &  $E_\bar{x}(8)$ & $E_\tilde{x}(8)$ \\
 			\midrule
-			C          & 0,0000 & 0,00 & 0,0000 \\
-			C (opt)    & 0,4766 & 0,48 & 0,0091 \\
-			Rust       & 0,4786 & 0,47 & 0,0159 \\
-			Rust (opt) & 0,4780 & 0,47 & 0,0175 \\
-			X10        & 0,0000 & 0,00 & 0,0000 \\
-			X10 (opt)  & 2,3886 & 2,38 & 0,0047 \\
+			C          & 2.2157 & 2.2199 & 0.2770 & 0.2775 \\
+			C (opt)    & 2.2094 & 2.1825 & 0.2762 & 0.2728 \\
+			Rust       & 1.9654 & 1.9626 & 0.2457 & 0.2453 \\
+			Rust (opt) & 2.1037 & 2.0890 & 0.2630 & 0.2611 \\
+			X10        & 1.4670 & 1.4533 & 0.1834 & 0.1817 \\
+			X10 (opt)  & 1.8722 & 1.8678 & 0.2340 & 0.2335 \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
@@ -377,9 +380,11 @@ Varianten berechnen.
 	\label{fig:primes_parallel_speedup_efficiency_table}
 \end{figure}
 
-\textcolor{red}{Evaluation Speedup, Effizienz}
+Betrachtet man die Ergebnisse der Speedup- und Effizienzberechnung, so kann man keine großen Diskrepanzen 
+diesbezüglich zwischen den Sprachen erkennen. Alle profitieren mehr oder weniger von der Parallelisierung.
 
-
+Der Speedup ist in diesem Beispiel eher gering, dies liegt jedoch am verwendeten Algorithmus, welcher durch
+die naive Partitionierung der zu betrachtenden Zahlen Leistungseinbußen in Kauf nimmt.
 
 \subsection{Allokation auf dem Heap}
 
