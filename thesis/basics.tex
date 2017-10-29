@@ -5,30 +5,32 @@ invasiven Computing behandelt, welche zum Verständnis dieser Arbeit beitragen.
 
 \section{Rust}
 
-Rust ist eine relativ neue Programmiersprache, welche wie beispielsweise C++ direkte Kontrolle über die
+Rust ist eine Programmiersprache, welche wie beispielsweise C++ direkte Kontrolle über die
 unterliegende Hardware bieten soll. Dies bedeutet in der Praxis, dass diese Sprache nicht von einem Garbage
 Collector Gebrauch macht, wie es Sprachen wie zum Beispiel X10 tun. Im Gegensatz zu C++ bietet Rust jedoch
-standardmäßig Speichersicherheit und garantieren somit dass Programme keine Speicherfehler beinhalten.
+standardmäßig automatische Speichersicherheit und garantieren somit, dass Programme keine Speicherfehler beinhalten.
 \cite{theRustLanguage}
 
-Rust erfreut sich in der jüngsten Vergangenheit wachsende Beliebtheit bei Programmierern aller Art. So wurde
-bei einer Umfrage der Webseite stackoverflow.com Rust im Jahre 2016 als beliebteste Programmiersprache bei 
+Rust erfreut sich seit ihrer Veröffentlichung wachsende Beliebtheit bei Programmierern aller Art. Sie wurde
+bei einer Umfrage der Webseite \textit{stackoverflow.com} im Jahre 2016 als beliebteste Programmiersprache bei 
 Entwicklern ermittelt\cite{stackoverflowSurvey}.
 
 Das wohl derzeit prominenteste Projekt, welches Rust verwendet, ist der Servo Web Browser Engine. Dieses Projekt
 wurde von Mozilla Research initialisiert, erhält jedoch ebenfalls Beiträge von Freiwilligen
 als auch von Unternehmen wie Samsung.
 Diese Software soll nach und nach im Mozilla Firefox Webbrowser integriert werden und hierbei eine bessere
-Leistung uns Sicherheit als vorhergehende Technologien vorweisen\cite{engineeringServo}.
+Leistung und Sicherheit als vorhergehende Technologien vorweisen\cite{engineeringServo}.
 
 \subsection{Motivation}
 
 Eine der Kernziele der Rust Programmiersprache ist es, sichere Speicherzugriffe zu gewährleisten, ohne
 für diesen Zweck einen Garbage Collector zu verwenden. Fehlerhafte Speicherzugriffe können undefiniertes
 Verhalten auslösen, welches ein Sicherheitsrisiko darstellen kann, denn diese Fehler können gezielt ausgenutzt
-werden, um Schadcode auszuführen.\cite{engineeringServo}\cite{undefinedBehaviour}
+werden, um Schadcode auszuführen. Fehlerhafte Speicherzugriffe beziehen sich hierbei auf den Gebrauch von
+Referenzen, deren Speicher bereits befreit wurde.\cite{engineeringServo}\cite{undefinedBehaviour}
 
-Außerdem soll Rust paralleles Rechnen unterstützen und so möglichst effizient moderne Hardware verwenden.
+Außerdem soll Rust paralleles Rechnen unterstützen und
+so möglichst effizient moderne Hardwarearchitekturen ausnutzen.
 Hierfür sollen gewisse häufig auftretende Fehler in der Parallelprogrammierung gänzlich entfallen.
 \cite{theRustLanguage}
 
@@ -37,11 +39,12 @@ funktionalen Programmierung. Zusätzlich werden Sprachkonzepte und Abstraktionen
 ansonsten zumeist in höheren Programmiersprachen geboten werden. Hierdurch soll der Einstieg für
 Programmierer, die zuvor keine oder nur wenige Erfahrungen mit Systemsprachen gemacht haben, erleichtert werden.
 \cite{engineeringServo}
-
-Diese zusätzliche Sicherheiten und Nutzerfreundlichkeiten sollen jedoch keine Laufzeitkonsequenzen mit sich ziehen,
-denn Rust soll in dieser Hinsicht ähnliche Ergebnisse wie andere Systemsprachen, beispielsweise C oder C++,
-aufweisen. Außerdem soll Rust es vereinfachen, mehrere Programmiersprachen miteinander zu verwenden. Es soll
-also möglich sein, Code aus anderen Sprachen aus einem Rust Kontext zu verwenden als auch umgekehrt.\cite{rustBook}
+Diese zusätzlichen Sicherheiten und Nutzerfreundlichkeiten sollen gleichzeitig jedoch keine Laufzeitkonsequenzen mit 
+sich ziehen, denn es ist ein Ziel von Rust, 
+eine ähnliche Recheneffizienz im Vergleich mit bestehenden Systemsprachen wie C oder C++ vorzuweisen.
+Außerdem soll Rust es vereinfachen, mehrere Programmiersprachen miteinander zu verwenden.
+Das Ziel hierbei ist es, Code aus anderen Sprachen aus einem Rust Kontext heraus zu verwenden als auch umgekehrt.
+\cite{rustBook}
 
 
 \subsection{Das Typsystem}
@@ -54,42 +57,53 @@ Collector zu realisieren.\cite{rustBook}
 
 Das Typsystem integriert das Konzept der \textit{Ownership (engl. Besitz)} ein.
 Dies ist die zentrale Besonderheit von Rusts Typsystem.
-Der Grundgedanke hierhinter ist es, dass der Zugriff auf eine Speicherregion einer Variable exklusiv
-zur Verfügung gestellt wird. Diese Variable wird auch\textit{Owner (engl. Besitzer)} genannt.
+Der Grundgedanke hierhinter ist es, dass der Zugriff auf eine Speicherregion exklusiv einer Variable
+zur Verfügung gestellt wird. Diese Variable wird auch als \textit{Owner (engl. Besitzer)} bezeichnet.
 Zu jedem Zeitpunkt darf die Speicherregion nur einen \textit{Owner} haben.
-Sobald dieser \textit{Owner} den Geltungsbereich verlässt, wird die zugehörige Speicherregion freigegeben.
+Sobald dieser \textit{Owner} den Geltungsbereich verlässt, wird die zugehörige Speicherregion freigegeben,
+die dort vorhandenen Daten können anschließend nicht mehr verwendet werden.
 Dies ist der Mechanismus, der es in Rust erlaubt, Speicher ohne manuelle Befreiung oder Nutzung eine
-Garbage Collectors zu verwalten.\cite{rustBook}
+Garbage Collectors zu verwalten. Er stellt sicher, dass keine fehlerhaften Speicherzugriffe
+durch die Nutzung von ungültigen Daten im Speicher entstehen.\cite{rustBook}
 
 Die \textit{Ownership} einer Speicherregion kann mithilfe der \textit{Move}-Semantik den Besitzer wechseln.
-Die kann bei Funktionsaufrufen oder auch bei einer Zuweisung geschehen. Beispiele hierfür sind in Abbildung
+Die kann bei Funktionsaufrufen oder auch bei Zuweisungen geschehen. Beispiele hierfür sind in Listing
 \ref{code:move_semantics} zu sehen.\cite{rustBook}
 
+\lstset{literate=%
+  {Ö}{{\"O}}1
+  {Ä}{{\"A}}1
+  {Ü}{{\"U}}1
+  {ß}{{\ss}}1
+  {ü}{{\"u}}1
+  {ä}{{\"a}}1
+  {ö}{{\"o}}1
+}
 \begin{lstlisting}[float,caption={Beispieldarstellung der \textit{Move}-Semantik},label=code:move_semantics]
 let x = String::from("hello");;
 // Owner: x
 
 let y = x;
 // Owner: y
-// x ist nun ungueltig
+// x ist nun ungültig
 
 let z = f(y) 
 // Owner: -
-// Ownership wurde an f uebergeben,
+// Ownership wurde an f übergeben,
 // da f aber bereits den Geltungsbereich verlassen hat
 // ist der Speicherbereich nun befreit.
-// y ist nun ungueltig
-\end{lstlisting}\cite{rustBook}
+// y ist nun ungültig
+\end{lstlisting}
 
 Zusätzlich zur \textit{Move}-Semantik können in Rust Referenzen zu Variablen verwendet werden. Dies wird im Kontext
 von Rust häufig als \textit{borrowing (engl. ausleihen)} bezeichnet. Verwendet man eine Referenz auf eine Variable,
 ist der \textit{Owner} des Speicherbereichs weiterhin die originale Variable. Es gibt zwei unterschiedliche
 Typen von Referenzen, veränderliche und unveränderliche Referenzen. Standardmäßig werden in Rust unveränderliche
 Referenzen verwendet. Diese erlauben es nicht, den Wert des Speicherbereichs zu verändern, sondern nur auszulesen.
-Es gibt keine Limitierung bei der Anzahl unveränderlicher Referenzen eine Variable besitzen kann. Im Gegensatz
+Es gibt keine Limitierung bei der Anzahl unveränderlicher Referenzen, die eine Variable besitzen kann. Im Gegensatz
 hierzu kann nur eine veränderliche Referenz auf die Variable existieren. Dies ermöglicht es, bereits zur
-Compile-Zeit gewisse Wettlaufsituationen, \textit{Race Conditions}, in der Parallelprogrammierung auszuschließen. 
-\cite{rustBook}
+Compile-Zeit gewisse Wettlaufsituationen, die sogenannten \textit{Race Conditions},
+in der Parallelprogrammierung auszuschließen.\cite{rustBook}
 
 \subsubsection{Strukturen, Implementierungen und Traits}
 
@@ -100,34 +114,34 @@ Strukturen in Rust spezifizieren benutzerdefinierte Datentypen, welche verwandte
 ähnelt den Strukturen in C. Anders wie in C kann man jedoch mithilfe von Implementierungen Methoden und assozierte
 Funktionen für diese Strukturen definieren.
 Diese Möglichkeit erlaubt es eine objektorientierte Herangehensweise in Rust zu verwenden.
-Implementierungen erlauben das Definieren von Methoden, welche auf einer initiierten Struktur aufgerufen werden
-und eine Referenz auf \texttt{\textsc{\textbf{self}}}, also der Struktur selbst, als Parameter entgegennehmen.
+Implementierungen erlauben das Definieren von Methoden, welche auf einer initiierten Struktur aufgerufen werden 
+können und eine Referenz auf \texttt{\textsc{\textbf{self}}}, also der Struktur selbst, als Parameter entgegennehmen.
 Zusätzlich können Funktionen definiert werden, welche keinen solchen Parameter entgegennehmen und somit auch mit
-nicht initiierten Strukturen verwendet werden kann. Dies ähnelt statischen Methoden in objektorientierten
+nicht initiierten Strukturen verwendet werden können. Dies ähnelt statischen Methoden in objektorientierten
 Sprachen.\cite{rustBook}
 
-Traits sind ein Sprachkonstrukt in Rust, welches das Verhalten von Typen abstrakt definieren können. Sie ähneln sich
-hierbei Schnittstellen aus anderen Programmiersprachen. Zusätzlich zur benutzerdefinierten Spezifikation
-solcher Schnittstellen-ähnlichen Konstrukte bietet Rust vordefinierte Traits, welche das Verhalten der Typen
+Traits sind Sprachkonstrukte in Rust, welche das Verhalten von Typen abstrakt definieren können. Sie ähneln 
+hierbei Schnittstellen (\textit{Interfaces}) aus anderen Programmiersprachen.
+Zusätzlich zur benutzerdefinierten Spezifikation
+solcher \textit{Interface}-ähnlichen Konstrukte bietet Rust vordefinierte Traits, welche das Verhalten der Typen
 bezüglich \textit{Ownership} und \textit{Move}-Semantik beeinflussen.\cite{rustBook}
 
 Zum einen existiert das \textit{Drop}-Trait. Dieses Trait erlaubt es, das Verhalten eines Typen beim Verlassenen des
 Geltungsbereichs zu beeinflussen. In der \textit{drop}-Methode des Traits wird es ermöglicht, einen Destruktor
-für den Typ zu implementieren. Dieser kann aus unterschiedlichen Gründen benötigt oder hilfreich sein.
-Beispielsweise kann man diesen verwenden, um einen Referenzzähler zu dekrementieren, unbenutzte Netzwerkverbindungen
-zu trennen oder anderweitige Ressourcen freizugeben.\cite{rustBook}
+für den Typ zu definieren. Dieser kann aus unterschiedlichen Gründen benötigt oder hilfreich sein.
+Beispielsweise kann man einen solchen verwenden, 
+m einen Referenzzähler zu dekrementieren, unbenutzte Netzwerkverbindungen
+zu trennen oder andersweitig Ressourcen wieder freizugeben.\cite{rustBook}
 
 Außerdem gibt es die \textit{Copy}-Traits, welche es ermöglichen, anstelle der \textit{Move}-Semantik die
-\textit{Copy}-Semantik zu verwenden. Jedes mal, wenn ein Speicherbereich im Kontext der \textit{Move}-Sematik
-den \textit{Owner} wechseln würde, wird
+\textit{Copy}-Semantik zu verwenden. Für Typen, die dieses Trait implementieren wird jedes mal, wenn ein
+Speicherbereich im Kontext der \textit{Move}-Sematik den \textit{Owner} wechseln würde,
 stattdessen eine bitweise Kopie der Daten erstellt. Primitive Datentypen wie \texttt{\textsc{\textbf{i32}}}
-verhalten sich standardmäßig genau so. Das \textit{Copy}-Trait kann jedoch nicht auf jeden Typ
+verhalten sich standardmäßig bereits so. Das \textit{Copy}-Trait kann jedoch nicht auf jeden Typ
 angewandt werden. Insbesondere kann das \textit{Drop}-Trait nicht gleichzeitig auf diesen Typ angewandt werden,
-da diese beim Verlassen des Geltungsbereichs einen Einfluss außerhalb ihres Speicherbereich haben können. \cite{rustBook}\cite{rustDocCopy}
-
-\subsubsection{Affine und Lineare Typen}
-
-TODO
+da diese beim Verlassen des Geltungsbereichs einen Einfluss außerhalb ihres Speicherbereich haben können.
+Würde der Destruktor für jede Kopie aufgerufen werden, könnte dies zu unvorhergesehenen und
+unerwünschten Konsequenzen führen.\cite{rustBook}\cite{rustDocCopy}
 
 \subsection{Fehler- und Ausnahmebehandlung}
 
@@ -136,7 +150,7 @@ in dem eine \textit{Option} oder \textit{Result} Aufzählung als
 Rückgabeparameter einer Funktion verwendet wird.
 Anhand dieser lässt es sich prüfen, ob eine Ausnahme beim Funktionsaufruf
 aufgetreten ist. Bei unbehandelten Ausnahmen wird für den aktiven Faden die
-\texttt{\textsc{\textbf{panic\char`_fmt"'}}}-Funktion aufgerufen.
+\texttt{\textsc{\textbf{panic\char`_fmt}}}-Funktion aufgerufen.
 Bei Fehlern beendet Rust die Ausführung des Programms.
 
 \subsection{Architektur/Compiler}
@@ -157,15 +171,15 @@ Distribuieren der entwickelten Software. Kompilierte Software kann als ein sogen
 Um den Gebrauch von unterschiedlichen \texttt{\textsc{\textbf{rustc}}} und \texttt{\textsc{\textbf{cargo}}} Versionen 
 zu vereinfachen, wurde das Werkzeug \texttt{\textsc{\textbf{rustup}}} entwickelt. Dieses
 Hilfsprogramm ermöglicht es unterschiedliche Varianten des Rust-Compilers zu installieren und bei Belieben zu
-wechseln. Es bietet auch die Funktionalität, die benötigten Bibliotheken für unterstützte Architekturen
-herunterzuladen um Programme für andere Zielarchitekturen zu kompilieren.
+wechseln. Es bietet auch die Funktionalität, die benötigten Kern- und Standardbibliotheken für unterstützte
+Architekturen herunterzuladen, um Programme für andere Zielarchitekturen zu kompilieren.\cite{rustupRepo}
 
 Sowohl \texttt{\textsc{\textbf{rustc}}} als auch \texttt{\textsc{\textbf{cargo}}} ermöglichen das Kompilieren für
 unterschiedliche Zielarchitekturen mithilfe der \texttt{\textsc{\textbf{rustc}}} und
 \texttt{\textsc{\textbf{-{}-target}}}-Option. Als Compiler-Backend wird LLVM verwendet.
 Rust-Code wird also vor der Übersetzung zu Maschinenbefehlen in die Zwischensprache
 LLVM-IR übersetzt und erst anschließend weiterverarbeitet. Somit ist es möglich, Rust-Programme für alle von LLVM
-unterstützen Rechnerarchitekturen zu kompilieren.
+unterstützen Rechnerarchitekturen zu kompilieren.\cite{rustGPU}
 
 
 
@@ -204,7 +218,7 @@ SPARC (\textbf{S}calable \textbf{P}rocessor \textbf{ARC}hitecture) ist eine Rech
 RISC (Reduced Instruction Set Computing) Konzept aufbaut. Eines der Ziele der SPARC Architektur ist es, skalierbar
 zu sein und so in unterschiedlichsten Umgebungen zum Einsatz zu kommen. So können SPARC Prozessoren in
 Mikrocontrollern bis hin zu Supercomputern verwendet werden. Die Architektur wird an unterschiedliche
-Halbleiter-Unternehmen lizensiert, mit dem Ziel durch konkurrierende Kräfte Innovation bezüglich Leistung oder
+Halbleiter-Unternehmen lizensiert, mit dem Ziel durch konkurrierende Kräfte Innovation bezüglich Leistung als auch
 Kosten zu fördern.\cite{sparc}
 
 SPARC-V8 ist eine auf SPARC basierende Architektur. Es handelt sich hierbei um eine Allzweckarchitektur mit einem
@@ -221,7 +235,7 @@ Implementierungen der SPARC-V8 Architektur in der Hardwarebeschreibungssprache
 VHDL (Very High Speed Integrated Circuit Hardware Description Language).
 Unterschiedliche Iterationen dieser Prozessorfamilie sind unter Open-Source Lizenzen als VHDL-Designs verfügbar.
 So wurden die VHDL-Designs des LEON2 Prozessors unter der GNU LGPL Lizenz veröffentlicht.\cite{sparcv8Eval}
-Auch das Design des LEON3 Prozessors ist unter einer Open-Source Lizenz verfügbar\cite{}.
+Auch das Design des LEON3 Prozessors ist unter einer Open-Source Lizenz verfügbar\cite{invasiveArrays}.
 
 Die Kombination von stark konfigurierbaren Designs und der Open-Source Lizenz ermöglicht den Gebrauch der
 LEON VHDL Designs in domänenspezifischen, angepassten ASICs (Application-Specific Integrated Circuit),
@@ -236,26 +250,34 @@ dynamisch Hardwareressourcen zu reservieren, nutzen und anschließend wieder fre
 
 Die drei fundamentalen Phasen des invasiven Computing sind die \textit{\textbf{Invade}}, \textit{\textbf{Infect}}
 und \textit{\textbf{Retreat}} Phasen. In der \textit{Invade} Phase werden zunächst die gewünschten
-Hardwareressourcen angefordert und anschließend reserviert. Diese Menge an Hardwareressourcen kann dann mithilfe
+Hardwareressourcen angefordert und anschließend reserviert. Diese Menge an Ressourcen kann dann mithilfe
 eines \textit{Claims} verwaltet werden. Die zu reservierenden Ressourcen werden mithilfe von \textit{Constraints}
-angegeben.
-Sind die Ressourcen reserviert, kann die \textit{Infect}
+spezifiziert.
+Wurden die Ressourcen erfolgreich reserviert, kann die \textit{Infect}
 Phase beginnen. In dieser werden Ausführungsfaden erstellt,
 welche auf den reservierten Hardwareressourcen ausgeführt werden. Im Kontext des invasiven Computing wird ein solcher
-Faden als \textit{inasive-let} oder abgekürzt als \text{i-let} bezeichnet\cite{invasiveCommonTerms}.
-Benötigt das Programm die reservierten Ressourcen nicht mehr, können diese in der \textit{Retreat} Phade wieder
+Faden als \textit{invasive-let} oder abgekürzt als \textit{i-let} bezeichnet\cite{invasiveCommonTerms}.
+Benötigt das Programm die reservierten Ressourcen nicht mehr, können diese in der \textit{Retreat} Phase wieder
 freigegeben werden.\cite{octopos}
 
 Für den praktischen Einsatz des invasiven Computings wurde ein Betriebssystem namens \textit{OctoPOS} entwickelt. 
 Dieses unterstützt die \textit{Invade}, \textit{Infect} und \textit{Retreat} Phasen auf der Systemebene.
-Zusätzlich hierzu existiert das \textit{Invasive Run-Time Support System (IRTSS)}. Diese Middleware
-\cite{invasiveRISC} fungiert als eine Hardware-Abstraktionsschicht und als
-Ressourcenverwalter \cite{invasiveManyCore}.
-\textit{OctoPOS} und \textit{IRTSS} bieten so eine Platform für das invasive Programmieren.\cite{octopos}
+Zusätzlich hierzu existiert das \textit{invasive Run-Time Support System (iRTSS)}. Diese Middleware
+fungiert als eine Hardware-Abstraktionsschicht und als Ressourcenverwalter.
+\textit{OctoPOS} und \textit{iRTSS} bieten so eine Platform für das invasive Programmieren und
+unterstützen derzeit Zurzeit den Gebrauch der Programmiersprachen C, C++ und X10.
+\cite{octopos}\cite{invasiveManyCore}\cite{invasiveRISC}
 
 Um das Konzept des invasiven Computing möglichst effizient auszunutzen, wurden speziell an das invasive Computing
 angepasste Hardware entwickelt, deren Prozessorkerne auf dem Design des LEON3 Prozessors basieren.
-Diese Hardware unterstützen gewisse invasive Grundfunktionen und entlastet somit das Betriebssystem und das IRTSS.
-\cite{invasiveArrays}
+Diese Hardware unterstützen gewisse invasive Grundfunktionen und entlastet somit das \textit{OctoPOS} Betriebssystem
+und das \textit{iRTSS}.\cite{invasiveArrays}
 
-Zurzeit unterstützen OctoPOS und IRTSS den Einsatz der Programmiersprachen C, C++ und X10.
+
+%\section{Verwandte Arbeiten}
+
+%Eine verwandte Arbeit ist "`Invasive Computing—An Overview"'\cite{teich11msoc}
+%von Jürgen Teich, Jörg Henkel, Andreas Herkersdorf, Doris Schmitt-Landsiedel, Wolfgang Schröder-Preikschat
+%und Gregor Snelting.
+%Diese illustriert die Grundkonzepte hinter dem invasiven Computing, befasst sich jedoch im Gegensatz zu dieser Arbeit 
+%nicht mit der Programmiersprache Rust.

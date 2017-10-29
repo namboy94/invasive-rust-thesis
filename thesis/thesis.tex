@@ -37,19 +37,24 @@ Die Parallelisierung von Rechnern liegt immer mehr im Fokus der derzeitigen tech
 Dies erfordert die Entwicklung und Nutzung von neuen Programmierparadigmen, welche effektiv
 diese neuen Architekturen ausnutzen können. Ein möglicher Ansatz ist hierbei das
 invasive Computing. Dieses ermöglicht es dem Programmierer, die Ressourcennutzung
-eines Programms feiner zu kontrollieren.
+eines Programms explizit und dynamisch zu kontrollieren.
 
-Das IRTSS Betriebssystem, welches eine beispielhafte Implementierung für ein solches
+Das OctoPOS Betriebssystem und die invasive Middleware \textit{iRTSS},
+welche eine beispielhafte Implementierung für ein solches
 invasives System bietet, unterstützt derzeit die Verwendung der Programmiersprachen
 C, C++ als auch X10. Hiermit wird die Einführung der Programmiersprache Rust als
-weitere unterstützte Sprache vorgeschlagen. Diese Sprache hat einige wünschenswerte Merkmale, 
-welche interessant für den Gebrauch im invasiven Computing sind.
+weitere unterstützte Sprache vorgeschlagen. Diese Sprache besitzt einige wünschenswerte Merkmale, 
+welche für den Gebrauch im invasiven Computing geeignet sind.
 
-Im Rahmen dieser Arbeit wurde das octorust Programm und die zugehörige octolib Bibliothek entwickelt,
-welche es ermöglichen, Rust auf dem IRTSS Betriebssystem zu verwenden. Der Einsatz von Rust
-ermöglicht das speichersichere Programmieren ohne einen Garbage Collector. Um dies zu erreichen,
-werden keine oder nur wenige Kompromisse bei der Laufzeit eines Programmes in Kauf genommen. Daher
-bietet Rust in gewissen Situationen einen Vorteil gegenüber den bereits von IRTSS unterstützten Sprachen.
+Im Rahmen dieser Arbeit wurde das \textit{octorust} Programm und die zugehörige \textit{octolib} Bibliothek
+entwickelt, welche es ermöglichen, Rust auf invasiven Systemen zu verwenden. Der Einsatz von Rust
+ermöglicht das speichersichere Programmieren ohne einen Garbage Collector, wobei keine Kompromisse bezüglich
+der Laufzeit eingegangen werden müssen. Daher bietet Rust in gewissen Situationen einen
+Vorteil gegenüber den bereits von \textit{OctoPOS} und \textit{IRTSS} unterstützten Sprachen.
+
+Vorläufige Messungen haben ergeben, dass Rust in Situationen, in denen häufige Speicherallokationen und
+-deallokationen vorkommen, eine über dreißig mal kürzere Laufzeit als X10 aufweisen kann, wobei bei mathematischen
+Berechnungen keine eindeutige Leistungseinstufung ersichtlich ist.
 
 \vfill
 
