@@ -12,6 +12,7 @@
 \usepackage{studarbeit}
 \usepackage{xcolor}
 \usepackage{listings}
+\usepackage[section]{placeins}
 
 \title{Invasives Rust}
 \author{Hermann Krumrey}
@@ -43,20 +44,18 @@ Das OctoPOS Betriebssystem und die invasive Middleware \textit{iRTSS},
 welche eine beispielhafte Implementierung für ein solches
 invasives System bietet, unterstützt derzeit die Verwendung der Programmiersprachen
 C, C++ als auch X10. Hiermit wird die Einführung der Programmiersprache Rust als
-weitere unterstützte Sprache vorgeschlagen. Diese Sprache besitzt einige wünschenswerte Merkmale, 
-welche für den Gebrauch im invasiven Computing geeignet sind.
+weitere unterstützte Sprache vorgeschlagen.
 
 Im Rahmen dieser Arbeit wurde das \textit{octorust} Programm und die zugehörige \textit{octolib} Bibliothek
 entwickelt, welche es ermöglichen, Rust auf invasiven Systemen zu verwenden. Der Einsatz von Rust
 ermöglicht das speichersichere Programmieren ohne einen Garbage Collector, wobei keine Kompromisse bezüglich
 der Laufzeit eingegangen werden müssen. Daher bietet Rust in gewissen Situationen einen
-Vorteil gegenüber den bereits von \textit{OctoPOS} und \textit{IRTSS} unterstützten Sprachen.
+Vorteil gegenüber den bereits von \textit{OctoPOS} und \textit{iRTSS} unterstützten Sprachen.
 
 Vorläufige Messungen haben ergeben, dass Rust in Situationen, in denen häufige Speicherallokationen und
 -deallokationen vorkommen, eine über dreißig mal kürzere Laufzeit als X10 aufweisen kann, wobei bei mathematischen
 Berechnungen keine eindeutige Leistungseinstufung ersichtlich ist.
 
-\vfill
 \vfill
 
 \tiny

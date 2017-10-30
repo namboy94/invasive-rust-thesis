@@ -1,7 +1,7 @@
 \chapter{Entwurf und Implementierung}\label{sec:impl}
 
 Im folgenden werden Programme und Bibliotheken entwickelt, welche es ermöglichen, Rust auf der von
-\textit{OctoPOS} und \textit{iRTSS} zur Verfügung gestellten invasiven Platform verwenden zu können.
+\textit{OctoPOS} und \textit{iRTSS} zur Verfügung gestellten invasiven Plattform verwenden zu können.
 Dies ermöglicht es Programme, welche vom invasiven Computing Gebrauch machen, in der
 Programmiersprache Rust zu schreiben.
 
@@ -10,9 +10,9 @@ Programmiersprache Rust zu schreiben.
 Rust wird derzeit nicht offiziell auf der SPARC-V8 Architektur unterstützt. Rust verwendet jedoch als Backend LLVM,
 welches diese Architektur unterstützt und daher ist es prinzipiell möglich,
 Rust-Programme für diese Architektur zu kompilieren.
-Die Rust-Standardbibliothek ist allerdings nicht trivial auf andere Architekturen zu portieren.
+Die Rust-Standardbibliothek ist allerdings zu schwierig auf andere Architekturen zu portieren.
 Um diese Hürde zu umgehen bietet Rust die Funktion,
-Programme mit einer minimalen, platformunabhängigen Untermenge der Standardbibliothek zu kompilieren.
+Programme mit einer minimalen, plattformunabhängigen Untermenge der Standardbibliothek zu kompilieren.
 Diese Funktion wird hier ausgenutzt,
 um eine minimale Implementierung der Programmiersprache auf die SPARC-V8 Architektur zu portieren.
 
@@ -44,7 +44,7 @@ Eine beispielhafte JSON-Spezifikationsdatei für die SPARC-V8 Architektur.
 }
 \end{lstlisting}
 
-Außerdem wird ein C-Linker, beispielsweise \texttt{\textsc{\textbf{gcc}}},
+Außerdem wird ein Linker, beispielsweise \texttt{\textsc{\textbf{gcc}}},
 für die SPARC-V8 Architektur benötigt. Der Pfad zu diesem Linker
 muss in der \texttt{\textsc{\textbf{linker}}}-Option der JSON-Datei angegeben werden.
 
@@ -55,7 +55,7 @@ den Pfad zur Spezifikations-JSON-Datei.
 Derzeit ist es nicht möglich, \textit{libcore} mit dem stabilen Rust-Compiler zu kompilieren,
 da diese Bibliothek Funktionalitäten verwendet, welche auf dem stabilen Compiler deaktiviert sind.
 Daher muss ein Nightly-Compiler installiert werden, welches
-dank \texttt{\textsc{\textbf{rustup}}} nutzerfreundlich gestaltet ist.
+dank \texttt{\textsc{\textbf{rustup}}} benutzerfreundlich gestaltet ist.
 Außerdem sollte die Version der \textit{libcore} Bibliothek
 mit der Version des nightly-Compilers übereinstimmen,
 um versionsabhängige Konflikte bei der Kompilierung zu vermeiden.
@@ -97,15 +97,13 @@ Spezifikations-JSON-Datei als Argument für die \texttt{\textsc{\textbf{-{}-targ
 
 \section{Erstellung des \textit{octorust} Hilfsprogramms}
 
-Um das relativ komplizierte und fehleranfällige Kompilieren für Rust-Programme
+Um das Kompilieren für Rust-Programme
 auf der SPARC-V8 Architektur zu vereinfachen, als
-auch besagte Rust-Programme zusammen mit dem \textit{OctoPOS} Betriebssytem und dem \textit{iRTSS} zu verwenden,
+auch besagte Rust-Programme zusammen mit dem \textit{OctoPOS} Betriebssystem und dem \textit{iRTSS} zu verwenden,
 wurde ein Python-Programm namens \textit{octorust} geschrieben, welche diese Schritte
 vereinfacht.
 Das Programm wurde in Python geschrieben, da Pythons Standardbibliothek viele nützliche Funktionen zur Manipulation
-von Dateien bietet, welches sich für diesen Zweck als hilfreich erwiesen hat. Außerdem bietet Python mit 
-\texttt{\textsc{\textbf{argparse}}} ein praktisches Modul zum Verarbeiten von Kommandozeilen-Argumenten.
-Dieses ermöglicht es, eine Vielzahl an Kommandozeilenargumenten mit minimalem Programmieraufwand anzubieten.
+von Dateien bietet, welches sich für diesen Zweck als hilfreich erwiesen hat.
 
 Das Programm verwendet \texttt{\textsc{\textbf{python-setuptools}}} und eine dafür konfigurierte 
 \texttt{\textsc{\textbf{setup.py}}} Datei, um das Programm lokal zu installieren.
@@ -114,11 +112,12 @@ installiert und das zugehörige \texttt{\textsc{\textbf{octorust}}} Skript als a
 Verfügung gestellt.
 Gleichzeitig wird ein Verzeichnis namens \texttt{\textsc{\textbf{.octorust}}}
 im Heimverzeichnis des derzeitigen Nutzers erstellt.
-Dieses fungiert als Speicherort für \textit{OctoPOS/iRTSS}-builds, die in Kapitel \ref{sec:octolib} genauer
+Dieses fungiert als Speicherort für \textit{OctoPOS/iRTSS}-Builds, die in Kapitel \ref{sec:octolib} genauer
 beschriebene \textit{octolib} Bibliothek und im Falle dass kein solcher zuvor installiert war, einen SPARC-V8
 \texttt{\textsc{\textbf{gcc}}}.
 Zudem werden für alle unterstützten Architekturen die \textit{libcore} und \textit{libc} Bibliotheken
-kompiliert und in den Installationspfad des derzeit verwendeten \texttt{\textsc{\textbf{rustup}}}-Toolchains kopiert.
+kompiliert und in den Installationspfad der derzeit verwendeten
+\texttt{\textsc{\textbf{rustup}}}-Werkzeugkette kopiert.
 
 \textit{Octorust} bietet die folgenden Optionen:
 \begin{description}
@@ -142,7 +141,7 @@ kompiliert und in den Installationspfad des derzeit verwendeten \texttt{\textsc{
 	\item[-o, -{}-output]
 	Mit dieser Option kann der Pfad zur resultierenden Ausgabedatei explizit angegeben	werden.
 	Ansonsten ermittelt \textit{octorust} automatisch einen sinnvollen Ausgabenamen,
-	beispielsweise \texttt{\textsc{\textbf{foo.out}}} für ein Cargo-Project mit dem Namen
+	beispielsweise \texttt{\textsc{\textbf{foo.out}}} für ein Cargo-Projekt mit dem Namen
 	\textit{foo}.
 	
 	\item[-k, -{}-keep]
@@ -163,7 +162,7 @@ kompiliert und in den Installationspfad des derzeit verwendeten \texttt{\textsc{
 	Wird diese Option verwendet, werden Compiler-Optimierungen für Rust-Programme aktiviert.
 	
 	\item[-{}-fetch-irtss]
-	Mithilfe dieser Option können \textit{OctoPOS/iRTSS}-builds von \\
+	Mithilfe dieser Option können \textit{OctoPOS/iRTSS}-Builds von \\
 	https://www4.cs.fau.de/invasic/octopos/ heruntergeladen werden. Hierfür wird jedoch
 	eine gültige Nutzername/Passwort-Kombination in einer \texttt{\textsc{\textbf{.netrc}}}
 	Datei im folgenden Format benötigt:
@@ -244,7 +243,7 @@ die minimale C Datei oder auch die C Objektdatei.
 
 \section{\textit{octolib}}\label{sec:octolib}
 
-Zusätzlich zum \textit{octorust} Programm wurde ebenfalls eine Rust-Bibliothek names \textit{octolib} geschrieben. 
+Zusätzlich zum \textit{octorust} Programm wurde ebenfalls eine Rust-Bibliothek namens \textit{octolib} geschrieben. 
 Diese Bibliothek soll die Interaktion zwischen Rust und \textit{OctoPOS/iRTSS} ermöglichen und and die neue 
 Programmiersprache anpassen. \textit{OctoPOS/IRTSS} bieten eine C-Schnittstelle an, welche man mithilfe von Rusts
 \textit{Foreign Function Interface} und der \textit{libc} Bibliothek aus Rust heraus ansprechen kann.
@@ -252,7 +251,7 @@ Die \textit{libc} Bibliothek bietet die Möglichkeit, Komponenten, welche die St
 auszulassen, daher ist sie auch auf der SPARC-V8 Architektur nutzbar.
 
 Die \textit{octolib} Bibliothek wird vor dem Kompilieren als Abhängigkeit in die Cargo.toml Datei des
-zu kompiliernden Cargo Projekts eingefügt.
+zu kompilierenden Cargo Projekts eingefügt.
 Hierfür wird mithilfe des \texttt{\textsc{\textbf{toml}}} Python Moduls der derzeitige Inhalt der Cargo.toml Datei
 eingelesen, der Pfad zur lokal installierten \textit{octolib} Bibliothek in diese Daten injiziert und anschließend 
 wieder in die Konfigurationsdatei geschrieben.
@@ -262,7 +261,7 @@ werden die alten Daten wieder in die Cargo.toml Datei geschrieben,
 um zu vermeiden dass die Cargo.toml Datei eine Konfiguration enthält, die auf eine lokale Konfiguration basiert.
 Damit die Bibliothek für jedes zu kompilierende Programm auffindbar ist,
 wird eine lokale Kopie während der Installation des \text-it{octorust}-Programms im
-\texttt{\textsc{\textbf{~/.octorust}}} Verzeichnis erstellt.
+\texttt{\textsc{\textbf{\char`~/.octorust}}} Verzeichnis erstellt.
 
 \subsection{Struktur}
 
@@ -325,13 +324,13 @@ Zusätzlich zu den Funktionsdefinitionen mussten die in der C-Schnittstelle defi
 Strukturen und Typen ebenfalls portiert werden.
 Dank der \texttt{\textsc{\textbf{\#[repr(C)]}}} Anweisung kann man in Rust Strukturen erstellen,
 welche kompatibel mit ihren C-Äquivalenten sind.
-Diese Strukturen sind teils von Platform-spezifischen Konstanten abhängig, welche man in Rust mit der
+Diese Strukturen sind teils von Plattform-spezifischen Konstanten abhängig, welche man in Rust mit der
 \texttt{\textsc{\textbf{\#[cfg(target\char`_arch = \"Zielarchitektur\")]}}} Anweisung
 für unterschiedliche Architekturen definieren kann.
 Benutzerdefinierte Typen, welche prinzipiell Aliase für bestehende Typen sind, lassen sich in Rust durch das
 Schlüsselwort \texttt{\textsc{\textbf{type}}} erstellen.
 
-\subsubsection{Das Helper-Modul}
+\subsubsection{Das \texttt{\textsc{\textbf{helper}}}-Modul}
 
 Das \texttt{\textsc{\textbf{helper}}}-Modul enthält Adapter für C-Funktionen,
 für die in Rust ohne Zugriff zur Standardbibliothek keine Alternative existieren.
@@ -353,7 +352,7 @@ Die \texttt{\textsc{\textbf{Constraints}}} Struktur ist eine leichte,
 objektorientierte Abstraktion für die \textit{Constraints}, mit denen die Anzahl Ressourcen,
 die einem \textit{Claim} zur Verfügung stehen sollen, spezifiziert werden.
 Die Implementierung dieser Struktur bietet einen Konstruktor, welcher eine neue
-\texttt{\textsc{\textbf{constraints\char`_t}}} Struktur mithile der
+\texttt{\textsc{\textbf{constraints\char`_t}}} Struktur mithilfe der
 \texttt{\textsc{\textbf{agent\char`_constr\char`_create}}}
 Funktion aus dem \texttt{\textsc{\textbf{octo\char`_bindings}}} Modul erstellt und anschließend einige Standardwerte setzt. 
 Dem Konstruktor werden zudem 2 Parameter übergeben,
@@ -389,7 +388,7 @@ Erstellungskontext bestehen\cite{embeddedRustOS}, ist es nicht möglich,
 eine Closure direkt als eine normale Rust Funktion zu verwenden.
 Stattdessen erstellt man einen Zeiger auf die Datenregion,
 welche die Closure repräsentiert und übergibt diesen dann einer
-\texttt{\textsc{\textbf{extern \char`"C\char`"}}} Funktion, welche aus diesem Zeiger die Closure zurückkonvertiert.
+\texttt{\textsc{\textbf{extern \char`"C\char`"}}} Funktion, welche aus diesem Zeiger die Closure zurück konvertiert.
 Diese \texttt{\textsc{\textbf{extern \char`"C\char`"}}}-Funktion kann dann der C-Schnittstelle zusammen mit dem
 Zeiger auf die Closure-Daten übergeben werden.
 
@@ -399,7 +398,7 @@ erledigt, während zur Rückkonvertierung eine \texttt{\textsc{\textbf{extern \c
 
 \subsubsection{AgentClaim}
 
-Die größte Abstraktion in der \textit{octolib} Bibliothek ist die \texttt{\textsc{\textbf{AgentClaim}}} Struktur.
+Das wichtigste Konstrukt in der \textit{octolib} Bibliothek ist die \texttt{\textsc{\textbf{AgentClaim}}} Struktur.
 Diese bietet zunächst einmal eine Abstraktionsschicht über die \texttt{\textsc{\textbf{agentclaim\char`_t}}}
 Struktur aus der C-Schnittstelle und verschiedene Methoden um diese zu verwenden.
 
@@ -410,11 +409,11 @@ Mit diesen \textit{Constraints} wird dann eine interne
 welche für alle folgenden Methodenaufrufe verwendet wird. Es wird also bereits im Konstruktor implizit die
 \textit{Invade}-Phase des invasiven Computing ausgeführt.
 
-Eine praktische Methode fürs Debugging ist \texttt{\textsc{\textbf{set\char`_verbose}}}.
+Eine praktische Methode fürs Debuggen ist \texttt{\textsc{\textbf{set\char`_verbose}}}.
 Diese Methode erlaubt es, die Ausführlichkeit der auf die Kommandozeile gedruckten Informationen der
 \texttt{\textsc{\textbf{AgentClaim}}}-Struktur zu beeinflussen.
 
-Die \texttt{\textsc{\textbf{reinvade}}}-Methode elaubt es, eine \textit{Reinvade}-Operation auf dem
+Die \texttt{\textsc{\textbf{reinvade}}}-Methode erlaubt es, eine \textit{Reinvade}-Operation auf dem
 \textit{Claim} auszuführen. Diese erlaubt es, die von der internen
 \texttt{\textsc{\textbf{agentclaim\char`_t}}}-Struktur verwendeten \textit{Constraints} anzupassen.
 Diese Methode nimmt einen optionalen Parameter an,
@@ -432,7 +431,8 @@ Diese Parameterdaten werden als ein Array von \texttt{\textsc{\textbf{void}}}-Ze
 Die Anzahl der Elemente des Arrays muss mit der Anzahl von vom \textit{Claim} reservierten Rechenelemente 
 übereinstimmen. Bei einer zu geringen Anzahl an Rechenelementen kann es ansonsten zu Fehlern kommen.
 Bei einer zu großen Zahl an Rechenelementen kommt es zum Pufferüberlauf, welches den Absturz des Programms zur
-Folge hat.
+Folge hat. Um die Parameterübergabe sicherer zu gestalten können in der Zukunft Serialisierungsbibliotheken
+wie \texttt{\textsc{\textbf{serde}}} verwendet werden.
 
 In der \texttt{\textsc{\textbf{infect}}}-Methode werden Signal-Strukturen aus der C-Schnittstelle verwendet,
 um die Kommunikation zwischen verschiedenen Rechenelementen zu verwalten.

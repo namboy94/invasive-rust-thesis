@@ -33,15 +33,16 @@ Für jedes betrachtete Programm wurden je zwei Versionen pro Programmiersprache 
 Zum einen mit Compiler-Optimierungen,
 zum anderen ohne. Bei Messungen der Ausführungszeit wurde die Wall-Clock-Time in Sekunden als Messwert verwendet.
 Jedes Programm, dessen Laufzeit
-überprüft wird, wurde mithilfe des "`temci"'-Benchmarkprogramms fünfzig mal ausgeführt.
+überprüft wird, wurde mithilfe des \texttt{\textsc{\textbf{temci}}}-Benchmarkprogramms fünfzig mal ausgeführt.
 C und Rust Programme wurden mit \textit{octorust} kompiliert, X10 Programme mit dem \textit{x10i} Compiler.
 Alle berechneten Werte werden auf vier Nachkommastellen gerundet.
 
 Um die statistische Relevanz der Ergebnisse zu evaluieren, wurden zu jeder Messung der Laufzeit
 das arithmetische Mittel (Abbildung \ref{formula:mean}),
 der Median (Abbildung \ref{formula:median}),
-die korrigierte empirische Standardabweichung (Abbildung \ref{formula:std_deviation}) und
-den zugehörigen empirischen Variationskoeffizienten (Abbildung \ref{formula:variation_coefficient}) berechnet.
+die Stichproben-Standardabweichung (Abbildung \ref{formula:std_deviation}) und
+der zugehörige Stichproben-Variationskoeffizient (Abbildung \ref{formula:variation_coefficient}) berechnet.
+\cite{wtSkript}
 
 \begin{figure}
 	\caption{Das Arithmetische Mittel}
@@ -64,18 +65,18 @@ den zugehörigen empirischen Variationskoeffizienten (Abbildung \ref{formula:var
 \end{figure}
 
 \begin{figure}
-	\caption{Die korrigierte empirische Standardabweichung}
+	\caption{Die Stichproben-Standardabweichung}
 	\begin{equation}
 		\label{formula:std_deviation}
-		s = \sqrt{\frac{1}{n - 1}}
+		s_x = \sqrt{\frac{1}{n - 1} \sum_{i=1}^n{(x_i - \bar{x})^2}}
 	\end{equation}
 \end{figure}
 
 \begin{figure}
-	\caption{Der empirische Variationskoeffizient zur korrigierten empirischen Standardabweichung}
+	\caption{Der Stichproben-Variationskoeffizient für Werte $x_i > 0$}
 	\begin{equation}
 		\label{formula:variation_coefficient}
-		s = \frac{s}{\bar{x}}
+		v_x = \frac{s_x}{\bar{x}}
 	\end{equation}
 \end{figure}
 
@@ -91,7 +92,7 @@ anschließend sofort wieder beendet.
 	\begin{center}
 		\begin{tabular}{lrrrr}
 			\toprule
-			Sprache    & $\bar{x}$ & $\tilde{x}$ & $s$ & $V$\\
+			Sprache    & $\bar{x}$ & $\tilde{x}$ & $s_x$ & $v_x$\\
 			\midrule
 			C          &  0.5564 & 0.5600 & 0.0138 & 2.4829\% \\
 			C (opt)    &  0.5586 & 0.5600 & 0.0134 & 2.3993\% \\
@@ -116,12 +117,12 @@ anschließend sofort wieder beendet.
 			\toprule
 			Sprache & Dateigröße \\
 			\midrule
-			C          & 0 \\
-			C (opt)    & 0 \\
-			Rust       & 0 \\
-			Rust (opt) & 0 \\
-			X10        & 0 \\
-			X10 (opt)  & 0 \\
+			C          & 10117708 \\
+			C (opt)    & 10117708 \\
+			Rust       & 10118632 \\
+			Rust (opt) & 10117760 \\
+			X10        & 16630348 \\
+			X10 (opt)  & 17546444 \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
@@ -135,8 +136,7 @@ anschließend sofort wieder beendet.
 Anhand der Ergebnisse in Tabelle \ref{fig:compile_table} kann man feststellen,
 dass die Kompilierungsdauer bei Rust oder C Programmen im Vergleich zu
 X10 Programmen gering sind. X10 Programme benötigen im Schnitt über 80 Sekunden länger um kompiliert zu werden.
-Außerdem sind die Dateigrößen der X10 Programme größer als die der Rust und C Programme,
-jedoch nicht im selben Maße wie die Kompilierungsdauer.
+Außerdem sind die Dateigrößen der X10 Programme größer als die der Rust und C Programme.
 
 \section{Laufzeitverhalten}
 
@@ -157,7 +157,7 @@ der Kompilierungsdauer und Dateigröße verwendet wurde.
 	\begin{center}
 		\begin{tabular}{lrrrr}
 			\toprule
-			Sprache    & $\bar{x}$ & $\tilde{x}$ & $s$ & $V$ \\
+			Sprache    & $\bar{x}$ & $\tilde{x}$ & $s_x$ & $v_x$ \\
 			\midrule
 			C          & 0.3916 & 0.3800 & 0.0214 &  5.4687\% \\
 			C (opt)    & 0.3900 & 0.3800 & 0.0208 &  5.3334\% \\
@@ -202,7 +202,7 @@ benötigt wird, wäre dies ohnehin aller Wahrscheinlichkeit nach kein entscheide
 	\begin{center}
 		\begin{tabular}{lrrrr}
 			\toprule
-			Sprache    & $\bar{x}$ & $\tilde{x}$ & $s$ & $V$   \\
+			Sprache    & $\bar{x}$ & $\tilde{x}$ & $s_x$ & $v_x$   \\
 			\midrule
 			C          &  4.2094  &  4.2000 & 0.0219 & 0.5201\% \\
 			C (opt)    &  4.2202  &  4.2300 & 0.0277 & 0.6572\% \\
@@ -228,7 +228,7 @@ benötigt wird, wäre dies ohnehin aller Wahrscheinlichkeit nach kein entscheide
 	\begin{center}
 		\begin{tabular}{lrrrr}
 			\toprule
-			Sprache    & $\bar{x}$ & $\tilde{x}$ & $s$ & $V$ \\
+			Sprache    & $\bar{x}$ & $\tilde{x}$ & $s_x$ & $v_x$ \\
 			\midrule
 			C          & 0.5626 & 0.5600 & 0.0191 & 3.4031\% \\
 			C (opt)    & 0.5620 & 0.5600 & 0.0199 & 3.5405\% \\
@@ -266,6 +266,8 @@ Version des Rust Programms weitaus mehr Zeit zur Ausführung benötigt als jede 
 Konfiguration. Auch im Falle von X10 verschlechtert sich das Laufzeitverhalten, wenn auch nicht so
 sehr wie im Falle von Rust.
 
+\FloatBarrier
+
 \subsection{Paralleles Berechnen von Primzahlen}
 
 Um auch die invasiven Aspekte der Sprachen zu evaluieren, wurden X10, C und Rust Programme geschrieben,
@@ -280,7 +282,7 @@ indem jede Zahl mit jeder kleineren Zahl auf Teilbarkeit geprüft wird.
 	\begin{center}
 		\begin{tabular}{lrrrr}
 			\toprule
-			Sprache & $\bar{x}$ & $\tilde{x}$ & $s$ & $V$ \\
+			Sprache & $\bar{x}$ & $\tilde{x}$ & $s_x$ & $v_x$ \\
 			\midrule
 			C          &  30.6064 &  30.590 & 0.6380 & 2.0844\% \\
 			C (opt)    &  30.4666 &  30.075 & 0.6262 & 2.0554\% \\
@@ -307,7 +309,7 @@ indem jede Zahl mit jeder kleineren Zahl auf Teilbarkeit geprüft wird.
 	\begin{center}
 		\begin{tabular}{lrrrr}
 			\toprule
-			Sprache & $\bar{x}$ & $\tilde{x}$ & $s$ & $V$ \\
+			Sprache & $\bar{x}$ & $\tilde{x}$ & $s_x$ & $v_x$ \\
 			\midrule
 			C          &  13.8136 &  13.7800 & 0.0935 & 0.6772\% \\
 			C (opt)    &  13.7898 &  13.7800 & 0.0912 & 0.6612\% \\
@@ -382,11 +384,13 @@ Varianten berechnen.
 Betrachtet man die Ergebnisse der \textit{Speedup}- und \textit{Effizienz}berechnung,
 so kann man keine großen Diskrepanzen 
 diesbezüglich zwischen den Sprachen erkennen. Alle profitieren ungefähr gleich viel von der Parallelisierung,
-wobei X10 den schlechtesten \textit{Startup}-Wert und die geringste \textit{Effizienz} vorweist.
+wobei X10 den schlechtesten \textit{Speedup}-Wert und die geringste \textit{Effizienz} vorweist.
 
 Der Speedup ist in diesem Beispiel eher gering, dies liegt jedoch am verwendeten Algorithmus, welcher durch
 die gleichmäßige Partitionierung in Verbindung mit der naiven Berechnung, welche bei größeren Zahlen
 einen höheren Rechenaufwand erfordert, Leistungseinbußen in Kauf nimmt.
+
+\FloatBarrier
 
 \subsection{Allokation auf dem Heap}
 
@@ -408,7 +412,7 @@ Das Äquivalent zu Arrays in X10 sind Rails, daher wurden in der X10 Implementie
 	\begin{center}
 		\begin{tabular}{lrrrr}
 			\toprule
-			Sprache    & $\bar{x}$ & $\tilde{x}$ & $s$ & $V$ \\
+			Sprache    & $\bar{x}$ & $\tilde{x}$ & $s_x$ & $v_x$ \\
 			\midrule
 			C          & 0.3894   & 0.3800 & 0.0191 & 4.9058\%  \\
 			C (opt)    & 0.3876   & 0.3800 & 0.0197 & 5.0953\%  \\
@@ -420,7 +424,7 @@ Das Äquivalent zu Arrays in X10 sind Rails, daher wurden in der X10 Implementie
 		\end{tabular}
 	\end{center}
 	\caption{
-		Diese Tabelle stellt die Ergebnisse des garbageonly-Benchmarks dar. Dieser Benchmark erstellt insgesamt
+		Diese Tabelle stellt die Ergebnisse des \textit{garbageonly}-Benchmarks dar. Dieser Benchmark erstellt insgesamt
 		\texttt{\textsc{\textbf{1000000}}} int-Arrays (beziehungsweise Rails in X10) mit einer Größe von
 		\texttt{\textsc{\textbf{5000}}} Elementen.
 		Alle Werte sind auf vier Nachkommastellen gerundet und mit Ausnahme des Variationskoeffizienten
@@ -454,7 +458,7 @@ Gleiches gilt für X10, für welches \textit{x10i} die Kompilierung durchführt.
 
 Zusätzlich hierzu bietet \textit{octorust} jedoch auch das Kompilieren von Cargo Projekten.
 Diese weisen zwar einen etwas
-höheren Arbeitsaufwand zu Beginn des Projekts auf, erlauben aber anschließend nutzerfreundliches Einbinden von
+höheren Arbeitsaufwand zu Beginn des Projekts auf, erlauben aber anschließend benutzerfreundliches Einbinden von
 externen Bibliotheken in der Cargo.toml Konfigurationsdatei. Außerdem wird in Cargo Projekten
 die \textit{octolib} automatisch eingebunden. Im Falle von X10 und C ist eine ähnliche
 Funktionalität nicht vorhanden, externe Bibliotheken müssen beim Kompilieren manuell eingebunden werden.
@@ -464,7 +468,7 @@ Funktionalität nicht vorhanden, externe Bibliotheken müssen beim Kompilieren m
 Um den Programmieraufwand eines simplen invasiven Programms zu beurteilen, wurde ein Programm geschrieben, 
 welches zuerst eine \textit{Invade}-Operation durchführt und anschließend eine simple `"Hello World"'
 Funktion auf jedem der reservierten Rechenelemente in der \textit{Infect}-Phase ausführt.
-Das Programm wartet anschließend bis alle Rechenlemente mit der Ausführung beendet sind und gibt anschließend
+Das Programm wartet anschließend bis alle Rechenelemente mit der Ausführung beendet sind und gibt anschließend
 alle Ressourcen in der \textit{Retreat}-Phase wieder frei.
 
 \subsubsection{Rust}
@@ -649,6 +653,3 @@ Das C Programm ist im Vergleich zu den beiden anderen Programmiersprachen hingeg
 fehleranfälliger. Zudem benötigt ein solches C Programm ungefähr doppelt so viele 
 Codezeilen wie die äquivalenten Rust oder X10 Programme. Obendrein ist es in C nicht möglich, Closures oder
 ähnliche Konstrukte zu verwenden, Rust und X10 unterstützen dies jedoch.
-
-\textcolor{blue}{Code rauslassen}
-
