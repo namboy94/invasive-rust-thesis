@@ -1,10 +1,5 @@
 \chapter{Evaluation}\label{sec:eval}
 
-%Dies kann in Benchmarks zumeist auch bestätigt werden\cite{rustVsCBenchmark}. 
-%Benchmarks, welche Rust mit
-%höheren Programmiersprachen wie Java\cite{rustVsJavaBenchmark} oder Python\cite{rustVsPythonBenchmark} vergleichen,
-%weisen meist eine bessere Leistung von Rust auf.
-
 Im Folgenden wird der Gebrauch von Rust im Zusammenhang mit dem invasiven Computing evaluiert. Hierbei
 wird vor allem mit den bereits unterstützten Sprachen C und X10 verglichen.
 
@@ -38,12 +33,13 @@ Für jedes betrachtete Programm wurden je zwei Versionen pro Programmiersprache 
 Zum einen mit Compiler-Optimierungen,
 zum anderen ohne. Bei Messungen der Ausführungszeit wurde die Wall-Clock-Time in Sekunden als Messwert verwendet.
 Jedes Programm, dessen Laufzeit
-überprüft wird, wird mithilfe des "`temci"'-Benchmarkprogramms fünfzig mal ausgeführt.
+überprüft wird, wurde mithilfe des "`temci"'-Benchmarkprogramms fünfzig mal ausgeführt.
+C und Rust Programme wurden mit \textit{octorust} kompiliert, X10 Programme mit dem \textit{x10i} Compiler.
+Alle berechneten Werte werden auf vier Nachkommastellen gerundet.
 
 Um die statistische Relevanz der Ergebnisse zu evaluieren, wurden zu jeder Messung der Laufzeit
 das arithmetische Mittel (Abbildung \ref{formula:mean}),
 der Median (Abbildung \ref{formula:median}),
-die Median Absolute Deviation (Abbildung \ref{formula:mad}),
 die korrigierte empirische Standardabweichung (Abbildung \ref{formula:std_deviation}) und
 den zugehörigen empirischen Variationskoeffizienten (Abbildung \ref{formula:variation_coefficient}) berechnet.
 
@@ -68,7 +64,7 @@ den zugehörigen empirischen Variationskoeffizienten (Abbildung \ref{formula:var
 \end{figure}
 
 \begin{figure}
-	\caption{Die empirische Standardabweichung}
+	\caption{Die korrigierte empirische Standardabweichung}
 	\begin{equation}
 		\label{formula:std_deviation}
 		s = \sqrt{\frac{1}{n - 1}}
@@ -76,21 +72,12 @@ den zugehörigen empirischen Variationskoeffizienten (Abbildung \ref{formula:var
 \end{figure}
 
 \begin{figure}
-	\caption{Der empirische Variationskoeffizient}
+	\caption{Der empirische Variationskoeffizient zur korrigierten empirischen Standardabweichung}
 	\begin{equation}
 		\label{formula:variation_coefficient}
 		s = \frac{s}{\bar{x}}
 	\end{equation}
 \end{figure}
-
-\begin{figure}
-	\caption{Die Median Absolute Deviation}
-	\begin{equation}
-		\label{formula:mad}
-		E(n) = \frac{1}{n} \sum_{i=1}^n{|x_i - \tilde{x}|}
-	\end{equation}
-\end{figure}
-
 
 
 
@@ -102,46 +89,45 @@ anschließend sofort wieder beendet.
 
 \begin{figure}[hb]
 	\begin{center}
-		\begin{tabular}{lrrrrr}
+		\begin{tabular}{lrrrr}
 			\toprule
-			Sprache    & $\bar{x}$ & $\tilde{x}$ & $s$ & $V$ & $MAD$ \\
+			Sprache    & $\bar{x}$ & $\tilde{x}$ & $s$ & $V$\\
 			\midrule
-			C          &  0.5564 & 0.5600 & 0.0138 & 2.4829\% & 0.0100 \\
-			C (opt)    &  0.5586 & 0.5600 & 0.0134 & 2.3993\% & 0.0100 \\
-			Rust       &  0.8174 & 0.8200 & 0.0164 & 2.0051\% & 0.0100 \\
-			Rust (opt) &  0.8116 & 0.8100 & 0.0136 & 1.6765\% & 0.0100 \\
-			X10        & 82.8640 & 83.075 & 1.3321 & 1.6076\% & 1.1600 \\
-			X10 (opt)  &  0      & 0      & 0      & 0      & 0        \\
+			C          &  0.5564 & 0.5600 & 0.0138 & 2.4829\% \\
+			C (opt)    &  0.5586 & 0.5600 & 0.0134 & 2.3993\% \\
+			Rust       &  0.8174 & 0.8200 & 0.0164 & 2.0051\% \\
+			Rust (opt) &  0.8116 & 0.8100 & 0.0136 & 1.6765\% \\
+			X10        & 82.8640 & 83.075 & 1.3321 & 1.6076\% \\
+			X10 (opt)  &  0      & 0      & 0      & 0        \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
 	\caption{
-		Diese Tabelle stellt die Messergebnisse der Kompilierungsdauer des startup-Benchmarks dar. Die Werte
-		des Mittel und des Median sind in Sekunden angegeben.
-		\textcolor{red}{TODO X10 opt Werte}
+		Diese Tabelle stellt die Messergebnisse der Kompilierungsdauer des \textit{startup}-Programms dar.
+		Alle Werte sind auf vier Nachkommastellen gerundet uns mit Ausnahme des Variationskoeffizienten
+		in Sekunden angegeben.
 	}
 	\label{fig:compile_table}
 \end{figure}
 
 \begin{figure}[hb]
 	\begin{center}
-		\begin{tabular}{lrrrr}
+		\begin{tabular}{lr}
 			\toprule
 			Sprache & Dateigröße \\
 			\midrule
-			C          & 0 & 0 \\
-			C (opt)    & 0 & 0 \\
-			Rust       & 0 & 0 \\
-			Rust (opt) & 0 & 0 \\
-			X10        & 0 & 0 \\
-			X10 (opt)  & 0 & 0 \\
+			C          & 0 \\
+			C (opt)    & 0 \\
+			Rust       & 0 \\
+			Rust (opt) & 0 \\
+			X10        & 0 \\
+			X10 (opt)  & 0 \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
 	\caption{
-		Diese Tabelle stellt die Messergebnisse der Dateigrößen des startup-Benchmarks dar. Die Messwerte sind in
-		der Anzahl Bytes, welche die ausführbare Datei ausmachen, angegeben.
-		\textcolor{red}{TODO Werte}
+		Diese Tabelle stellt die Messergebnisse der Dateigrößen des \textit{startup}-Programms dar.
+		Die Messwerte sind in der Anzahl Bytes, welche die ausführbare Datei ausmachen, angegeben.
 	}
 	\label{fig:filesize_table}
 \end{figure}
@@ -152,56 +138,59 @@ X10 Programmen gering sind. X10 Programme benötigen im Schnitt über 80 Sekunde
 Außerdem sind die Dateigrößen der X10 Programme größer als die der Rust und C Programme,
 jedoch nicht im selben Maße wie die Kompilierungsdauer.
 
-\textcolor{red}{TODO Auf Statistische Mittel eingehen}
-
 \section{Laufzeitverhalten}
 
 Um die erreichbare Leistung der Programmiersprachen zu vergleichen,
 wurden im Folgenden unterschiedliche Programme entwickelt.
 Diese Programme wurden soweit möglich in allen Programmiersprachen einheitlich implementiert und ermöglichen so,
-das Laufzeitverhalten der Programmiersprachen zu vergleichen.
+das Laufzeitverhalten der Programmiersprachen miteinander zu vergleichen.
 
 \subsection{Vergleich der Anlaufzeit}
 
 Es wird zunächst überprüft, wie lange ein Programm,
 welches in einer zu betrachtenden Programmiersprachen geschrieben wurde,
 benötigt, um die Ausführung zu starten und anschließend sofort wieder zu beenden.
-Es wurde das exakt selbe Programm verwendet, welches in Kapitel \ref{sec:compile_time_filesize} zur Messung
+Es wurde dasselbe Programm verwendet, welches in Kapitel \ref{sec:compile_time_filesize} zur Messung
 der Kompilierungsdauer und Dateigröße verwendet wurde.
 
 \begin{figure}[hb]
 	\begin{center}
-		\begin{tabular}{lrrrrr}
+		\begin{tabular}{lrrrr}
 			\toprule
-			Sprache    & $\bar{x}$ & $\tilde{x}$ & $s$ & $V$ & $MAD$ \\
+			Sprache    & $\bar{x}$ & $\tilde{x}$ & $s$ & $V$ \\
 			\midrule
-			C          & 0.3916 & 0.3800 & 0.0214 & 5.4687\% & 0.0100 \\
-			C (opt)    & 0.3900 & 0.3800 & 0.0208 & 5.3334\% & 0.0100 \\
-			Rust       & 0.3820 & 0.3800 & 0.0139 & 3.6258\% & 0.0100 \\
-			Rust (opt) & 0.4026 & 0.3800 & 0.0459 & 11.408\% & 0.0100 \\
-			X10        & 1.7738 & 1.7800 & 0.0255 & 1.4357\% & 0.0150 \\
-			X10 (opt)  & 1.7506 & 1.7500 & 0.0234 & 1.3380\% & 0.0200 \\
+			C          & 0.3916 & 0.3800 & 0.0214 &  5.4687\% \\
+			C (opt)    & 0.3900 & 0.3800 & 0.0208 &  5.3334\% \\
+			Rust       & 0.3820 & 0.3800 & 0.0139 &  3.6258\% \\
+			Rust (opt) & 0.4026 & 0.3800 & 0.0459 & 11.4080\% \\
+			X10        & 1.7738 & 1.7800 & 0.0255 &  1.4357\% \\
+			X10 (opt)  & 1.7506 & 1.7500 & 0.0234 &  1.3380\% \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
 	\caption{
-		Diese Tabelle stellt die Messergebnisse der Laufzeit des startup-Benchmarks dar.
+		Diese Tabelle stellt die Messergebnisse der Laufzeit des \textit{startup}-Benchmarks dar.
 		Dieser Benchmark simuliert das Starten und sofortige Schließen eines Programms.
+		Alle Werte sind auf vier Nachkommastellen gerundet uns mit Ausnahme des Variationskoeffizienten
+		in Sekunden angegeben.
 	}
 	\label{fig:startup_table}
 \end{figure}
 
 Anhand der Werte in Tabelle \ref{fig:startup_table} kann man prinzipiell erkennen,
-dass die Anlaufzeiten von C und Rust sich sehr nahe sind, während X10 hierfür im Schnitt 2 Sekundenlänger benötigt.
-Auch wenn man die Varianz der Werte in Betracht zieht, bleibt diese Diskrepanz bestehen.
+dass die Anlaufzeiten von C und Rust sich sehr nahe sind, etwaige Unterschiede lassen sich durch die Varianz der
+Ergebnisse zurückführen. Die Implementierung in X10 benötigt jedoch im Schnitt ungefähr vier mal länger als es bei 
+den beiden anderen Programmiersprachen der Fall ist. 
 
 
 \subsection{Berechnen von Primzahlen}\label{sec:primes_calc}
 
-Um die Rechenleistung der verschiedenen Programmiersprachen bei einem intensiveren Problem zu vergleichen, wurden
-Programme geschrieben, welche Primzahlen berechnen. Hierbei wurden zwei unterschiedliche Ansätze verwendet: zum einen
-eine naive Berechnung, welche jede Zahl individuell auf Teilbarkeit mit kleineren Zahlen prüft und andererseits
-das Sieb von Eratosthenes, eine effiziente Methode zum Berechnen von Primzahlen.
+Um die Rechenleistung der verschiedenen Programmiersprachen bei einem intensiveren mathematischen Problem zu 
+vergleichen, wurden Programme geschrieben, welche Primzahlen berechnen.
+Hierbei wurden zwei unterschiedliche Ansätze verwendet. Zum einen wurde
+eine naive Berechnung implementiert, welche jede Zahl individuell auf Teilbarkeit mit kleineren Zahlen prüft. 
+Andererseits wurde das Sieb von Eratosthenes verwendet, welches eine effiziente Methode zum Berechnen von Primzahlen
+ist.
 
 Im Falle des Siebs von Eratosthenes kann Rust in diesem Kontext keine Quadratwurzeloperation durchführen,
 da diese die Standardbibliothek benötigen. Daher wurden in allen Sprachen anstelle einer Quadratwurzelfunktion
@@ -209,65 +198,72 @@ feste Zahlen verwendet, um den Vergleich zwischen den Sprachen gerecht zu gestal
 Da jedoch nur eine Quadratwurzeloperation für das Sieb des Eratosthenes
 benötigt wird, wäre dies ohnehin aller Wahrscheinlichkeit nach kein entscheidender Faktor bei der Laufzeitmessung.
 
-
 \begin{figure}[hb]
 	\begin{center}
-		\begin{tabular}{lrrrrr}
+		\begin{tabular}{lrrrr}
 			\toprule
-			Sprache    & $\bar{x}$ & $\tilde{x}$ & $s$ & $V$ & $MAD$ \\
+			Sprache    & $\bar{x}$ & $\tilde{x}$ & $s$ & $V$   \\
 			\midrule
-			C          & 4.2094  & 4.2000  & 0.0219 & 0.5201\% & 0.0100 \\
-			C (opt)    & 4.2202  & 4.2300  & 0.0277 & 0.6572\% & 0.0150 \\
-			Rust       & 61.6462 & 61.6050 & 0.2849 & 0.4621\% & 0.1200 \\
-			Rust (opt) & 4.9692  & 4.9650  & 0.0319 & 0.6413\% & 0.0250 \\
-			X10        & 10.583  & 10.550  & 0.1368 & 1.2923\% & 0.0200 \\
-			X10 (opt)  & 5.9694  & 5.9700  & 0.0719 & 1.2039\% & 0.0300 \\
+			C          &  4.2094  &  4.2000 & 0.0219 & 0.5201\% \\
+			C (opt)    &  4.2202  &  4.2300 & 0.0277 & 0.6572\% \\
+			Rust       & 61.6462  & 61.6050 & 0.2849 & 0.4621\% \\
+			Rust (opt) &  4.9692  &  4.9650 & 0.0319 & 0.6413\% \\
+			X10        & 10.5830  & 10.5500 & 0.1368 & 1.2923\% \\
+			X10 (opt)  &  5.9694  &  5.9700 & 0.0719 & 1.2039\% \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
 	\caption{
-		Diese Tabelle stellt die Ergebnisse des naive-primes-Benchmarks dar.
-		Dieser Benchmark überprüft die ersten 50000 natürlichen Zahlen darauf,
+		Diese Tabelle stellt die Ergebnisse des \textit{naive-primes}-Benchmarks dar.
+		Dieser Benchmark überprüft die ersten \texttt{\textsc{\textbf{50000}}} natürlichen Zahlen darauf,
 		ob es sich bei ihnen um Primzahlen handelt,
 		indem er für jede Zahl individuell alle kleinere Zahlen auf Teilbarkeit prüft.
+		Alle Werte sind auf vier Nachkommastellen gerundet uns mit Ausnahme des Variationskoeffizienten
+		in Sekunden angegeben.
 	}
 	\label{fig:primes_naive_table}
 \end{figure}
 
 \begin{figure}[hb]
 	\begin{center}
-		\begin{tabular}{lrrrrr}
+		\begin{tabular}{lrrrr}
 			\toprule
-			Sprache    & $\bar{x}$ & $\tilde{x}$ & $s$ & $V$ & $MAD$ \\
+			Sprache    & $\bar{x}$ & $\tilde{x}$ & $s$ & $V$ \\
 			\midrule
-			C          & 0.5626 & 0.5600 & 0.0191 & 3.4031\% & 0.0100 \\
-			C (opt)    & 0.5620 & 0.5600 & 0.0199 & 3.5405\% & 0.0100 \\
-			Rust       & 0.8362 & 0.8300 & 0.0138 & 1.6544\% & 0.0100 \\
-			Rust (opt) & 0.4984 & 0.4900 & 0.0210 & 4.2196\% & 0.0100 \\
-			X10        & 2.3508 & 2.3400 & 0.0347 & 1.4782\% & 0.0200 \\
-			X10 (opt)  & 1.9892 & 1.9900 & 0.0274 & 1.3771\% & 0.0200 \\
+			C          & 0.5626 & 0.5600 & 0.0191 & 3.4031\% \\
+			C (opt)    & 0.5620 & 0.5600 & 0.0199 & 3.5405\% \\
+			Rust       & 0.8362 & 0.8300 & 0.0138 & 1.6544\% \\
+			Rust (opt) & 0.4984 & 0.4900 & 0.0210 & 4.2196\% \\
+			X10        & 2.3508 & 2.3400 & 0.0347 & 1.4782\% \\
+			X10 (opt)  & 1.9892 & 1.9900 & 0.0274 & 1.3771\% \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
 	\caption{
-		Diese Tabelle stellt die Ergebnisse des eratosthenes-primes-Benchmarks dar.
-		Dieser Benchmark überprüft mithilfe des Siebs von Eratosthenes die ersten 1690000 natürlichen Zahlen darauf,
-		ob es sich bei ihnen um Primzahlen handelt.
+		Diese Tabelle stellt die Ergebnisse des \textit{eratosthenes-primes}-Benchmarks dar.
+		Dieser Benchmark überprüft mithilfe des Siebs von Eratosthenes die ersten \texttt{\textsc{\textbf{1690000}}}
+		natürlichen Zahlen darauf, ob es sich bei ihnen um Primzahlen handelt. Diese Zahl wurde gewählt,
+		da mit der betrachteten Implementierung ansonsten der Stack bei C und Rust überlaufen würde.
+		Da Rust ohne die Standardbibliothek keine Quadratwurzeloperationen
+		unterstützt, wurde in jeder Implementierung der Wert \texttt{\textsc{\textbf{1300}}} fest als das Ergebnis
+		der Quadratwurzeloperation einprogrammiert.
+		Alle Werte sind auf vier Nachkommastellen gerundet uns mit Ausnahme des Variationskoeffizienten
+		in Sekunden angegeben.
 	}
 	\label{fig:primes_eratosthenes_table}
 \end{figure}
 
-Mit den Werten in den Tabellen \ref{fig:primes_naive_table} und \ref{fig:primes_eratosthenes_table} lassen sich keine
-eindeutigen Aussage darüber treffen, welche der Programmiersprachen die Aufgabe am effizientesten
-absolviert hat, vorausgesetzt, es werden die Versionen mit Compiler-Optimierungen betrachtet. Es existiert
-jedoch eine Tendenz, dass C und Rust eine bessere Laufzeit als X10 aufweisen.
-Allerdings muss dabei auch die längere Anlaufzeit von X10 Programmen beachtet werden.
-Zieht man diese ab, kann X10 ohne Weiteres mit der Leistung von C und Rust mithalten.
+Mit den Werten in den Tabellen \ref{fig:primes_naive_table} und \ref{fig:primes_eratosthenes_table} lässt sich keine
+eindeutige Aussage darüber treffen, welche der Programmiersprachen die Aufgabe am effizientesten
+gelöst hat, vorausgesetzt, es werden die Versionen mit Compiler-Optimierungen betrachtet. Es existiert
+jedoch eine Tendenz, dass C und Rust eine leicht bessere Laufzeit als X10 aufweisen.
+Allerdings muss dabei auch die längere Anlaufzeit von X10 Programmen in Betracht gezogen werden.
+Zieht man diese ab, sind die Ergebnisse zu nah aneinander als dass man eine klare Tendenz beobachten könne.
 
 Werden allerdings die Versionen ohne Compiler-Optimierungen betrachtet, kann es deutliche Unterschiede zwischen den
 Sprachen geben. In Tabelle \ref{fig:primes_naive_table} ist beispielsweise zu erkennen, dass die unoptimierte
-Version des Rust Programms weitaus länger Zeit zur Ausführung benötigt als jegliche anderen betrachteten
-Konfigurationen. Auch im Falle von X10 verschlechtert sich das Laufzeitverhalten, wenn auch nicht so
+Version des Rust Programms weitaus mehr Zeit zur Ausführung benötigt als jede andere betrachtete
+Konfiguration. Auch im Falle von X10 verschlechtert sich das Laufzeitverhalten, wenn auch nicht so
 sehr wie im Falle von Rust.
 
 \subsection{Paralleles Berechnen von Primzahlen}
@@ -278,53 +274,57 @@ Hierfür wird die Menge an Zahlen, welche überprüft werden sollen,
 ob es sich bei ihnen um Primzahlen handelt, gleichermaßen in Partitionen getrennt.
 Die Anzahl und Größe der Partitionen hängen hierbei von der Anzahl an verfügbaren Rechenelementen ab.
 Jedes der Rechenelemente berechnet anschließend die ihm zugewiesene Menge an Zahlen naiv,
-indem die Zahl mit jeder kleineren Zahl auf Teilbarkeit geprüft wird.
+indem jede Zahl mit jeder kleineren Zahl auf Teilbarkeit geprüft wird.
 
 \begin{figure}[hb]
 	\begin{center}
-		\begin{tabular}{lrrrrr}
+		\begin{tabular}{lrrrr}
 			\toprule
-			Sprache & $\bar{x}$ & $\tilde{x}$ & $s$ & $V$ & $MAD$ \\
+			Sprache & $\bar{x}$ & $\tilde{x}$ & $s$ & $V$ \\
 			\midrule
-			C          & 30.6064 & 30.590 & 0.6380 & 2.0844\% & 0.6400 \\
-			C (opt)    & 30.4666 & 30.075 & 0.6262 & 2.0554\% & 0.1750 \\
-			Rust       & 476.9242 & 475.895 & 3.6647 & 0.7684\% & 1.3450 \\
-			Rust (opt) & 37.6212 & 37.330 & 0.6651 & 1.7679\% & 0.0200 \\
-			X10        & 67.9618 & 67.405 & 1.1505 & 1.6929\% & 0.0750 \\
-			X10 (opt)  & 31.4584 & 31.305 & 0.4181 & 1.3290\% & 0.0450 \\
+			C          &  30.6064 &  30.590 & 0.6380 & 2.0844\% \\
+			C (opt)    &  30.4666 &  30.075 & 0.6262 & 2.0554\% \\
+			Rust       & 476.9242 & 475.895 & 3.6647 & 0.7684\% \\
+			Rust (opt) &  37.6212 &  37.330 & 0.6651 & 1.7679\% \\
+			X10        &  67.9618 &  67.405 & 1.1505 & 1.6929\% \\
+			X10 (opt)  &  31.4584 &  31.305 & 0.4181 & 1.3290\% \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
 	\caption{
-		Diese Tabelle stellt die Laufzeitergebnisse des sequentiellen Ergebnisses des parallel-primes-Benchmarks dar,
-		es wurde also die zu verwendende Anzahl an Rechenelementen auf 1 gesetzt.
-		Dieser Benchmark überprüft die ersten 500000 natürlichen Zahlen darauf, ob es sich bei ihnen um Primzahlen
-		\textcolor{red}{TODO Werte} handelt.
+		Diese Tabelle stellt die Laufzeitergebnisse des sequentiellen Ergebnisses des
+		\textit{parallel-primes}-Benchmarks dar,
+		es wurde also die zu verwendende Anzahl an Rechenelementen auf \texttt{\textsc{\textbf{1}}} gesetzt.
+		Dieser Benchmark überprüft die ersten \texttt{\textsc{\textbf{500000}}} natürlichen Zahlen darauf,
+		ob es sich bei ihnen um Primzahlen handelt.
+		Alle Werte sind auf vier Nachkommastellen gerundet uns mit Ausnahme des Variationskoeffizienten
+		in Sekunden angegeben.
 	}
 	\label{fig:primes_parallel_one_table}
 \end{figure}
 
 \begin{figure}[hb]
 	\begin{center}
-		\begin{tabular}{lrrrrr}
+		\begin{tabular}{lrrrr}
 			\toprule
-			Sprache & $\bar{x}$ & $\tilde{x}$ & $s$ & $V$ & $MAD$ \\
+			Sprache & $\bar{x}$ & $\tilde{x}$ & $s$ & $V$ \\
 			\midrule
-			C          & 13.8136 & 13.780 & 0.0935 & 0.6772\% & 0.0200 \\
-			C (opt)    & 13.7898 & 13.780 & 0.0912 & 0.6612\% & 0.0200 \\
-			Rust       & 242.656 & 242.48 & 0.7602 & 0.3133\% & 0.1200 \\
-			Rust (opt) & 17.883 & 17.870 & 0.0862 & 0.4823\% & 0.0300 \\
-			X10        & 46.3264 & 46.380 & 0.2348 & 0.5069\% & 0.2100 \\
-			X10 (opt)  & 16.8028 & 16.760 & 0.1181 & 0.7026\% & 0.0750 \\
+			C          &  13.8136 &  13.7800 & 0.0935 & 0.6772\% \\
+			C (opt)    &  13.7898 &  13.7800 & 0.0912 & 0.6612\% \\
+			Rust       & 242.6560 & 242.4800 & 0.7602 & 0.3133\% \\
+			Rust (opt) &  17.8830 &  17.8700 & 0.0862 & 0.4823\% \\
+			X10        &  46.3264 &  46.3800 & 0.2348 & 0.5069\% \\
+			X10 (opt)  &  16.8028 &  16.7600 & 0.1181 & 0.7026\% \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
 	\caption{
-		Diese Tabelle stellt die Laufzeitergebnisse des parallel-primes-Benchmarks dar,
-		wenn 8 Rechenelemente verwendet werden.
-		Dieser Benchmark überprüft die ersten 500000 natürlichen Zahlen darauf,
+		Diese Tabelle stellt die Laufzeitergebnisse des \textit{parallel-primes}-Benchmarks dar,
+		wenn \texttt{\textsc{\textbf{8}}} Rechenelemente verwendet werden.
+		Dieser Benchmark überprüft die ersten \texttt{\textsc{\textbf{500000}}} natürlichen Zahlen darauf,
 		ob es sich bei ihnen um Primzahlen handelt.
-		\textcolor{red}{TODO Werte}
+		Alle Werte sind auf vier Nachkommastellen gerundet uns mit Ausnahme des Variationskoeffizienten
+		in Sekunden angegeben.
 	}
 	\label{fig:primes_parallel_eight_table}
 \end{figure}
@@ -335,12 +335,11 @@ Programmiersprache in diesem Fall nicht signifikant die Laufzeit beeinflusst. Es
 Rust sich bei dieser naiven Berechnung von Primzahlen hinsichtlich der Ausführungszeit schlechter verhält als
 die anderen beiden Sprachen.
 
-\textcolor{red}{TODO Auf Statistische Mittel eingehen}
-
-Zur Bewertung von parallelen Algorithmen verwendet man unter Anderem die Werte des Speedup und der Effizienz.
-Den relativen Speedup eines parallelen Programms berechnet man mit der Formel \ref{formula:speedup} und die
-Effizienz mit der Formel \ref{formula:effizienz}. $S(n)$ bezeichnet hierbei den Speedup, $E(n)$ die Effizienz
-und $T(x)$ die Ausführungszeit mit x Prozessoren.
+Zur Bewertung von parallelen Algorithmen verwendet man unter Anderem die Werte des \textit{Speedup}
+und der \textit{Effizienz}.
+Den relativen \textit{Speedup} eines parallelen Programms berechnet man mit der Formel \ref{formula:speedup} und die
+\textit{Effizienz} mit der Formel \ref{formula:effizienz}. $S(n)$ bezeichnet hierbei den \textit{Speedup},
+$E(n)$ die \textit{Effizienz} und $T(x)$ die Ausführungszeit mit x Prozessoren.
 
 \begin{equation}
 	\label{formula:speedup}
@@ -373,18 +372,21 @@ Varianten berechnen.
 		\end{tabular}
 	\end{center}
 	\caption{
-		In dieser Tabelle werden die berechneten Werte für den Speedup und die Effizienz des parallel-primes-Benchmarks
-		veranschaulicht.
-		\textcolor{red}{TODO Werte}
+		In dieser Tabelle werden die berechneten Werte für den \textit{Speedup} und die \textit{Effizienz}
+		des \textit{parallel-primes-Benchmark} veranschaulicht. Hierbei wurden die Ergebnisse sowohl für den
+		Median als auch für das arithmetischen Mittel berechnet. Alle Werte sind auf vier Nachkommastellen gerundet.
 	}
 	\label{fig:primes_parallel_speedup_efficiency_table}
 \end{figure}
 
-Betrachtet man die Ergebnisse der Speedup- und Effizienzberechnung, so kann man keine großen Diskrepanzen 
-diesbezüglich zwischen den Sprachen erkennen. Alle profitieren mehr oder weniger von der Parallelisierung.
+Betrachtet man die Ergebnisse der \textit{Speedup}- und \textit{Effizienz}berechnung,
+so kann man keine großen Diskrepanzen 
+diesbezüglich zwischen den Sprachen erkennen. Alle profitieren ungefähr gleich viel von der Parallelisierung,
+wobei X10 den schlechtesten \textit{Startup}-Wert und die geringste \textit{Effizienz} vorweist.
 
 Der Speedup ist in diesem Beispiel eher gering, dies liegt jedoch am verwendeten Algorithmus, welcher durch
-die naive Partitionierung der zu betrachtenden Zahlen Leistungseinbußen in Kauf nimmt.
+die gleichmäßige Partitionierung in Verbindung mit der naiven Berechnung, welche bei größeren Zahlen
+einen höheren Rechenaufwand erfordert, Leistungseinbußen in Kauf nimmt.
 
 \subsection{Allokation auf dem Heap}
 
@@ -395,31 +397,34 @@ allerdings auch auf Kosten der Laufzeiteffizienz und Verfügbarkeit durch Garbag
 Um zu Überprüfen, ob diese Gegebenheit einen messbaren Effekt auf die Laufzeit eines Programmes haben kann,
 wurde ein Programm geschrieben, welches kontinuierlich Objekte auf dem Heap erstellt,
 welche anschließend wieder aus dem Geltungsbereich verschwinden.
-In C muss der Speicher, in dem diese Objekte gespeichert werden, manuell mit "`free"' befreit werden,
-in Rust wird dieser Speicher automatisch wieder befreit sobald sie den Geltungsbereich verlassen und bei
-X10 werden diese Objekte vom Garbage Collector verwalten.
+In C muss der Speicher, in dem diese Objekte gespeichert werden, manuell mit \texttt{\textsc{\textbf{free}}}
+befreit werden, in Rust wird dieser Speicher automatisch wieder befreit sobald ihr \textit{Owner} den
+Geltungsbereich verlässt und im Falle von X10 werden diese Objekte vom Garbage Collector verwaltet.
 
 Die erstellten Objekte sind in diesem Fall Arrays von Integer-Zahlenwerten.
 Das Äquivalent zu Arrays in X10 sind Rails, daher wurden in der X10 Implementierung diese verwendet.
 
 \begin{figure}[hb]
 	\begin{center}
-		\begin{tabular}{lrrrrr}
+		\begin{tabular}{lrrrr}
 			\toprule
-			Sprache    & $\bar{x}$ & $\tilde{x}$ & $s$ & $V$ & $MAD$ \\
+			Sprache    & $\bar{x}$ & $\tilde{x}$ & $s$ & $V$ \\
 			\midrule
-			C          & 0.3894   & 0.3800 & 0.0191 & 4.9058\% & 0.0100 \\
-			C (opt)    & 0.3876   & 0.3800 & 0.0197 & 5.0953\% & 0.0100 \\
-			Rust       & 29.5478  & 29.480 & 0.2671 & 0.9038\% & 0.0400 \\
-			Rust (opt) & 5.1024   & 5.1000 & 0.0258 & 0.5048\% & 0.0200 \\
-			X10        & 339.345  & 338.19 & 2.3484 & 0.6920\% & 0.3900 \\
-			X10 (opt)  & 227.8816 & 226.09 & 2.8234 & 1.2390\% & 1.0300 \\
+			C          & 0.3894   & 0.3800 & 0.0191 & 4.9058\%  \\
+			C (opt)    & 0.3876   & 0.3800 & 0.0197 & 5.0953\%  \\
+			Rust       & 29.5478  & 29.480 & 0.2671 & 0.9038\%  \\
+			Rust (opt) & 5.1024   & 5.1000 & 0.0258 & 0.5048\%  \\
+			X10        & 339.345  & 338.19 & 2.3484 & 0.6920\%  \\
+			X10 (opt)  & 227.8816 & 226.09 & 2.8234 & 1.2390\%  \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
 	\caption{
-		Diese Tabelle stellt die Ergebnisse des garbageonly-Benchmarks dar. Dieser Benchmark erstellt insgesamt 1000000
-		int-Arrays (beziehungsweise Rails in X10) mit einer Größe von 5000 Elementen.
+		Diese Tabelle stellt die Ergebnisse des garbageonly-Benchmarks dar. Dieser Benchmark erstellt insgesamt
+		\texttt{\textsc{\textbf{1000000}}} int-Arrays (beziehungsweise Rails in X10) mit einer Größe von
+		\texttt{\textsc{\textbf{5000}}} Elementen.
+		Alle Werte sind auf vier Nachkommastellen gerundet und mit Ausnahme des Variationskoeffizienten
+		in Sekunden angegeben.
 	}
 	\label{fig:garbageonly_table}
 \end{figure}
@@ -432,7 +437,7 @@ Speicherverhaltens keine eindeutige Aussage diesbezüglich treffen.
 Bei häufiger Erstellung von neuen Objekten weisen Rust und C allerdings trotzdem durch die gemessene Laufzeit
 einen nennenswerten Vorteil gegenüber X10 auf. Im Falle von Rust muss der Programmierer obendrein
 den Speicher nicht selbst wieder freigeben, denn dies geschieht implizit sobald eine Variable
-den Geltungsbereich verlässt. Somit weist Rust gegenüber C ebenfalls trotzt der schlechteren Laufzeit
+den Geltungsbereich verlässt. Somit weist Rust gegenüber C ebenfalls trotz der schlechteren Laufzeit
 einen Vorteil auf.
 
 \section{Aufwand des Programmierens}
@@ -444,86 +449,99 @@ Programmiersprachen verglichen.
 
 Zunächst wird die Struktur eines invasiven Projekts in den unterschiedlichen Programmiersprachen verglichen.
 
-Einzelne C und Rust Programme können jeweils mithilfe von octorust kompiliert werden. Gleiches gilt für X10, für
-welches x10firm die Kompilierung durchführt.
+Einzelne C und Rust Programme können jeweils mithilfe von \textit{octorust} kompiliert werden.
+Gleiches gilt für X10, für welches \textit{x10i} die Kompilierung durchführt.
 
-Zusätzlich hierzu bietet octorust jedoch auch das Kompilieren von Cargo Projekten. Diese weisen zwar einen
-höheren Aufwand zu Beginn des Projekts auf, erlauben aber anschließend nutzerfreundliches Einbinden von
-externen Bibliotheken in der Cargo.toml Konfigurationsdatei. Im Falle von X10 und C ist eine ähnliche
+Zusätzlich hierzu bietet \textit{octorust} jedoch auch das Kompilieren von Cargo Projekten.
+Diese weisen zwar einen etwas
+höheren Arbeitsaufwand zu Beginn des Projekts auf, erlauben aber anschließend nutzerfreundliches Einbinden von
+externen Bibliotheken in der Cargo.toml Konfigurationsdatei. Außerdem wird in Cargo Projekten
+die \textit{octolib} automatisch eingebunden. Im Falle von X10 und C ist eine ähnliche
 Funktionalität nicht vorhanden, externe Bibliotheken müssen beim Kompilieren manuell eingebunden werden.
 
 \subsection{Minimales Invade, Infect, Retreat}
 
-Um den Programmieraufwand eines simplen invasiven Programm zu beurteilen, wurde wurde ein Programm geschrieben, 
-welches zuerst eine "`Invade"'-Operation durchführt und anschließend eine simple `"Hello World"'
-Funktion auf jedem der reservierten Rechenelemente in der "`Infect"'-Phase ausführt.
+Um den Programmieraufwand eines simplen invasiven Programms zu beurteilen, wurde ein Programm geschrieben, 
+welches zuerst eine \textit{Invade}-Operation durchführt und anschließend eine simple `"Hello World"'
+Funktion auf jedem der reservierten Rechenelemente in der \textit{Infect}-Phase ausführt.
 Das Programm wartet anschließend bis alle Rechenlemente mit der Ausführung beendet sind und gibt anschließend
-alle Ressourcen in der "`Retreat"'-Phase wieder frei.
+alle Ressourcen in der \textit{Retreat}-Phase wieder frei.
 
 \subsubsection{Rust}
 
 Um dieses Programm in Rust zu implementieren, muss man zunächst die notwendigen Strukturen importieren.
-Benötigt werden die "`Constraints"' und "AgentClaim"' Strukturen. 
-Zusätzlich muss der "`libc::c\char`_void"'-Typ importiert werden, um die Funktionssignatur des Ilets zu definieren.
-Außerdem wird zum drucken von `"Hello World!"' die "`helper::printer::print"' Funktion benötigt.
+Benötigt werden die \texttt{\textsc{\textbf{Constraints}}} und \texttt{\textsc{\textbf{AgentClaim}}} Strukturen. 
+Zusätzlich muss der \texttt{\textsc{\textbf{libc::c\char`_void}}}-Typ importiert werden,
+um die Funktionssignatur des \textit{i-let} Funktionen zu definieren.
+Außerdem wird zum Drucken von "`Hello World!"' die \texttt{\textsc{\textbf{helper::printer::print}}}
+Funktion benötigt.
 
-Zunächst werden die Constraints mithilfe der "`Constraints"'-Struktur initialisiert. Anschließend können diese
-bei der Initialisierung einer Instanz der "`AgentClaim"'-Struktur verwendet werden. Wurde der Konstruktor
-der "`AgentClaim"'-Struktur aufgerufen, wurde die "`Invade"'-Operation bereits durchgeführt. Es muss nun nur noch
-die "`infect"'-Methode aufgerufen werden. Dieser Methode wird eine Closure als Parameter übergeben, welche den
-Text "`Hello World"' auf die Kommandozeile druckt. Sobald die "`infect"'-Methode aufgerufen wurde, wartet der
-Hauptfaden des Programms automatisch darauf, dass die einzelnen Rechenelemente ihre Ausführung beendet haben.
+Zunächst werden die \textit{Constraints} mithilfe der \texttt{\textsc{\textbf{Constraints}}}-Struktur initialisiert.
+Anschließend können diese weiter konfiguriert werden oder direkt bei der Initialisierung einer Instanz der
+\texttt{\textsc{\textbf{AgentClaim}}}-Struktur verwendet werden. Wurde der Konstruktor
+der \texttt{\textsc{\textbf{AgentClaim}}}-Struktur aufgerufen,
+wurde die \textit{Invade}-Operation bereits implizit durchgeführt.
+Es muss nun nur noch die \texttt{\textsc{\textbf{infect}}}-Methode aufgerufen werden.
+Dieser Methode wird eine Closure als Parameter übergeben, welche den
+Text "`Hello World"' auf die Kommandozeile druckt. Sobald die \texttt{\textsc{\textbf{infect}}}-Methode
+aufgerufen wurde, wartet der Hauptfaden des Programms darauf,
+dass die einzelnen Rechenelemente ihre Ausführung beendet haben.
 
-Hiernach muss der Programmierer keine zusätzlichen Instruktionen aufrufen. Die "`Retreat"'-Phase wird beim
+Hiernach muss der Programmierer keine zusätzlichen Instruktionen aufrufen. Die \textit{Retreat}-Phase wird beim
 Verlassen des Geltungsbereichs automatisch durchgeführt.
 
-Eine beispielhafte Implementierung wird in Listing \ref{code:rust_minimal_infect} veranschaulicht.
+Eine beispielhafte Implementierung dieses Programms wird in Listing \ref{code:rust_minimal_infect} veranschaulicht.
 
+\lstset{basicstyle=\tiny}
 \begin{lstlisting}[float,caption={Minimales Invade, Infect, Retreat in Rust},label=code:rust_minimal_infect]
 #![no_std]
 
 extern crate libc;
 extern crate octolib;
 use libc::c_void;
-use octolib::helper::printer::*;
+use octolib::helper::printer::print;
 use octolib::improvements::constraints::Constraints;
 use octolib::improvements::claim::AgentClaim;
 
 #[no_mangle]
-pub extern "C" fn rust_main_ilet(claim: u8) {
+pub extern "C" fn rust_main_ilet(claim_id: u8) {
 
-    let mut ilet = |params: *mut c_void| { print("Hello World\n\0"); };
+    let mut ilet_fn = |params: *mut c_void| { print("Hello World\n\0"); };
+    
     let mut constr = Constraints::new(4, 4);
-    let mut agent = AgentClaim::new(constr);
-    agent.infect(ilet, None);
-
+    let mut claim = AgentClaim::new(constr);
+    claim.infect(ilet_fn, None);
 }
 \end{lstlisting}
+\lstset{basicstyle=\normalsize}
 
 \subsubsection{X10}
 
 Soll das Programm in X10 implementiert werden, so muss man zuerst die benötigten Klassen importieren. Es werden 
-mindestens die Klassen "`invasic.constraints.PEQuantity"', "`invasic.IncarnationID"' und "`invasic.Claim"'
-benötigt. Zusätzlich muss "`x10.io.Console"' importiert werden um das Drucken auf die Kommandozeile zu
-ermöglichen.
+mindestens die Klassen \texttt{\textsc{\textbf{invasic.constraints.PEQuantity}}},
+\texttt{\textsc{\textbf{invasic.IncarnationID}}} und \texttt{\textsc{\textbf{invasic.Claim}}}
+benötigt. Zusätzlich muss \texttt{\textsc{\textbf{x10.io.Console}}} importiert werden
+um das Drucken auf die Kommandozeile zu ermöglichen.
 
-Wie bereits bei Rust werden zunächst die Constraints initialisiert. Hierzu
-ruft man lediglich den Konstruktor der Klasse "`PEQuantity"' auf. Man kann dies mithilfe
-des "`\char`&\char`&"'-Operators mit weiteren Constraints-Attributen verbinden.
-Anschließend führt man die "`Invade"'-Phase mithilfe der statischen "`Claim.invade"'-Methode aus und erhält
-als Rückgabewert den erstellten Claim.
-Um dann die "`Infect"'-Phase zu beginnen, muss auf diesem Claim die "`infect"'-Methode verwendet werden.
+Wie bereits bei Rust werden zunächst die \textit{Constraints} spezifiziert. Hierzu
+ruft man lediglich den Konstruktor der Klasse \texttt{\textsc{\textbf{PEQuantity}}} auf. Man kann mithilfe
+des \texttt{\textsc{\textbf{\char`&\char`&}}}-Operators weitere \textit{Constraints}-Attributen wie
+beispielsweise \texttt{\textsc{\textbf{TileSharing.WITH\char`_OTHER\char`_APPLICATIONS}}} mit der
+\texttt{\textsc{\textbf{PEQuantity}}} verbinden.
+Anschließend führt man die \texttt{\textsc{\textbf{Invade}}}-Phase mithilfe der statischen
+\texttt{\textsc{\textbf{Claim.invade}}}-Methode aus und erhält als Rückgabewert den erstellten \textit{Claim}.
+Um darauf die \textit{Infect}-Phase zu beginnen, muss auf diesem \textit{Claim} die
+\texttt{\textsc{\textbf{infect}}}-Methode verwendet werden.
 Als Parameter erhält diese eine Closure, welche "`Hello World"' auf die Kommandozeile druckt.
 Sobald die Methode aufgerufen wurde, wartet der Hauptfaden des Programms auf das Ende der Ausführung der
 verwendeten Rechenelemente.
 
-Nach erfolgreicher Ausführung der "`infect"'-Phase, muss dann noch manuell die "`retreat"'-Method des Claims
-aufgerufen werden.
+Nach erfolgreicher Ausführung der \textit{Infect}-Phase, muss dann noch manuell die 
+\texttt{\textsc{\textbf{retreat}}}-Methode des \textit{Claims} aufgerufen werden.
 
-\textcolor{red}{impl Retreat manuell Fragezeichen, TileSharing}
+Eine beispielhafte Implementierung dieses Programms wird in Listing \ref{code:x10_minimal_infect} veranschaulicht.
 
-Eine beispielhafte Implementierung wird in Listing \ref{code:x10_minimal_infect} veranschaulicht.
-
+\lstset{basicstyle=\tiny}
 \begin{lstlisting}[float,caption={Minimales Invade, Infect, Retreat in X10},label=code:x10_minimal_infect]
 import x10.io.Console;
 
@@ -533,47 +551,49 @@ import invasic.IncarnationID;
 import invasic.Claim;
 
 class Infect {
-	public static def main(Array[String]) {
+    public static def main(Array[String]) {
+        val iletFn = (id: IncarnationID) => {
+            Console.OUT.println("Hello World!");
+        };
 
-	    val ilet = (id: IncarnationID) => {
-	        Console.OUT.println("Hello World!");
-	    };
-
-	    val constraints = new PEQuantity(4, 4) && TileSharing.WITH_OTHER_APPLICATIONS;
+        val constraints = new PEQuantity(4, 4) && TileSharing.WITH_OTHER_APPLICATIONS;
         val claim = Claim.invade(constraints);
-        claim.infect(ilet);
-	}
+        claim.infect(iletFn);
+        claim.retreat();
+    }
 };
 \end{lstlisting}
+\lstset{basicstyle=\normalsize}
 
 \subsubsection{C}
 
-Im Gegensatz zu Rust und X10 müssen die verwendeten Strukturen nicht explizit importiert werden. Es muss lediglich
-"`octopos.h"' mit der Präprozessor-Anweisung "`include"' verwendet werden.
-Um auf die Kommandozeile drucken zu können, muss zusätzlich "`stdio.h"' importiert werden.
+Im Gegensatz zu Rust und X10 müssen die in C verwendeten Strukturen nicht alle explizit importiert werden.
+Es muss lediglich \texttt{\textsc{\textbf{octopos.h}}} mit der Präprozessor-Anweisung
+\texttt{\textsc{\textbf{include}}} verwendet werden.
+Um auf die Kommandozeile drucken zu können, muss zusätzlich \texttt{\textsc{\textbf{stdio.h}}} importiert werden.
 
-Die Implementierung des eigentlichen Programms erweist sich in C jedoch als deutlich komplexer als es bei
-Rust oder X10 der Fall war.
+Die Constraints werden mithilfe der \texttt{\textsc{\textbf{agent\char`_constr\char`_create}}}-Funktion initialisiert
+und müssen anschließend mit diversen \texttt{\textsc{\textbf{agent\char`_constr\char`_set\char`_...}}}-Funktionen
+konfiguriert werden.
+Mit dieser konfigurierten \texttt{\textsc{\textbf{constraints\char`_t}}}-Struktur kann nun eine
+\texttt{\textsc{\textbf{agentclaim\char`_t}}}-Struktur mithilfe
+der \texttt{\textsc{\textbf{agent\char`_claim\char`_invade}}}-Funktion initialisiert werden.
 
-Die Constraints werden mithilfe der "`agent\char`_constr\char`_create"'-Funktion initialisiert
-und müssen anschließend mit diversen "`agent\char`_constr\char`_set\char`_..."'-Funktionen konfiguriert werden.
-Mit dieser konfigurierten "`constraints\char`_t"'-Struktur kann nun eine "`agentclaim\char`_t"'-Struktur mithilfe
-der "`agent\char`_claim\char`_invade"'-Funktion initialisiert werden.
-
-Nach dieser "`Invade"'-Operation muss man in C manuell über alle Rechenelemente iterieren, dabei
-"`simple\char`_ilet"'-Strukturen für diese erstellen und anschließend mit der "`proxy\char`_infect"'-Funktion
-die Ausführung beginnen. Als Ilet-Funktion muss eine volle C Funktion verwendet werden,
+Nach dieser \textit{Invade}-Operation muss man in C manuell über alle reservierten Rechenelemente iterieren, dabei
+\texttt{\textsc{\textbf{simple\char`_ilet}}}-Strukturen für diese erstellen und anschließend mit der
+\texttt{\textsc{\textbf{proxy\char`_infect}}}-Funktion
+die Ausführung beginnen. Als \textit{i-let}-Funktion muss eine C Funktion verwendet werden,
 da die Sprache keine Closures oder ähnliche Konstrukte bietet.
 Damit der Hauptfaden auf das Ausführungsende der einzelnen Rechenelemente wartet, muss
 man manuell Signalstrukturen verwenden.
 
 Nachdem die Recheneinheiten signalisiert haben, dass sie ihre Ausführung beendet haben, muss man noch manuell
-die "`Retreat"'-Phase beginnen und anschließend mit der "`shutdown"'-Funktion die Ausführung des Programms beenden.
+die \textit{Retreat}-Phase beginnen und anschließend mit der \texttt{\textsc{\textbf{shutdown}}}-Funktion
+die Ausführung des Programms beenden.
 
-\textcolor{red}{impl Retreat}
+Eine beispielhafte Implementierung dieses Programms wird in Listing \ref{code:c_minimal_infect} veranschaulicht.
 
-Eine beispielhafte Implementierung wird in Listing \ref{code:c_minimal_infect} veranschaulicht.
-
+\lstset{basicstyle=\tiny}
 \begin{lstlisting}[float,caption={Minimales Invade, Infect, Retreat in C},label=code:c_minimal_infect]
 #include <octopos.h>
 #include <stdio.h>
@@ -583,41 +603,43 @@ void signaler(void* sig) {
     simple_signal_signal_and_exit(s);
 }
 
-void ILetFunc(void *signal) {
+void ilet_fn(void *signal) {
     printf("Hello World!\n");
     simple_ilet answer;
     simple_ilet_init(&answer, signaler, signal);
     dispatch_claim_send_reply(&answer);
 }
 
-void main_ilet(claim_t claim) {
+void main_ilet(claim_t claim_id) {
 
-    constraints_t myConstr = agent_constr_create();
-    agent_constr_set_quantity(myConstr, 4, 4, 0);
-    agent_constr_set_tile_shareable(myConstr, 1);
-    agentclaim_t myClaim = agent_claim_invade(0, myConstr);
+    constraints_t constr = agent_constr_create();
+    agent_constr_set_quantity(constr, 4, 4, 0);
+    agent_constr_set_tile_shareable(constr, 1);
+    agentclaim_t claim = agent_claim_invade(0, constr);
 
     simple_signal sync;
-    simple_signal_init(&sync, agent_claim_get_pecount(myClaim));
+    simple_signal_init(&sync, agent_claim_get_pecount(claim));
 
     for (int tile=0; tile < get_tile_count(); tile++) {
-        int pes=agent_claim_get_pecount_tile_type(myClaim,  tile, 0);
+        int pes=agent_claim_get_pecount_tile_type(claim,  tile, 0);
         if (pes) {
-            proxy_claim_t pClaim = agent_claim_get_proxyclaim_tile_type(myClaim, tile, 0);
+            proxy_claim_t p_claim = agent_claim_get_proxyclaim_tile_type(claim, tile, 0);
 
-            simple_ilet ILet[pes];
+            simple_ilet ilets[pes];
             for (int i = 0; i < pes; ++i) {
-                simple_ilet_init(&ILet[i], ILetFunc, &sync);
+                simple_ilet_init(&ilets[i], ilet_fn, &sync);
             }
 
-            proxy_infect(pClaim, &ILet[0], pes);
+            proxy_infect(p_claim, &ilets[0], pes);
         }
     }
 
     simple_signal_wait(&sync);
+    agent_claim_retreat(claim);
     shutdown(0);
 }
 \end{lstlisting}
+\lstset{basicstyle=\normalsize}
 
 \subsubsection{Vergleich}
 
