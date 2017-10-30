@@ -8,15 +8,15 @@ invasiven Computing behandelt.
 Rust ist eine Programmiersprache, welche wie beispielsweise C++ direkte Kontrolle über die
 unterliegende Hardware bieten soll. Dies bedeutet in der Praxis, dass diese Sprache nicht von einem Garbage
 Collector Gebrauch macht, wie es Sprachen wie zum Beispiel X10 tun. Im Gegensatz zu C++ bietet Rust jedoch
-standardmäßig automatische Speichersicherheit und garantieren somit, dass Programme keine Speicherfehler beinhalten.
+standardmäßig automatische Speichersicherheit und garantieren somit, dass Programme keine Speicherfehler enthalten.
 \cite{theRustLanguage}
 
 Rust erfreut sich seit ihrer Veröffentlichung wachsende Beliebtheit bei Programmierern aller Art. Sie wurde
 bei einer Umfrage der Webseite \textit{stackoverflow.com} im Jahre 2016 als beliebteste Programmiersprache bei 
 Entwicklern ermittelt\cite{stackoverflowSurvey}.
 
-Das wohl derzeit prominenteste Projekt, welches Rust verwendet, ist der Servo Web Browser Engine. Dieses Projekt
-wurde von Mozilla Research initialisiert, erhält jedoch ebenfalls Beiträge von Freiwilligen
+Das wohl derzeit prominenteste Projekt, welches Rust verwendet, ist der \textit{Servo Web Browser Engine}.
+Dieses Projekt wurde von Mozilla Research initiiert, erhält jedoch ebenfalls Beiträge von Freiwilligen
 als auch von Unternehmen wie Samsung.
 Diese Software soll nach und nach im Mozilla Firefox Webbrowser integriert werden und hierbei eine bessere
 Leistung und Sicherheit als vorhergehende Technologien vorweisen\cite{engineeringServo}.
@@ -37,7 +37,7 @@ Hierfür sollen gewisse häufig auftretende Fehler in der Parallelprogrammierung
 Rust lehnt sich konzeptionell und syntaktisch an C-ähnliche Sprachen an, enthält jedoch auch Konzepte aus der
 funktionalen Programmierung. Zusätzlich werden Sprachkonzepte und Abstraktionen geboten, welche
 ansonsten zumeist in höheren Programmiersprachen geboten werden. Hierdurch soll der Einstieg für
-Programmierer, die zuvor keine oder nur wenige Erfahrungen mit Systemsprachen gemacht haben, erleichtert werden.
+Programmierer, die zuvor keine oder nur wenige Erfahrungen mit Systemsprachen gesammelt haben, erleichtert werden.
 \cite{engineeringServo}
 
 Diese zusätzlichen Sicherheiten und Nutzerfreundlichkeiten sollen gleichzeitig jedoch keine Laufzeitkonsequenzen mit 
@@ -50,15 +50,13 @@ Das Ziel hierbei ist es, Code aus anderen Sprachen aus einem Rust Kontext heraus
 
 \subsection{Das Typsystem}
 
-\todo{Affine Typen, Vorteil}
-
 Das signifikanteste Alleinstellungsmerkmal der Programmiersprache Rust ist ihr Typsystem. Dieses ermöglicht es
-erst, die versprochenen Sicherheitsgarantien ohne zusätzliche Konstrukte wie einen Garbage
+erst, die versprochenen Sicherheitsgarantien ohne zusätzliche Konstrukte wie einem Garbage
 Collector zu realisieren.\cite{rustBook}
 
 \subsubsection{Ownership, Move-Semantik und Borrowing}
 
-Das Typsystem integriert das Konzept der \textit{Ownership (engl. Besitz)} ein.
+Das Typsystem integriert das Konzept der \textit{Ownership (engl. Besitz)}.
 Dies ist die zentrale Besonderheit von Rusts Typsystem.
 Der Grundgedanke hierhinter ist es, dass der Zugriff auf eine Speicherregion exklusiv einer Variable
 zur Verfügung gestellt wird. Diese Variable wird auch als \textit{Owner (engl. Besitzer)} bezeichnet.
@@ -68,7 +66,6 @@ die dort vorhandenen Daten können anschließend nicht mehr verwendet werden.
 Dies ist der Mechanismus, der es in Rust erlaubt, Speicher ohne manuelle Befreiung oder Nutzung eine
 Garbage Collectors zu verwalten. Er stellt sicher, dass keine fehlerhaften Speicherzugriffe
 durch die Nutzung von ungültigen Daten im Speicher entstehen.\cite{rustBook}
-
 Das Konzept des \textit{Ownership} wurde von affinen Typen inspiriert.\cite{embeddedRustOS}
 Solche Typen können maximal ein mal verwendet werden.\cite{affineTypes}
 
@@ -108,7 +105,7 @@ Typen von Referenzen, veränderliche und unveränderliche Referenzen. Standardm�
 Referenzen verwendet. Diese erlauben es nicht, den Wert des Speicherbereichs zu verändern, sondern nur auszulesen.
 Es gibt keine Limitierung bei der Anzahl unveränderlicher Referenzen, die eine Variable besitzen kann. Im Gegensatz
 hierzu kann nur eine veränderliche Referenz auf die Variable existieren. Dies ermöglicht es, bereits zur
-Compile-Zeit gewisse Wettlaufsituationen, die sogenannten \textit{Data Races},
+Compile-Zeit gewisse Wettlaufsituationen, sogenannte \textit{Data Races},
 in der Parallelprogrammierung auszuschließen.\cite{rustBook}
 
 \subsubsection{Strukturen, Implementierungen, Aufzählungen und Traits}
@@ -129,20 +126,20 @@ Sprachen.\cite{rustBook}
 
 Aufzählungen agieren in Rust ähnlich zu anderen Programmiersprachen. Der Vorteil der Aufzählungen in Rust ist, dass
 diese fürs \textit{Pattern Matching} verwendet werden können. Ein Beispiel dazu, wie dies in der Praxis verwendet
-werden kann wird in Kapitel \ref{sec:error_handling}
+werden kann wird in Kapitel \ref{sec:error_handling} beschrieben.
 \cite{rustBook}
 
 Traits sind Sprachkonstrukte in Rust, welche das Verhalten von Typen abstrakt definieren können. Sie ähneln 
 hierbei Schnittstellen (\textit{Interfaces}) aus anderen Programmiersprachen.
 Zusätzlich zur benutzerdefinierten Spezifikation
 solcher \textit{Interface}-ähnlichen Konstrukte bietet Rust vordefinierte Traits, welche das Verhalten der Typen
-bezüglich \textit{Ownership} und \textit{Move}-Semantik beeinflussen.\cite{rustBook}
+bezüglich \textit{Ownership} und \textit{Move}-Semantik beeinflussen können.\cite{rustBook}
 
 Zum einen existiert das \textit{Drop}-Trait. Dieses Trait erlaubt es, das Verhalten eines Typen beim Verlassenen des
 Geltungsbereichs zu beeinflussen. In der \textit{drop}-Methode des Traits wird es ermöglicht, einen Destruktor
 für den Typ zu definieren. Dieser kann aus unterschiedlichen Gründen benötigt oder hilfreich sein.
 Beispielsweise kann man einen solchen verwenden, 
-m einen Referenzzähler zu dekrementieren, unbenutzte Netzwerkverbindungen
+um einen Referenzzähler zu dekrementieren, unbenutzte Netzwerkverbindungen
 zu trennen oder andersweitig Ressourcen wieder freizugeben.\cite{rustBook}
 
 Außerdem gibt es die \textit{Copy}-Traits, welche es ermöglichen, anstelle der \textit{Move}-Semantik die
@@ -160,7 +157,7 @@ unerwünschten Konsequenzen führen.\cite{rustBook}\cite{rustDocCopy}
 Obwohl der Compiler dank Rusts Typsystem bereits bei der Kompilierung eine Vielzahl von Fehlern erkennen kann,
 ist dies  nicht für alle möglichen Fehlertypen möglich. Beispielsweise ist es möglich, dass
 durch einen inkorrekte Indizierung eines Arrays ein Fehler entsteht.
-Es müssen also zur Laufzeit solche mögliche Fehler behandelt werden.\cite{rustBook}
+Solche Fehler müssen also zur Laufzeit behandelt werden.\cite{rustBook}
 
 Fehler werde in Rust idiomatisch mithilfe von Rückgabewerten vom Aufzählungstyp \texttt{\textsc{\textbf{Result}}}
 behandelt. Anhand dieser Rückgabewerte lässt sich mithilfe von
@@ -169,9 +166,10 @@ kann der eigentliche Rückgabewert der Funktion aus dieser Aufzählung entnommen
 \cite{rustBook}
 
 Wird ein Fehler nicht auf diese Art und Weise behandelt, wird das \texttt{\textsc{\textbf{panic!}}}-Makro
-aufgerufen. Dieses befreit standardmäßig die Daten des Programms auf dem Stack, druckt einen Stacktrace und
-beendet Anschließend die Ausführung des Programms. Es ist jedoch auch möglich, stattdessen die Ausführung des
-Programms direkt zu beenden.\cite{rustBook}
+aufgerufen. Dieses befreit standardmäßig die Daten des Programms auf dem Stack, druckt anschließend einen
+Stacktrace und beendet darauf die Ausführung des Programms.
+Es ist jedoch auch möglich, ein Programm so zu konfigurieren,
+dass stattdessen die Ausführung des Programms beendet wird sobald ein unbehandelter Fehler auftritt.\cite{rustBook}
 
 \subsection{Interaktion mit anderen Programmiersprachen}
 
@@ -192,11 +190,11 @@ direkt ein Speichersegment adressieren. Somit hat man direkte Kontrolle über di
 jedoch bei Unachtsamkeit seitens des Entwicklers zu Fehlern oder undefiniertem Verhalten führen kann.
 Außerdem können unsichere Funktionen, beispielsweise welche die mithilfe der
 \textit{Foreign Function Interface} aus anderen Programmiersprachen importiert wurden,
-nur in \texttt{\textsc{\textbf{unsafe}}}-Blöcken verwendet werden.
+nur in \texttt{\textsc{\textbf{unsafe}}}-Blöcken verwendet werden.\cite{rustBook}
 
 Auch in \texttt{\textsc{\textbf{unsafe}}}-Blöcken bleibt das Konzept von \textit{Ownership} und die zugehörige
 \textit{Move}-Semantik und \textit{Borrowing} bestehen. Diese Sicherheitsmechanik wird also nicht aufgegeben
-wenn man die Funktionalität der \texttt{\textsc{\textbf{unsafe}}}-Blöcke verwendet.
+wenn man die Funktionalität der \texttt{\textsc{\textbf{unsafe}}}-Blöcke verwendet.\cite{rustBook}
 
 \subsection{Architektur/Compiler}
 
@@ -220,10 +218,11 @@ wechseln. Es bietet auch die Funktionalität, die benötigten Kern- und Standard
 Architekturen herunterzuladen, um Programme für andere Zielarchitekturen zu kompilieren.\cite{rustupRepo}
 
 Sowohl \texttt{\textsc{\textbf{rustc}}} als auch \texttt{\textsc{\textbf{cargo}}} ermöglichen das Kompilieren für
-unterschiedliche Zielarchitekturen mithilfe der \texttt{\textsc{\textbf{rustc}}} und
-\texttt{\textsc{\textbf{-{}-target}}}-Option. Als Compiler-Backend wird LLVM verwendet.
+unterschiedliche Zielarchitekturen mithilfe der
+\texttt{\textsc{\textbf{-{}-target}}}-Option. Als Compiler-Backend wird \textit{LLVM} verwendet.
 Rust-Code wird also vor der Übersetzung zu Maschinenbefehlen in die Zwischensprache
-LLVM-IR übersetzt und erst anschließend weiterverarbeitet. Somit ist es möglich, Rust-Programme für alle von LLVM
+\textit{LLVM-IR} übersetzt und erst anschließend weiterverarbeitet.
+Somit ist es möglich, Rust-Programme für alle von \textit{LLVM}
 unterstützen Rechnerarchitekturen zu kompilieren.\cite{rustGPU}
 
 
@@ -310,12 +309,12 @@ Dieses unterstützt die \textit{Invade}, \textit{Infect} und \textit{Retreat} Ph
 Zusätzlich hierzu existiert das \textit{invasive Run-Time Support System (iRTSS)}. Diese Middleware
 fungiert als eine Hardware-Abstraktionsschicht und als Ressourcenverwalter.
 \textit{OctoPOS} und \textit{iRTSS} bieten so eine Plattform für das invasive Programmieren und
-unterstützen derzeit Zurzeit den Gebrauch der Programmiersprachen C, C++ und X10.
+unterstützen derzeit den Gebrauch der Programmiersprachen C, C++ und X10.
 \cite{octopos}\cite{invasiveManyCore}\cite{invasiveRISC}
 
-Um das Konzept des invasiven Computing möglichst effizient auszunutzen, wurden speziell an das invasive Computing
+Um das Konzept des invasiven Computing möglichst effizient auszunutzen, wird speziell an das invasive Computing
 angepasste Hardware entwickelt, deren Prozessorkerne auf dem Design des LEON3 Prozessors basieren.
-Diese Hardware unterstützen gewisse invasive Grundfunktionen und entlastet somit das \textit{OctoPOS} Betriebssystem
+Diese Hardware unterstützt gewisse invasive Grundfunktionen und entlastet somit das \textit{OctoPOS} Betriebssystem
 und das \textit{iRTSS}.\cite{invasiveArrays}
 
 \section{Verwandte Arbeiten}

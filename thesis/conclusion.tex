@@ -8,28 +8,32 @@ und ein Ausblick auf die Zukunft der Programmiersprache Rust im Bezug zum invasi
 Betrachtet man die Ergebnisse der Evaluation, so kann behauptet werden,
 dass Rust in gewissen Aspekten C oder X10 vorzuziehen ist.
 
-Zum einen eliminiert Rust einige Fehlerquellen, welche in C zu undefiniertem Verhalten führen können.
-In Rust muss der Programmierer nicht selbst auf solche Fehler achten und wird teils bereits vom Compiler auf Fehler
+Zum einen eliminiert Rust einige Fehlerquellen, welche in C oder anderen herkömmlichen
+Systemsprachen zu undefiniertem Verhalten führen können.
+In Rust muss der Programmierer nicht selbst auf solche Fehler achten und wird bereits vom Compiler auf Fehler
 hingewiesen. Dies erlaubt es, sicherere und weniger fehleranfällige Programme zu schreiben.
 Sollte es trotzdem während der Laufzeit zu schwerwiegenden Fehlern kommen, beispielsweise bei einem Pufferüberlauf,
 brechen Rust Programme die Ausführung ab und weisen so kein undefiniertes Verhalten auf.
 
 Des Weiteren weist Rust in Situationen, in denen häufig Objekte erstellt und wieder den Geltungsbereich verlassen,
 ein besseres Laufzeitverhalten auf als X10 es tut. Außerdem eignet sich X10 wegen des Garbage Collectors nicht für 
-Situationen, in denen Pausen jeglicher Art nicht erwünscht sind, beispielsweise bei Echtzeitsystemen. In diesem
+Anwendungsgebiete, in denen Pausen jeglicher Art nicht erwünscht sind, beispielsweise bei Echtzeitsystemen. In diesem
 Einsatzgebiet ist die Verfügbarkeit des Systems wichtig, daher wäre eine Garbage Collector Pause nicht
 wünschenswert. Rust wäre hier eine bessere Option.
 
-Außerdem weist das Kompilieren mit \textit{octorust} weitaus kürzere Kompilierungsdauer
+Außerdem weist das Kompilieren mit \textit{octorust} deutlich kürzere Kompilierungsdauer
 als der \textit{x10i}-Compiler auf,
 welches bei der Entwicklung von Programmen unter Umständen ein Zeitersparnis
 mit sich bringen kann. 
 Zudem sind die Dateigrößen der kompilierten Rust Programme geringer als es bei X10 der Fall ist.
 
 Rust bietet beim Programmieraufwand kaum Vorteile gegenüber X10, einzig das implizite \textit{Retreat} wäre hier zu 
-erwähnen. Vergleicht man Rust diesbezüglich allerdings mit C, so erkennt man eine deutliche Reduktion im Aufwand.
+erwähnen.
+X10 bietet zudem derzeit robustere Abstraktionen über die C-Schnittstelle von \textit{OctoPOS} und
+\textit{iRTSS}.
+Vergleicht man Rust diesbezüglich allerdings mit C, so erkennt man eine deutliche Reduktion im Programmieraufwand.
 
-Negativ zu betrachten wäre die starke Abhängigkeit von der C-Schnittstelle vom IRTSS Betriebssystem,
+Negativ zu betrachten wäre die starke Abhängigkeit von der \textit{OctoPOS/iRTSS} C-Schnittstelle,
 welche die Sicherheit von Rust teils aufgibt. Die Funktionen der C-Schnittstelle bieten nämlich keine Garantien 
 bezüglich der Sicherheit und die häufige Nutzung von \texttt{\textsc{\textbf{void}}}-Zeigern zum Übertragen
 von Parametern ist ebenfalls ein Problem, welches zu Fehlern führen kann.
@@ -54,10 +58,10 @@ Durch die unsichere Art und Weise, in der die Parameterübergabe in der \textit{
 \textit{octolib} angeboten wird, können Programmfehler entstehen. Dies könnte beispielsweise durch den Einsatz von
 Serialisierungsbibliotheken wie \texttt{\textsc{\textbf{serde}}} in der Zukunft verbessert werden.
 
-Um die starke Abhängigkeit von \textit{OctoPOS} und \textit{iRTSS} ihrer C-Schnittstelle zu verringern,
+Um die starke Abhängigkeit von der \textit{OctoPOS/iRTSS} C-Schnittstelle zu verringern,
 können weitere Abstraktionen erstellt werden, welche von den
 besonderen Eigenschaften der Rust-Programmiersprache Gebrauch machen.
 Dass dies möglich ist, hat die Implementierung des X10-Compilers \textit{x10i} bewiesen,
-denn dieser verwendet die exakt selbe C-Schnittstelle,
+denn dieser verwendet dieselbe C-Schnittstelle,
 bietet jedoch robuste Abstraktionen über diese und erlaubt so
-das Entwickeln von X10-Programmen, ohne dass der Programmierer sich mit der C-Schnittstelle befassen muss.
+das Entwickeln von X10-Programmen, ohne dass der Programmierer sich dabei mit der C-Schnittstelle befassen muss.

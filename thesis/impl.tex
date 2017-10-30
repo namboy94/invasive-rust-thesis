@@ -10,10 +10,10 @@ Programmiersprache Rust zu schreiben.
 Rust wird derzeit nicht offiziell auf der SPARC-V8 Architektur unterstützt. Rust verwendet jedoch als Backend LLVM,
 welches diese Architektur unterstützt und daher ist es prinzipiell möglich,
 Rust-Programme für diese Architektur zu kompilieren.
-Die Rust-Standardbibliothek ist allerdings zu schwierig auf andere Architekturen zu portieren.
+Die Rust-Standardbibliothek ist allerdings schwierig auf andere Architekturen zu portieren.
 Um diese Hürde zu umgehen bietet Rust die Funktion,
 Programme mit einer minimalen, plattformunabhängigen Untermenge der Standardbibliothek zu kompilieren.
-Diese Funktion wird hier ausgenutzt,
+Diese Funktionalität wird hier ausgenutzt,
 um eine minimale Implementierung der Programmiersprache auf die SPARC-V8 Architektur zu portieren.
 
 Um ein Rust Programm für eine nicht offiziell unterstütze Architektur zu kompilieren,
@@ -21,7 +21,8 @@ muss man zuerst die \textit{libcore} Bibliothek
 für die Zielarchitektur kompilieren. Um dies zu bewerkstelligen, benötigt man eine JSON-Datei, welche
 dem Compiler die nötigen Informationen bezüglich der Zielarchitektur zur Verfügung stellt.
 Eine solche JSON Datei für die
-SPARC-V8 Architektur wird beispielsweise in Listing \ref{code:leon_json}  sieht beispielsweise wie folgt aus\cite{initialSparcSupportGithub}:
+SPARC-V8 Architektur wird beispielsweise in Listing \ref{code:leon_json} veranschaulicht.
+\cite{initialSparcSupportGithub}
 
 \begin{lstlisting}[float,caption={
 Eine beispielhafte JSON-Spezifikationsdatei für die SPARC-V8 Architektur.
@@ -37,7 +38,7 @@ Eine beispielhafte JSON-Spezifikationsdatei für die SPARC-V8 Architektur.
     "target-endian": "big",
     "target-pointer-width": "32",
     "linker-flavor": "ld",
-    "linker": "Pfad zum SPARC-V8 C-Linker",
+    "linker": "Pfad zum SPARC-V8 Linker",
     "link-args": [
         "-nostartfiles"
     ]
@@ -64,8 +65,8 @@ Nachdem die \textit{libcore} Bibliothek erfolgreich kompiliert wurde, kann man,
 wenn \texttt{\textsc{\textbf{rustup}}} verwendet wurde um \texttt{\textsc{\textbf{rustc}}} und
 \texttt{\textsc{\textbf{cargo}}} zu installieren, 
 die resultierende \texttt{\textsc{\textbf{.rlib}}}-Datei anderen Rust-Programmen
-beim Kompilieren zur Verfügung stellen,
-indem man diese in das korrekte Unterverzeichnis im lokalen \texttt{\textsc{\textbf{.rustup}}} Verzeichnis kopiert.
+beim Kompilieren zur Verfügung stellen, indem man diese in das korrekte Unterverzeichnis im
+lokalen \texttt{\textsc{\textbf{\char`~/.rustup}}} Verzeichnis kopiert.
 Alternativ kann man das \textit{libcore} Cargo-Projekt direkt durch die Abhängigkeiten in der Cargo.toml Datei
 eines Cargo Projekts einbinden.
 
@@ -76,7 +77,7 @@ Außerdem müssen die Funktionen \texttt{\textsc{\textbf{eh\char`_personality}}}
 \texttt{\textsc{\textbf{eh\char`_unwind\char`_resume}}} und
 \texttt{\textsc{\textbf{panic\char`_fmt}}} in diesem Programm manuell implementiert werden.
 Nennenswert ist vor allem letztere, denn diese Funktion
-wird aufgerufen, sobald ein Programm nach einer unbehandelten Ausnahme kontrolliert die Ausführung beendet.
+wird aufgerufen, sobald ein Programm nach einen unbehandelten Fehler kontrolliert die Ausführung beendet.
 Der Anfang eines zu kompilierenden Programms muss also aussehen wie das Beispiel in Listing \ref{code:minimal_nostd}.
 
 \begin{lstlisting}[float,caption={
@@ -91,9 +92,11 @@ Der Beginn eines Rust-Programms, welches nicht die Standardbibliothek verwendet.
 #[lang = "panic_fmt"] fn panic_fmt() -> ! { loop {} }
 \end{lstlisting}
 
-Um dann das Programm zu kompilieren, verwendet man entweder \texttt{\textsc{\textbf{rustc}}} bei eigenständigen
-\texttt{\textsc{\textbf{.rs}}} Dateien oder den \texttt{\textsc{\textbf{cargo build}}} Befehl für Cargo Projekte. Beiden Befehlen muss wie auch beim Kompilieren von \textit{libcore} die 
-Spezifikations-JSON-Datei als Argument für die \texttt{\textsc{\textbf{-{}-target}}}-Option übergeben werden. 
+Um anschließend das Programm zu kompilieren,
+verwendet man entweder \texttt{\textsc{\textbf{rustc}}} bei eigenständigen
+\texttt{\textsc{\textbf{.rs}}} Dateien oder den \texttt{\textsc{\textbf{cargo build}}} Befehl für Cargo Projekte.
+Beiden Befehlen muss wie auch beim Kompilieren von \textit{libcore} die 
+JSON-Spezifikationsdatei als Argument für die \texttt{\textsc{\textbf{-{}-target}}}-Option übergeben werden. 
 
 \section{Erstellung des \textit{octorust} Hilfsprogramms}
 
@@ -105,9 +108,9 @@ vereinfacht.
 Das Programm wurde in Python geschrieben, da Pythons Standardbibliothek viele nützliche Funktionen zur Manipulation
 von Dateien bietet, welches sich für diesen Zweck als hilfreich erwiesen hat.
 
-Das Programm verwendet \texttt{\textsc{\textbf{python-setuptools}}} und eine dafür konfigurierte 
+Das Programm verwendet \texttt{\textsc{\textbf{python-setuptools}}} und eine dafür konfigurierte \\
 \texttt{\textsc{\textbf{setup.py}}} Datei, um das Programm lokal zu installieren.
-Während des Installationsprozesses wird zum einen das \textit{octorust}-Programm selbst lokal als Python Modul 
+Während des Installationsprozesses wird zum einen das \textit{octorust}-Programm lokal als Python Modul 
 installiert und das zugehörige \texttt{\textsc{\textbf{octorust}}} Skript als ausführbare Datei dem Nutzer zur 
 Verfügung gestellt.
 Gleichzeitig wird ein Verzeichnis namens \texttt{\textsc{\textbf{.octorust}}}
@@ -164,7 +167,7 @@ kompiliert und in den Installationspfad der derzeit verwendeten
 	\item[-{}-fetch-irtss]
 	Mithilfe dieser Option können \textit{OctoPOS/iRTSS}-Builds von \\
 	https://www4.cs.fau.de/invasic/octopos/ heruntergeladen werden. Hierfür wird jedoch
-	eine gültige Nutzername/Passwort-Kombination in einer \texttt{\textsc{\textbf{.netrc}}}
+	eine gültige Nutzername/Passwort-Kombination in einer \texttt{\textsc{\textbf{\char`~/.netrc}}}
 	Datei im folgenden Format benötigt:
 	\begin{verbatim}
 	machine www4.cs.fau.de
@@ -194,7 +197,7 @@ verlinkt werden kann.
 
 Zusätzlich muss die Haupt-Quelldatei des Projekts mit \texttt{\textsc{\textbf{\#![no\char`_std]}}} beginnen und 
 anstelle der \texttt{\textsc{\textbf{main()}}} Funktion muss eine
-\texttt{\textsc{\textbf{pub extern \char`"C\char`"}}} Funktion namens
+\texttt{\textsc{\textbf{pub extern \char`"C\char`"}}} Funktion namens \\
 \texttt{\textsc{\textbf{rust\char`_main\char`_ilet}}} als Startpunkt des Programms verwendet werden.
 Diese Funktion nimmt genau einen Parameter entgegen, welcher vom Typ \texttt{\textsc{\textbf{u8}}} ist.
 Über dieser Funktion muss außerdem die Anweisung \texttt{\textsc{\textbf{\#[no\char`_mangle]}}} stehen,
@@ -217,10 +220,10 @@ pub extern "C" fn rust_main_ilet(claim: u8) {
 
 \subsection{Kompilieren}
 
-Vor der Kompilierung wird im Falle, dass \textit{leon} als Zielarchitektur ausgewählt wurde,
+Vor der Kompilierung wird im Falle dass \textit{leon} als Zielarchitektur ausgewählt wurde,
 zuerst eine wie in Kapitel \ref{sec:rust_on_sparc} erläuterte
 JSON-Spezifikationsdatei generiert,
-in der der Pfad zum SPARC-V8 \texttt{\textsc{\textbf{gcc}}} Compiler automatisch eingetragen wird.
+in der der Pfad zum SPARC-V8 \texttt{\textsc{\textbf{gcc}}} Linker automatisch eingetragen wird.
 Für die anderen beiden Zielarchitekturen ist ein solcher Schritt nicht notwendig,
 da diese offiziell von \texttt{\textsc{\textbf{rustc}}} und \texttt{\textsc{\textbf{cargo}}} unterstützt werden. 
 Nachdem diese Spezifikationsdatei generiert wurde, wird das Projekt mithilfe von \texttt{\textsc{\textbf{cargo}}}
@@ -258,9 +261,9 @@ wieder in die Konfigurationsdatei geschrieben.
 Eine Kopie der ursprünglichen Daten wird vorerst noch im Hauptspeicher behalten und
 nachdem die Kompilierung beendet wurde, wobei hier nicht unterschieden wird, ob diese erfolgreich war oder nicht,
 werden die alten Daten wieder in die Cargo.toml Datei geschrieben,
-um zu vermeiden dass die Cargo.toml Datei eine Konfiguration enthält, die auf eine lokale Konfiguration basiert.
+um zu vermeiden dass die Cargo.toml Datei Werte enthält, die auf eine lokale Konfiguration basieren.
 Damit die Bibliothek für jedes zu kompilierende Programm auffindbar ist,
-wird eine lokale Kopie während der Installation des \text-it{octorust}-Programms im
+wird eine lokale Kopie während der Installation des \textit{octorust}-Programms im
 \texttt{\textsc{\textbf{\char`~/.octorust}}} Verzeichnis erstellt.
 
 \subsection{Struktur}
@@ -286,7 +289,7 @@ Die Bibliothek bietet die folgenden Module:
 	nützlich sein können.
 	
 	\item[improvements]
-	Rust-spezifische Abstraktionen, die es dem Programmierer erleichtern, Programme mit Rust für das invasive
+	Rust-spezifische Abstraktionen, die es dem Programmierer erleichtern, Programme mit Rust für invasive
 	Systeme zu schreiben.
 	
 	\item[octo\char`_structs]
@@ -304,10 +307,10 @@ Dank der \textit{Foreign Function Interface} müssen lediglich die Parameter- un
 an die neue Programmiersprache angepasst werden.
 Für die meisten Typen gibt es direkte Äquivalente in Rust, jegliche anderen Typen
 stellt die \textit{libc} Bibliothek zur Verfügung. Ein nennenswertes Beispiel eines Typs, der nicht in Rust enthalten 
-ist, ist der \texttt{\textsc{\textbf{void}}} Typ. Dieser Typ kann beispielsweise durch den
+ist, ist der \texttt{\textsc{\textbf{void}}} Typ. Dieser Typ kann durch den
 \texttt{\textsc{\textbf{c\char`_void}}} Typen aus der \textit{libc} Bibliothek emuliert werden.
 \texttt{\textsc{\textbf{void}}}-Zeiger (\texttt{\textsc{\textbf{void*}}}), welche an einigen Stellen der
-C-Schnittstelle verwendet werden, können so als \texttt{\textsc{\textbf{"`*mut c\char`_void}}} in Rust
+C-Schnittstelle verwendet werden, können so als \texttt{\textsc{\textbf{*mut c\char`_void}}} in Rust
 dargestellt werden.
 
 Um die Funktionen erfolgreich in die Rust-Bibliothek einbinden zu können,
@@ -325,7 +328,7 @@ Strukturen und Typen ebenfalls portiert werden.
 Dank der \texttt{\textsc{\textbf{\#[repr(C)]}}} Anweisung kann man in Rust Strukturen erstellen,
 welche kompatibel mit ihren C-Äquivalenten sind.
 Diese Strukturen sind teils von Plattform-spezifischen Konstanten abhängig, welche man in Rust mit der
-\texttt{\textsc{\textbf{\#[cfg(target\char`_arch = \"Zielarchitektur\")]}}} Anweisung
+\texttt{\textsc{\textbf{\#[cfg(target\char`_arch = \char`"Zielarchitektur\char`")]}}} Anweisung
 für unterschiedliche Architekturen definieren kann.
 Benutzerdefinierte Typen, welche prinzipiell Aliase für bestehende Typen sind, lassen sich in Rust durch das
 Schlüsselwort \texttt{\textsc{\textbf{type}}} erstellen.
@@ -348,9 +351,9 @@ vereinfachen und die Stärken von Rust ausnutzen sollen.
 
 \subsubsection{Constraints}
 
-Die \texttt{\textsc{\textbf{Constraints}}} Struktur ist eine leichte,
-objektorientierte Abstraktion für die \textit{Constraints}, mit denen die Anzahl Ressourcen,
-die einem \textit{Claim} zur Verfügung stehen sollen, spezifiziert werden.
+Die \texttt{\textsc{\textbf{Constraints}}} Struktur ist eine
+objektorientierte Abstraktion für die \textit{Constraints}, mit denen die Anzahl Ressourcen
+die einem \textit{Claim} zur Verfügung stehen sollen spezifiziert werden.
 Die Implementierung dieser Struktur bietet einen Konstruktor, welcher eine neue
 \texttt{\textsc{\textbf{constraints\char`_t}}} Struktur mithilfe der
 \texttt{\textsc{\textbf{agent\char`_constr\char`_create}}}
@@ -366,17 +369,17 @@ denn diese werden in den direkten C-Rust Bindings statt mit \texttt{\textsc{\tex
 Wert \texttt{\textsc{\textbf{0}}} geprüft. Dies wird in den Methoden dieser Struktur jedoch abstrahiert,
 so dass man in Rust den \texttt{\textsc{\textbf{bool}}}-Typ verwenden kann.
 
-Außerdem unterstützt die Methode \texttt{\textsc{\textbf{merge\char`_constraints}}} anstelle einer
+Außerdem unterstützt die Methode \texttt{\textsc{\textbf{merge\char`_constraints}}} anstelle einer \\
 \texttt{\textsc{\textbf{constraints\char`_t}}} Struktur aus der C-Schnittstelle eine in Rust definierte
 \texttt{\textsc{\textbf{Constraints}}} Struktur. Möchte man trotzdem lieber eine
 \texttt{\textsc{\textbf{constraints\char`_t}}}-Struktur verwenden, so kann stattdessen die
 \texttt{\textsc{\textbf{merge\char`_constraints\char`_t}}} Methode verwendet werden.
 
-Um Zugriff auf die interne \texttt{\textsc{\textbf{constraints\char`_t}}} Struktur zu erhalten, kann die
+Um Zugriff auf die interne \texttt{\textsc{\textbf{constraints\char`_t}}} Struktur zu erhalten, kann die \\
 \texttt{\textsc{\textbf{to\char`_constraints\char`_t}}} Methode aufgerufen werden.
 Hiernach ist die \texttt{\textsc{\textbf{Constraints}}}-Struktur selbst nicht mehr verwendbar,
 da die interne \texttt{\textsc{\textbf{constraints\char`_t}}}-Variable aufgrund der \textit{Move-Semantik}
-nicht mehr im Besitz des zugehörigen Speicherbereichs ist.
+nicht mehr der \textit{Owner} des zugehörigen Speicherbereichs ist.
 
 \subsubsection{Closures}
 
@@ -388,7 +391,8 @@ Erstellungskontext bestehen\cite{embeddedRustOS}, ist es nicht möglich,
 eine Closure direkt als eine normale Rust Funktion zu verwenden.
 Stattdessen erstellt man einen Zeiger auf die Datenregion,
 welche die Closure repräsentiert und übergibt diesen dann einer
-\texttt{\textsc{\textbf{extern \char`"C\char`"}}} Funktion, welche aus diesem Zeiger die Closure zurück konvertiert.
+\texttt{\textsc{\textbf{extern \char`"C\char`"}}} Funktion, welche aus diesem Zeiger die Closure in einem
+\texttt{\textsc{\textbf{unsafe}}}-Block zurück konvertiert.
 Diese \texttt{\textsc{\textbf{extern \char`"C\char`"}}}-Funktion kann dann der C-Schnittstelle zusammen mit dem
 Zeiger auf die Closure-Daten übergeben werden.
 
@@ -398,8 +402,9 @@ erledigt, während zur Rückkonvertierung eine \texttt{\textsc{\textbf{extern \c
 
 \subsubsection{AgentClaim}
 
-Das wichtigste Konstrukt in der \textit{octolib} Bibliothek ist die \texttt{\textsc{\textbf{AgentClaim}}} Struktur.
-Diese bietet zunächst einmal eine Abstraktionsschicht über die \texttt{\textsc{\textbf{agentclaim\char`_t}}}
+Das wichtigste Konstrukt in der \textit{octolib} Bibliothek ist die \texttt{\textsc{\textbf{AgentClaim}}} Struktur,
+da sie Abstraktionen für die \textit{Invade}-, \textit{Infect}- und \textit{Retreat}-Phasen implementiert.
+Diese Struktur bietet zunächst einmal eine Abstraktionsschicht über die \texttt{\textsc{\textbf{agentclaim\char`_t}}}
 Struktur aus der C-Schnittstelle und verschiedene Methoden um diese zu verwenden.
 
 Der Konstruktor nimmt als einzigen Parameter eine \texttt{\textsc{\textbf{Constraints}}}-Struktur entgegen,
@@ -436,7 +441,7 @@ wie \texttt{\textsc{\textbf{serde}}} verwendet werden.
 
 In der \texttt{\textsc{\textbf{infect}}}-Methode werden Signal-Strukturen aus der C-Schnittstelle verwendet,
 um die Kommunikation zwischen verschiedenen Rechenelementen zu verwalten.
-Um dies zu vereinfachen, wird die übergebene Funktion oder Closure nochmals von einer Closure umgeben,
+Um dies zu vereinfachen, wird die übergebene Funktion oder Closure nochmals von einer internen Closure umgeben,
 welche eine Referenz auf eine in der \texttt{\textsc{\textbf{infect}}}-Methode erstellten Signal-Struktur besitzt
 und über dieses Signal signalisiert, wann diese Closure die Ausführung ihrer Aufgabe beendet hat.
 Hierdurch ist es möglich, nach der Initialisierung der \textit{i-lets} auf die
@@ -464,8 +469,8 @@ Nachdem ein \text{i-let} initialisiert wurde, wird die eigentliche \textit{Infec
 
 Das bereits im Grundlagenkapitel erläuterte \textit{Drop}-Trait für Rust-Strukturen wird für die
 \texttt{\textsc{\textbf{AgentClaim}}}-Struktur implementiert.
-Verlässt eine Instanz der \texttt{\textsc{\textbf{AgentClaim}}}-Struktur den Geltungsbereich,
-wird eine \texttt{\textsc{\textbf{Retreat}}}-Operation auf der
+Verlässt eine Instanz der \texttt{\textsc{\textbf{AgentClaim}}}-Struktur den Geltungsbereich, wird eine \\
+\texttt{\textsc{\textbf{Retreat}}}-Operation auf der
 internen \texttt{\textsc{\textbf{agentclaim\char`_t}}}-Struktur ausgeführt und zusätzlich
 die \textit{Constraints} des \textit{Claims} gelöscht. Dieses implizite \textit{Retreat}
 stellt sicher, dass die vom Claim verwendeten Ressourcen nach dem Gebrauch wieder freigegeben werden und
