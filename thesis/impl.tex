@@ -247,7 +247,7 @@ die minimale C Datei oder auch die C Objektdatei.
 Zusätzlich zum \textit{octorust} Programm wurde ebenfalls eine Rust-Bibliothek names \textit{octolib} geschrieben. 
 Diese Bibliothek soll die Interaktion zwischen Rust und \textit{OctoPOS/iRTSS} ermöglichen und and die neue 
 Programmiersprache anpassen. \textit{OctoPOS/IRTSS} bieten eine C-Schnittstelle an, welche man mithilfe von Rusts
-Foreign Function Interface und der \textit{libc} Bibliothek aus Rust heraus ansprechen kann.
+\textit{Foreign Function Interface} und der \textit{libc} Bibliothek aus Rust heraus ansprechen kann.
 Die \textit{libc} Bibliothek bietet die Möglichkeit, Komponenten, welche die Standardbibliothek benötigen, 
 auszulassen, daher ist sie auch auf der SPARC-V8 Architektur nutzbar.
 
@@ -301,7 +301,7 @@ Die Bibliothek bietet die folgenden Module:
 \subsection{Direkte C-Rust Bindings}
 
 Im ersten Schritt wurden die Funktionen der C-Schnittstelle direkt Eins-zu-Eins als Rust-Funktionen eingebunden.
-Dank der Foreign Function Interface müssen lediglich die Parameter- und Rückgabetypen
+Dank der \textit{Foreign Function Interface} müssen lediglich die Parameter- und Rückgabetypen
 an die neue Programmiersprache angepasst werden.
 Für die meisten Typen gibt es direkte Äquivalente in Rust, jegliche anderen Typen
 stellt die \textit{libc} Bibliothek zur Verfügung. Ein nennenswertes Beispiel eines Typs, der nicht in Rust enthalten 
