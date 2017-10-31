@@ -61,9 +61,7 @@ Außerdem sollte die Version der \textit{libcore} Bibliothek
 mit der Version des nightly-Compilers übereinstimmen,
 um versionsabhängige Konflikte bei der Kompilierung zu vermeiden.
 
-Nachdem die \textit{libcore} Bibliothek erfolgreich kompiliert wurde, kann man,
-wenn \texttt{\textsc{\textbf{rustup}}} verwendet wurde um \texttt{\textsc{\textbf{rustc}}} und
-\texttt{\textsc{\textbf{cargo}}} zu installieren, 
+Nachdem die \textit{libcore} Bibliothek erfolgreich kompiliert wurde, kann man
 die resultierende \texttt{\textsc{\textbf{.rlib}}}-Datei anderen Rust-Programmen
 beim Kompilieren zur Verfügung stellen, indem man diese in das korrekte Unterverzeichnis im
 lokalen \texttt{\textsc{\textbf{\char`~/.rustup}}} Verzeichnis kopiert.
@@ -220,7 +218,7 @@ pub extern "C" fn rust_main_ilet(claim: u8) {
 
 \subsection{Kompilieren}
 
-Vor der Kompilierung wird im Falle dass \textit{leon} als Zielarchitektur ausgewählt wurde,
+Vor der Kompilierung wird im Falle, dass \textit{leon} als Zielarchitektur ausgewählt wurde,
 zuerst eine wie in Kapitel \ref{sec:rust_on_sparc} erläuterte
 JSON-Spezifikationsdatei generiert,
 in der der Pfad zum SPARC-V8 \texttt{\textsc{\textbf{gcc}}} Linker automatisch eingetragen wird.
@@ -247,7 +245,7 @@ die minimale C Datei oder auch die C Objektdatei.
 \section{\textit{octolib}}\label{sec:octolib}
 
 Zusätzlich zum \textit{octorust} Programm wurde ebenfalls eine Rust-Bibliothek namens \textit{octolib} geschrieben. 
-Diese Bibliothek soll die Interaktion zwischen Rust und \textit{OctoPOS/iRTSS} ermöglichen und and die neue 
+Diese Bibliothek soll die Interaktion zwischen Rust und \textit{OctoPOS/iRTSS} ermöglichen und an die neue 
 Programmiersprache anpassen. \textit{OctoPOS/IRTSS} bieten eine C-Schnittstelle an, welche man mithilfe von Rusts
 \textit{Foreign Function Interface} und der \textit{libc} Bibliothek aus Rust heraus ansprechen kann.
 Die \textit{libc} Bibliothek bietet die Möglichkeit, Komponenten, welche die Standardbibliothek benötigen, 
@@ -258,10 +256,9 @@ zu kompilierenden Cargo Projekts eingefügt.
 Hierfür wird mithilfe des \texttt{\textsc{\textbf{toml}}} Python Moduls der derzeitige Inhalt der Cargo.toml Datei
 eingelesen, der Pfad zur lokal installierten \textit{octolib} Bibliothek in diese Daten injiziert und anschließend 
 wieder in die Konfigurationsdatei geschrieben.
-Eine Kopie der ursprünglichen Daten wird vorerst noch im Hauptspeicher behalten und
-nachdem die Kompilierung beendet wurde, wobei hier nicht unterschieden wird, ob diese erfolgreich war oder nicht,
-werden die alten Daten wieder in die Cargo.toml Datei geschrieben,
-um zu vermeiden dass die Cargo.toml Datei Werte enthält, die auf eine lokale Konfiguration basieren.
+Um zu vermeiden, dass die Cargo.toml Datei Werte enthält, die auf eine lokale Konfiguration basieren, wird zunächst
+eine Kopie der ursprünglichen Daten im Hauptspeicher behalten. Nachdem die Kompilierung beendet
+wurde, werden diese Daten wieder in die Cargo.toml Datei geschrieben.
 Damit die Bibliothek für jedes zu kompilierende Programm auffindbar ist,
 wird eine lokale Kopie während der Installation des \textit{octorust}-Programms im
 \texttt{\textsc{\textbf{\char`~/.octorust}}} Verzeichnis erstellt.
@@ -289,14 +286,14 @@ Die Bibliothek bietet die folgenden Module:
 	nützlich sein können.
 	
 	\item[improvements]
-	Rust-spezifische Abstraktionen, die es dem Programmierer erleichtern, Programme mit Rust für invasive
-	Systeme zu schreiben.
+	Dieses Modul enthält Rust-spezifische Abstraktionen, die es dem Programmierer erleichtern,
+	Programme mit Rust für invasive Systeme zu schreiben.
 	
 	\item[octo\char`_structs]
-	Rust-äquivalente Strukturen zu denen, die in der C-Schnittstelle verwendet werden.
+	Dieses Modul enthält Rust-äquivalente Strukturen zu denen, die in der C-Schnittstelle verwendet werden.
 	
 	\item[octo\char`_types]
-	Rust-äquivalente Typen zu denen, die in der C-Schnittstelle verwendet werden.
+	Dieses Modul enthält Rust-äquivalente Typen zu denen, die in der C-Schnittstelle verwendet werden.
 
 \end{description}
 
@@ -338,7 +335,7 @@ Schlüsselwort \texttt{\textsc{\textbf{type}}} erstellen.
 Das \texttt{\textsc{\textbf{helper}}}-Modul enthält Adapter für C-Funktionen,
 für die in Rust ohne Zugriff zur Standardbibliothek keine Alternative existieren.
 So werden beispielsweise mehrere Adapter um die \texttt{\textsc{\textbf{printf}}}-Funktion geboten,
-welche je eine andere Anzahl an zusätzlichen Parametern bieten, um Variablen ausdrucken zu können.
+die je eine andere Anzahl an zusätzlichen Parametern bieten, um Variablen ausdrucken zu können.
 
 Beachtet werden muss bei diesen print-Funktionen, dass die überreichten Zeichenketten manuell
 Null-terminiert werden müssen. Um "`Hello World"' zu drucken, muss man also die Anweisung
@@ -365,7 +362,7 @@ Alle Parameter der \textit{Constraints} lassen sich nachträglich durch Methoden
 Hierbei profitieren vor allem die Methoden, welche boolesche Werte als Parametertypen besitzen,
 denn diese werden in den direkten C-Rust Bindings statt mit \texttt{\textsc{\textbf{bool}}}-Werten mit
 \texttt{\textsc{\textbf{u8}}}-Werten aufgerufen. Dies liegt daran, dass es in C keinen
-\texttt{\textsc{\textbf{bool}}} oder ähnlichen Typen gibt, dort werden stattdessen Zahlenwerte auf den
+\texttt{\textsc{\textbf{bool}}} oder ähnlichen Typen gibt. Dort werden stattdessen Zahlenwerte auf den
 Wert \texttt{\textsc{\textbf{0}}} geprüft. Dies wird in den Methoden dieser Struktur jedoch abstrahiert,
 so dass man in Rust den \texttt{\textsc{\textbf{bool}}}-Typ verwenden kann.
 
@@ -386,7 +383,7 @@ nicht mehr der \textit{Owner} des zugehörigen Speicherbereichs ist.
 Rust Closures können nicht ohne Weiteres einer C-Schnittstelle als Parameter übergeben werden.
 Somit ist es mit den direkten C-Rust Bindings nicht möglich, Closures zu verwenden,
 um Code auf den Rechenelementen ausführen zu lassen. Dies wäre jedoch eine
-wünschenswerte Funktionalität. Da Closures aus der Funktion selbst als auch ihrem
+wünschenswerte Funktionalität. Da Closures aus der Funktion selbst, als auch ihrem
 Erstellungskontext bestehen\cite{embeddedRustOS}, ist es nicht möglich,
 eine Closure direkt als eine normale Rust Funktion zu verwenden.
 Stattdessen erstellt man einen Zeiger auf die Datenregion,
@@ -433,21 +430,23 @@ Dieser Methode wird eine Funktion oder eine Closure als Parameter übergeben,
 welche dann auf den Rechenelementen des \textit{Claims} ausgeführt wird.
 Zusätzlich können ebenfalls Parameterdaten für die einzelnen Recheneinheiten übergeben werden.
 Diese Parameterdaten werden als ein Array von \texttt{\textsc{\textbf{void}}}-Zeigern übergeben.
-Die Anzahl der Elemente des Arrays muss mit der Anzahl von vom \textit{Claim} reservierten Rechenelemente 
+Die Anzahl der Elemente des Arrays muss mit der Anzahl der vom \textit{Claim} reservierten Rechenelemente 
 übereinstimmen. Bei einer zu geringen Anzahl an Rechenelementen kann es ansonsten zu Fehlern kommen.
 Bei einer zu großen Zahl an Rechenelementen kommt es zum Pufferüberlauf, welches den Absturz des Programms zur
-Folge hat. Um die Parameterübergabe sicherer zu gestalten können in der Zukunft Serialisierungsbibliotheken
+Folge hat. Um die Parameterübergabe sicherer zu gestalten, können in der Zukunft Serialisierungsbibliotheken
 wie \texttt{\textsc{\textbf{serde}}} verwendet werden.
 
 In der \texttt{\textsc{\textbf{infect}}}-Methode werden Signal-Strukturen aus der C-Schnittstelle verwendet,
 um die Kommunikation zwischen verschiedenen Rechenelementen zu verwalten.
+
 Um dies zu vereinfachen, wird die übergebene Funktion oder Closure nochmals von einer internen Closure umgeben,
-welche eine Referenz auf eine in der \texttt{\textsc{\textbf{infect}}}-Methode erstellten Signal-Struktur besitzt
-und über dieses Signal signalisiert, wann diese Closure die Ausführung ihrer Aufgabe beendet hat.
+welche eine Referenz auf eine in der \texttt{\textsc{\textbf{infect}}}-Methode erstellten Signal-Struktur besitzt.
+Über dieses Signal wird signalisiert, wann die übergebene Funktion oder Closure auf einem Rechenelement erfolgreich
+ausgeführt wurde.
 Hierdurch ist es möglich, nach der Initialisierung der \textit{i-lets} auf die
-vollständige Abarbeitung dieser zu warten oder alternativ das Signal, mit dem die \textit{i-lets} mit dem
+vollständige Abarbeitung dieser zu warten, oder alternativ das Signal, mithilfe dessen die \textit{i-lets} mit dem
 Hauptfaden des Programms kommunizieren, als Rückgabewert zu verwenden.
-Um beide dieser Varianten zu bieten, gibt es zusätzlich zur \texttt{\textsc{\textbf{infect}}}-Methode,
+Um beide dieser Vorgehensweisen anzubieten, gibt es zusätzlich zur \texttt{\textsc{\textbf{infect}}}-Methode,
 welche auf die vollständige Ausführung der \textit{i-lets} wartet,
 die \texttt{\textsc{\textbf{infect\char`_async}}}-Methode,
 welche die \texttt{\textsc{\textbf{simple\char`_signal}}}-Struktur,
@@ -469,9 +468,9 @@ Nachdem ein \text{i-let} initialisiert wurde, wird die eigentliche \textit{Infec
 
 Das bereits im Grundlagenkapitel erläuterte \textit{Drop}-Trait für Rust-Strukturen wird für die
 \texttt{\textsc{\textbf{AgentClaim}}}-Struktur implementiert.
-Verlässt eine Instanz der \texttt{\textsc{\textbf{AgentClaim}}}-Struktur den Geltungsbereich, wird eine \\
-\texttt{\textsc{\textbf{Retreat}}}-Operation auf der
-internen \texttt{\textsc{\textbf{agentclaim\char`_t}}}-Struktur ausgeführt und zusätzlich
+Verlässt eine Instanz der \texttt{\textsc{\textbf{AgentClaim}}}-Struktur den Geltungsbereich, wird eine
+\texttt{\textsc{\textbf{Retreat}}}-Operation auf der internen \\
+\texttt{\textsc{\textbf{agentclaim\char`_t}}}-Struktur ausgeführt und zusätzlich
 die \textit{Constraints} des \textit{Claims} gelöscht. Dieses implizite \textit{Retreat}
 stellt sicher, dass die vom Claim verwendeten Ressourcen nach dem Gebrauch wieder freigegeben werden und
 somit anderen Programmteilen zur Verfügung stehen.

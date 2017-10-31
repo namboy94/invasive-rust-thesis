@@ -6,12 +6,13 @@ invasiven Computing behandelt.
 \section{Rust}
 
 Rust ist eine Programmiersprache, welche wie beispielsweise C++ direkte Kontrolle über die
-unterliegende Hardware bieten soll. Dies bedeutet in der Praxis, dass diese Sprache nicht von einem Garbage
-Collector Gebrauch macht, wie es Sprachen wie zum Beispiel X10 tun. Im Gegensatz zu C++ bietet Rust jedoch
+unterliegende Hardware bieten soll. Dies bedeutet in der Praxis, dass diese Sprache nicht von einem
+\textit{Garbage Collector} Gebrauch macht, wie es beispielsweise bei der Sprache X10 der Fall ist.
+Im Gegensatz zu C++ bietet Rust jedoch
 standardmäßig automatische Speichersicherheit und garantieren somit, dass Programme keine Speicherfehler enthalten.
 \cite{theRustLanguage}
 
-Rust erfreut sich seit ihrer Veröffentlichung wachsende Beliebtheit bei Programmierern aller Art. Sie wurde
+Rust erfreut sich seit ihrer Veröffentlichung wachsender Beliebtheit bei Programmierern aller Art. Sie wurde
 bei einer Umfrage der Webseite \textit{stackoverflow.com} im Jahre 2016 als beliebteste Programmiersprache bei 
 Entwicklern ermittelt\cite{stackoverflowSurvey}.
 
@@ -24,7 +25,7 @@ Leistung und Sicherheit als vorhergehende Technologien vorweisen\cite{engineerin
 \subsection{Motivation}
 
 Eine der Kernziele der Rust Programmiersprache ist es, sichere Speicherzugriffe zu gewährleisten, ohne
-für diesen Zweck einen Garbage Collector zu verwenden. Fehlerhafte Speicherzugriffe können undefiniertes
+für diesen Zweck einen \textit{Garbage Collector} zu verwenden. Fehlerhafte Speicherzugriffe können undefiniertes
 Verhalten auslösen, welches ein Sicherheitsrisiko darstellen kann, denn diese Fehler können gezielt ausgenutzt
 werden, um Schadcode auszuführen. Fehlerhafte Speicherzugriffe beziehen sich hierbei auf Zugriffe auf
 Speicherregionen, welche entweder ungültig sind oder bereits befreit wurden.\cite{engineeringServo}\cite{undefinedBehaviour}
@@ -63,7 +64,7 @@ zur Verfügung gestellt wird. Diese Variable wird auch als \textit{Owner (engl. 
 Zu jedem Zeitpunkt darf die Speicherregion nur einen \textit{Owner} haben.
 Sobald dieser \textit{Owner} den Geltungsbereich verlässt, wird die zugehörige Speicherregion freigegeben,
 die dort vorhandenen Daten können anschließend nicht mehr verwendet werden.
-Dies ist der Mechanismus, der es in Rust erlaubt, Speicher ohne manuelle Befreiung oder Nutzung eine
+Dies ist der Mechanismus, der es in Rust erlaubt, Speicher ohne manuelle Befreiung oder Nutzung eines
 Garbage Collectors zu verwalten. Er stellt sicher, dass keine fehlerhaften Speicherzugriffe
 durch die Nutzung von ungültigen Daten im Speicher entstehen.\cite{rustBook}
 Das Konzept des \textit{Ownership} wurde von affinen Typen inspiriert.\cite{embeddedRustOS}
@@ -126,7 +127,7 @@ Sprachen.\cite{rustBook}
 
 Aufzählungen agieren in Rust ähnlich zu anderen Programmiersprachen. Der Vorteil der Aufzählungen in Rust ist, dass
 diese fürs \textit{Pattern Matching} verwendet werden können. Ein Beispiel dazu, wie dies in der Praxis verwendet
-werden kann wird in Kapitel \ref{sec:error_handling} beschrieben.
+werden kann, wird in Kapitel \ref{sec:error_handling} beschrieben.
 \cite{rustBook}
 
 Traits sind Sprachkonstrukte in Rust, welche das Verhalten von Typen abstrakt definieren können. Sie ähneln 
@@ -135,7 +136,7 @@ Zusätzlich zur benutzerdefinierten Spezifikation
 solcher \textit{Interface}-ähnlichen Konstrukte bietet Rust vordefinierte Traits, welche das Verhalten der Typen
 bezüglich \textit{Ownership} und \textit{Move}-Semantik beeinflussen können.\cite{rustBook}
 
-Zum einen existiert das \textit{Drop}-Trait. Dieses Trait erlaubt es, das Verhalten eines Typen beim Verlassenen des
+Zum einen existiert das \textit{Drop}-Trait. Dieses Trait erlaubt es, das Verhalten eines Typen beim Verlassen des
 Geltungsbereichs zu beeinflussen. In der \textit{drop}-Methode des Traits wird es ermöglicht, einen Destruktor
 für den Typ zu definieren. Dieser kann aus unterschiedlichen Gründen benötigt oder hilfreich sein.
 Beispielsweise kann man einen solchen verwenden, 
@@ -143,7 +144,7 @@ um einen Referenzzähler zu dekrementieren, unbenutzte Netzwerkverbindungen
 zu trennen oder andersweitig Ressourcen wieder freizugeben.\cite{rustBook}
 
 Außerdem gibt es die \textit{Copy}-Traits, welche es ermöglichen, anstelle der \textit{Move}-Semantik die
-\textit{Copy}-Semantik zu verwenden. Für Typen, die dieses Trait implementieren wird jedes mal, wenn ein
+\textit{Copy}-Semantik zu verwenden. Für Typen, die dieses Trait implementieren, wird jedes mal, wenn ein
 Speicherbereich im Kontext der \textit{Move}-Semantik den \textit{Owner} wechseln würde,
 stattdessen eine bitweise Kopie der Daten erstellt. Primitive Datentypen wie \texttt{\textsc{\textbf{i32}}}
 verhalten sich standardmäßig bereits so. Das \textit{Copy}-Trait kann jedoch nicht auf jeden Typ
@@ -156,10 +157,10 @@ unerwünschten Konsequenzen führen.\cite{rustBook}\cite{rustDocCopy}
 
 Obwohl der Compiler dank Rusts Typsystem bereits bei der Kompilierung eine Vielzahl von Fehlern erkennen kann,
 ist dies  nicht für alle möglichen Fehlertypen möglich. Beispielsweise ist es möglich, dass
-durch einen inkorrekte Indizierung eines Arrays ein Fehler entsteht.
+durch eine inkorrekte Indizierung eines Arrays ein Fehler entsteht.
 Solche Fehler müssen also zur Laufzeit behandelt werden.\cite{rustBook}
 
-Fehler werde in Rust idiomatisch mithilfe von Rückgabewerten vom Aufzählungstyp \texttt{\textsc{\textbf{Result}}}
+Fehler werden in Rust idiomatisch mithilfe von Rückgabewerten vom Aufzählungstyp \texttt{\textsc{\textbf{Result}}}
 behandelt. Anhand dieser Rückgabewerte lässt sich mithilfe von
 \textit{Pattern Matching} prüfen, ob ein Fehler beim Funktionsaufruf aufgetreten ist. Ist keiner aufgetreten,
 kann der eigentliche Rückgabewert der Funktion aus dieser Aufzählung entnommen werden.
@@ -223,7 +224,7 @@ unterschiedliche Zielarchitekturen mithilfe der
 Rust-Code wird also vor der Übersetzung zu Maschinenbefehlen in die Zwischensprache
 \textit{LLVM-IR} übersetzt und erst anschließend weiterverarbeitet.
 Somit ist es möglich, Rust-Programme für alle von \textit{LLVM}
-unterstützen Rechnerarchitekturen zu kompilieren.\cite{rustGPU}
+unterstützten Rechnerarchitekturen zu kompilieren.\cite{rustGPU}
 
 
 

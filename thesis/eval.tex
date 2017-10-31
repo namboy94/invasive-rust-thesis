@@ -389,9 +389,11 @@ Betrachtet man die Ergebnisse der \textit{Speedup}- und \textit{Effizienz}berech
 diesbezüglich zwischen den Sprachen erkennen. Alle profitieren ungefähr gleich viel von der Parallelisierung,
 wobei X10 den schlechtesten \textit{Speedup}-Wert und die geringste \textit{Effizienz} vorweist.
 
-Der Speedup ist in diesem Beispiel eher gering, dies liegt jedoch am verwendeten Algorithmus, welcher durch
-die gleichmäßige Partitionierung in Verbindung mit der naiven Berechnung, welche bei größeren Zahlen
-einen höheren Rechenaufwand erfordert, Leistungseinbußen in Kauf nimmt.
+Der \textit{Speedup} ist in diesem Beispiel eher gering, dies liegt jedoch am verwendeten Algorithmus,
+der durch die gleichmäßige Partitionierung der betrachteten Zahlen und der naiven Berechnung
+Leistungseinbußen in Kauf nimmt. Dies liegt vor allem daran, dass bei der naiven Berechnung größere Zahlen
+einen höheren Rechenaufwand erfordern. Da jedoch alle Partitionen gleich groß sind, wird der \textit{i-let} mit
+den höchsten Werten länger als alle anderen \textit{i-lets} benötigen, um seine Ausführung zu beenden.
 
 \FloatBarrier
 
@@ -401,7 +403,7 @@ X10 verwaltet den Speicher mithilfe eines Garbage Collectors, wobei C und Rust a
 Während Garbage Collector ein sehr hilfreiches Werkzeug sind, um den Programmieraufwand zu verringern, so kann dies
 allerdings auch auf Kosten der Laufzeiteffizienz und Verfügbarkeit durch Garbage Collector Pausen geschehen.
 
-Um zu Überprüfen, ob diese Gegebenheit einen messbaren Effekt auf die Laufzeit eines Programmes haben kann,
+Um zu Prüfen, ob diese Gegebenheit einen messbaren Effekt auf die Laufzeit eines Programmes haben kann,
 wurde ein Programm geschrieben, welches kontinuierlich Objekte auf dem Heap erstellt,
 welche anschließend wieder aus dem Geltungsbereich verschwinden.
 In C muss der Speicher, in dem diese Objekte gespeichert werden, manuell mit \texttt{\textsc{\textbf{free}}}
@@ -472,7 +474,7 @@ Funktionalität nicht vorhanden, externe Bibliotheken müssen beim Kompilieren m
 Um den Programmieraufwand eines simplen invasiven Programms zu beurteilen, wurde ein Programm geschrieben, 
 welches zuerst eine \textit{Invade}-Operation durchführt und anschließend eine simple "`Hello World"'
 Funktion auf jedem der reservierten Rechenelemente in der \textit{Infect}-Phase ausführt.
-Das Programm wartet anschließend bis alle Rechenelemente mit der Ausführung beendet sind und gibt anschließend
+Das Programm wartet anschließend bis alle Rechenelemente mit der Ausführung beendet sind und gibt daraufhin
 alle Ressourcen in der \textit{Retreat}-Phase wieder frei.
 
 \subsubsection{Rust}
@@ -486,9 +488,9 @@ Funktion benötigt.
 
 Zunächst werden die \textit{Constraints} mithilfe der \texttt{\textsc{\textbf{Constraints}}}-Struktur initialisiert.
 Anschließend können diese weiter konfiguriert werden oder direkt bei der Initialisierung einer Instanz der
-\texttt{\textsc{\textbf{AgentClaim}}}-Struktur verwendet werden. Wurde der Konstruktor
+\texttt{\textsc{\textbf{AgentClaim}}}-Struktur verwendet werden. Wird der Konstruktor
 der \texttt{\textsc{\textbf{AgentClaim}}}-Struktur aufgerufen,
-wurde die \textit{Invade}-Operation bereits implizit durchgeführt.
+so wird die \textit{Invade}-Operation bereits implizit durchgeführt.
 Es muss nun nur noch die \texttt{\textsc{\textbf{infect}}}-Methode aufgerufen werden.
 Dieser Methode wird eine Closure als Parameter übergeben, welche den
 Text "`Hello World"' auf die Kommandozeile druckt. Sobald die \texttt{\textsc{\textbf{infect}}}-Methode
@@ -500,7 +502,7 @@ Verlassen des Geltungsbereichs automatisch durchgeführt.
 
 Eine beispielhafte Implementierung dieses Programms wird in Listing \ref{code:rust_minimal_infect} veranschaulicht.
 
-\lstset{basicstyle=\tiny}
+\lstset{basicstyle=\small}
 \begin{lstlisting}[float,caption={Minimales Invade, Infect, Retreat in Rust},label=code:rust_minimal_infect]
 #![no_std]
 
@@ -514,7 +516,9 @@ use octolib::improvements::claim::AgentClaim;
 #[no_mangle]
 pub extern "C" fn rust_main_ilet(claim_id: u8) {
 
-    let mut ilet_fn = |params: *mut c_void| { print("Hello World\n\0"); };
+    let mut ilet_fn = |params: *mut c_void| {
+        print("Hello World\n\0");
+    };
     
     let mut constr = Constraints::new(4, 4);
     let mut claim = AgentClaim::new(constr);
@@ -551,7 +555,7 @@ Nach erfolgreicher Ausführung der \textit{Infect}-Phase, muss dann noch manuell
 
 Eine beispielhafte Implementierung dieses Programms wird in Listing \ref{code:x10_minimal_infect} veranschaulicht.
 
-\lstset{basicstyle=\tiny}
+\lstset{basicstyle=\small}
 \begin{lstlisting}[float,caption={Minimales Invade, Infect, Retreat in X10},label=code:x10_minimal_infect]
 import x10.io.Console;
 
@@ -566,7 +570,8 @@ class Infect {
             Console.OUT.println("Hello World!");
         };
 
-        val constraints = new PEQuantity(4, 4) && TileSharing.WITH_OTHER_APPLICATIONS;
+        val constraints = new PEQuantity(4, 4)
+            && TileSharing.WITH_OTHER_APPLICATIONS;
         val claim = Claim.invade(constraints);
         claim.infect(iletFn);
         claim.retreat();
@@ -603,7 +608,7 @@ die Ausführung des Programms beenden.
 
 Eine beispielhafte Implementierung dieses Programms wird in Listing \ref{code:c_minimal_infect} veranschaulicht.
 
-\lstset{basicstyle=\tiny}
+\lstset{basicstyle=\small}
 \begin{lstlisting}[float,caption={Minimales Invade, Infect, Retreat in C},label=code:c_minimal_infect]
 #include <octopos.h>
 #include <stdio.h>
@@ -633,7 +638,10 @@ void main_ilet(claim_t claim_id) {
     for (int tile=0; tile < get_tile_count(); tile++) {
         int pes=agent_claim_get_pecount_tile_type(claim,  tile, 0);
         if (pes) {
-            proxy_claim_t p_claim = agent_claim_get_proxyclaim_tile_type(claim, tile, 0);
+            proxy_claim_t p_claim =
+                agent_claim_get_proxyclaim_tile_type(
+                    claim, tile, 0
+                );
 
             simple_ilet ilets[pes];
             for (int i = 0; i < pes; ++i) {
