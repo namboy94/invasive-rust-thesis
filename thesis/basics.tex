@@ -27,8 +27,9 @@ Leistung und Sicherheit als vorhergehende Technologien vorweisen\cite{engineerin
 Eine der Kernziele der Rust Programmiersprache ist es, sichere Speicherzugriffe zu gewährleisten, ohne
 für diesen Zweck einen \textit{Garbage Collector} zu verwenden. Fehlerhafte Speicherzugriffe können undefiniertes
 Verhalten auslösen, welches ein Sicherheitsrisiko darstellen kann, denn diese Fehler können gezielt ausgenutzt
-werden, um Schadcode auszuführen. Fehlerhafte Speicherzugriffe beziehen sich hierbei auf Zugriffe auf
-Speicherregionen, welche entweder ungültig sind oder bereits befreit wurden.\cite{engineeringServo}\cite{undefinedBehaviour}
+werden, um Schadcode auszuführen. Hierbei beziehen sich fehlerhafte Speicherzugriffe auf das Verwenden von 
+Speicherregionen, die entweder ungültig sind oder bereits befreit wurden.
+\cite{engineeringServo}\cite{undefinedBehaviour}
 
 Außerdem soll Rust paralleles Rechnen unterstützen und
 so möglichst effizient moderne Hardwarearchitekturen ausnutzen.
@@ -36,8 +37,8 @@ Hierfür sollen gewisse häufig auftretende Fehler in der Parallelprogrammierung
 \cite{theRustLanguage}
 
 Rust lehnt sich konzeptionell und syntaktisch an C-ähnliche Sprachen an, enthält jedoch auch Konzepte aus der
-funktionalen Programmierung. Zusätzlich werden Sprachkonzepte und Abstraktionen geboten, welche
-ansonsten zumeist in höheren Programmiersprachen geboten werden. Hierdurch soll der Einstieg für
+funktionalen Programmierung. Zusätzlich werden Sprachkonzepte und Abstraktionen geboten, die
+ansonsten zumeist in höheren Programmiersprachen vorhanden sind. Hierdurch soll der Einstieg für
 Programmierer, die zuvor keine oder nur wenige Erfahrungen mit Systemsprachen gesammelt haben, erleichtert werden.
 \cite{engineeringServo}
 
@@ -71,7 +72,7 @@ Das Konzept des \textit{Ownership} wurde von affinen Typen inspiriert.\cite{embe
 Solche Typen können maximal ein mal verwendet werden.\cite{affineTypes}
 
 Die \textit{Ownership} einer Speicherregion kann mithilfe der \textit{Move}-Semantik den Besitzer wechseln.
-Die kann bei Funktionsaufrufen oder auch bei Zuweisungen geschehen. Beispiele hierfür sind in Listing
+Dies kann bei Funktionsaufrufen oder auch bei Zuweisungen geschehen. Beispiele hierfür sind in Listing
 \ref{code:move_semantics} zu sehen.\cite{rustBook}
 
 \lstset{literate=%
@@ -84,7 +85,7 @@ Die kann bei Funktionsaufrufen oder auch bei Zuweisungen geschehen. Beispiele hi
   {ö}{{\"o}}1
 }
 \begin{lstlisting}[float,caption={Beispieldarstellung der \textit{Move}-Semantik},label=code:move_semantics]
-let x = String::from("hello");;
+let x = String::from("hello");
 // Owner: x
 
 let y = x;
@@ -101,7 +102,12 @@ let z = f(y)
 
 Zusätzlich zur \textit{Move}-Semantik können in Rust Referenzen zu Variablen verwendet werden. Dies wird im Kontext
 von Rust häufig als \textit{borrowing (engl. ausleihen)} bezeichnet. Verwendet man eine Referenz auf eine Variable,
-ist der \textit{Owner} des Speicherbereichs weiterhin die originale Variable. Es gibt zwei unterschiedliche
+ist der \textit{Owner} des Speicherbereichs weiterhin die originale Variable.
+Zur Compile-Zeit wird überprüft, dass alle Referenzen gültig sind, um so die Existenz von hängenden Zeigern
+zu verhindern. Eine Referenz kann also nie auf eine Variable zeigen, die bereits den Geltungsbereich verlassen hat.
+\cite{rustBook}
+
+Es gibt zwei unterschiedliche
 Typen von Referenzen, veränderliche und unveränderliche Referenzen. Standardmäßig werden in Rust unveränderliche
 Referenzen verwendet. Diese erlauben es nicht, den Wert des Speicherbereichs zu verändern, sondern nur auszulesen.
 Es gibt keine Limitierung bei der Anzahl unveränderlicher Referenzen, die eine Variable besitzen kann. Im Gegensatz
@@ -122,11 +128,12 @@ Diese Möglichkeit erlaubt es eine objektorientierte Herangehensweise in Rust zu
 Implementierungen erlauben das Definieren von Methoden, welche auf einer initiierten Struktur aufgerufen werden 
 können und eine Referenz auf \texttt{\textsc{\textbf{self}}}, also der Struktur selbst, als Parameter entgegennehmen.
 Zusätzlich können Funktionen definiert werden, welche keinen solchen Parameter entgegennehmen und somit auch mit
-nicht initiierten Strukturen verwendet werden können. Dies ähnelt statischen Methoden in objektorientierten
-Sprachen.\cite{rustBook}
+Strukturen verwendet werden können ohne diese im Voraus zu initialisieren.
+Dies ähnelt statischen Methoden in objektorientierten Sprachen.\cite{rustBook}
 
-Aufzählungen agieren in Rust ähnlich zu anderen Programmiersprachen. Der Vorteil der Aufzählungen in Rust ist, dass
-diese fürs \textit{Pattern Matching} verwendet werden können. Ein Beispiel dazu, wie dies in der Praxis verwendet
+Aufzählungen agieren in Rust ähnlich zu anderen Programmiersprachen. Der Vorteil der Aufzählungen in Rust ist es,
+dass diese fürs \textit{Pattern Matching} verwendet werden können.
+Ein Beispiel dazu, wie dies in der Praxis verwendet
 werden kann, wird in Kapitel \ref{sec:error_handling} beschrieben.
 \cite{rustBook}
 
@@ -214,7 +221,7 @@ Verteilen der entwickelten Software. Kompilierte Software kann als ein sogenannt
 
 Um den Gebrauch von unterschiedlichen \texttt{\textsc{\textbf{rustc}}} und \texttt{\textsc{\textbf{cargo}}} Versionen 
 zu vereinfachen, wurde das Werkzeug \texttt{\textsc{\textbf{rustup}}} entwickelt. Dieses
-Hilfsprogramm ermöglicht es unterschiedliche Varianten des Rust-Compilers zu installieren und bei Belieben zu
+Hilfsprogramm ermöglicht es, unterschiedliche Varianten des Rust-Compilers zu installieren und bei Belieben zu
 wechseln. Es bietet auch die Funktionalität, die benötigten Kern- und Standardbibliotheken für unterstützte
 Architekturen herunterzuladen, um Programme für andere Zielarchitekturen zu kompilieren.\cite{rustupRepo}
 
@@ -299,7 +306,7 @@ Hardwareressourcen angefordert und anschließend reserviert. Diese Menge an Ress
 eines \textit{Claims} verwaltet werden. Die zu reservierenden Ressourcen werden mithilfe von \textit{Constraints}
 spezifiziert.
 Wurden die Ressourcen erfolgreich reserviert, kann die \textit{Infect}
-Phase beginnen. In dieser werden Ausführungsfaden erstellt,
+Phase beginnen. In dieser werden Ausführungsfäden erstellt,
 welche auf den reservierten Hardwareressourcen ausgeführt werden. Im Kontext des invasiven Computing wird ein solcher
 Faden als \textit{invasive-let} oder abgekürzt als \textit{i-let} bezeichnet\cite{invasiveCommonTerms}.
 Benötigt das Programm die reservierten Ressourcen nicht mehr, können diese in der \textit{Retreat} Phase wieder
@@ -322,7 +329,7 @@ und das \textit{iRTSS}.\cite{invasiveArrays}
 
 Eine verwandte Arbeit ist "`Invasive Computing—An Overview"'\cite{invasiveOverview}
 von Jürgen Teich, Jörg Henkel, Andreas Herkersdorf, Doris Schmitt-Landsiedel, Wolfgang Schröder-Preikschat
-und Gregor Snelting. Diese illustriert die Grundkonzepte hinter dem invasiven Computing.
+und Gregor Snelting. Diese illustriert die Grundkonzepte des invasiven Computing.
 
 Eine weitere verwandte Arbeit ist "`Technical Report: An X10 Compiler for Invasive Architectures"'\cite{invasiveX10} 
 von Sebastian Buchwald, Manuel Mohr und Andreas Zwinkau, welche die Erstellung eines X10 Compilers für den Gebrauch 
