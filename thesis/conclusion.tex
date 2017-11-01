@@ -16,17 +16,18 @@ Sollte es trotzdem während der Laufzeit zu schwerwiegenden Fehlern kommen, beis
 brechen Rust Programme die Ausführung ab und weisen so kein undefiniertes Verhalten auf.
 
 Des Weiteren weist Rust in Situationen, in denen häufig Objekte erstellt und wieder den Geltungsbereich verlassen,
-ein besseres Laufzeitverhalten auf als X10 es tut. Außerdem eignet sich X10 wegen des \textit{Garbage Collectors}
+ein mindestens 10-fach besseres Laufzeitverhalten auf als X10.
+Zudem eignet sich X10 wegen des \textit{Garbage Collectors}
 nicht für Anwendungsgebiete, in denen Pausen jeglicher Art nicht erwünscht sind,
 beispielsweise bei Echtzeitsystemen.
 In diesem Einsatzgebiet ist die Verfügbarkeit des Systems wichtig, daher wäre eine \textit{Garbage Collector}-Pause
 nicht wünschenswert. Rust wäre hier eine bessere Option.
 
-Außerdem weist das Kompilieren mit \textit{octorust} deutlich kürzere Kompilierungsdauer
-als der \textit{x10i}-Compiler auf,
-welches bei der Entwicklung von Programmen unter Umständen ein Zeitersparnis
-mit sich bringen kann. 
-Zudem sind die Dateigrößen der kompilierten Rust Programme geringer als es bei X10 der Fall ist.
+Außerdem weist das Kompilieren mit \textit{octorust} eine 100- bis 200-fach kürzere Kompilierungsdauer
+als der \textit{x10i}-Compiler auf. Dies kann bei der Entwicklung von Programmen ein Zeitersparnis von
+mehreren Minuten pro Kompilierungsvorgang zur Folge haben. 
+Zudem sind die Dateigrößen der kompilierten Rust Programme im betrachteten Minimalfall 6511716 Byte kleiner
+als die Größe eines kompilierten invasiven X10 Programms.
 
 Rust bietet beim Programmieraufwand kaum Vorteile gegenüber X10, einzig das implizite \textit{Retreat} wäre hier zu 
 erwähnen.
