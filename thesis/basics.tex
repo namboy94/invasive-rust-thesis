@@ -1,7 +1,7 @@
 \chapter{Grundlagen}\label{sec:basics}
 
 Im folgenden Kapitel werden die Grundlagen der Programmiersprache Rust, der Rechnerarchitektur SPARC-V8 und
-des invasiven Computing behandelt.
+des invasiven Rechnens behandelt.
 
 \section{Rust}
 
@@ -292,27 +292,27 @@ auch das Design des LEON3 Prozessors ist unter einer Open-Source Lizenz verfügb
 Die Kombination von stark konfigurierbaren Designs und der Open-Source Lizenz ermöglicht den Gebrauch der
 LEON VHDL Designs in domänenspezifischen, angepassten \textit{ASICs (Application-Specific Integrated Circuit)},
 \textit{FPGAs (Field Programmable Gate Array)} oder \textit{SOCs (System On Chip)}.
-Daher eignet sich die LEON Prozessorfamilie auch zum Einsatz im invasiven Computing,
+Daher eignet sich die LEON Prozessorfamilie auch zum Einsatz im invasiven Rechnen,
 um deren neuartigen Konzepte möglichst effizient auszunutzen. \cite{sparcv8Eval}
 
-\section{Invasives Computing}
+\section{Invasives Rechnen}
 
-Invasives Computing beschreibt die Möglichkeit eines Programms auf einem Parallelrechner,
+Invasives Rechnen beschreibt die Möglichkeit eines Programms auf einem Parallelrechner,
 dynamisch Hardwareressourcen zu reservieren, nutzen und anschließend wieder freizugeben.\cite{octopos}
 
-Die drei fundamentalen Phasen des invasiven Computing sind die \textit{\textbf{Invade}}, \textit{\textbf{Infect}}
+Die drei fundamentalen Phasen des invasiven Rechnens sind die \textit{\textbf{Invade}}, \textit{\textbf{Infect}}
 und \textit{\textbf{Retreat}} Phasen. In der \textit{Invade} Phase werden zunächst die gewünschten
 Hardwareressourcen angefordert und anschließend reserviert. Diese Menge an Ressourcen kann dann mithilfe
 eines \textit{Claims} verwaltet werden. Die zu reservierenden Ressourcen werden mithilfe von \textit{Constraints}
 spezifiziert.
 Wurden die Ressourcen erfolgreich reserviert, kann die \textit{Infect}
 Phase beginnen. In dieser werden Ausführungsfäden erstellt,
-welche auf den reservierten Hardwareressourcen ausgeführt werden. Im Kontext des invasiven Computing wird ein solcher
+welche auf den reservierten Hardwareressourcen ausgeführt werden. Im Kontext des invasiven Rechnens wird ein solcher
 Faden als \textit{invasive-let} oder abgekürzt als \textit{i-let} bezeichnet\cite{invasiveCommonTerms}.
 Benötigt das Programm die reservierten Ressourcen nicht mehr, können diese in der \textit{Retreat} Phase wieder
 freigegeben werden.\cite{octopos}
 
-Für den praktischen Einsatz des invasiven Computings wurde ein Betriebssystem namens \textit{OctoPOS} entwickelt. 
+Für den praktischen Einsatz des invasiven Rechnens wurde ein Betriebssystem namens \textit{OctoPOS} entwickelt.
 Dieses unterstützt die \textit{Invade}, \textit{Infect} und \textit{Retreat} Phasen auf der Systemebene.
 Zusätzlich hierzu existiert das \textit{invasive Run-Time Support System (iRTSS)}. Diese Middleware
 fungiert als eine Hardware-Abstraktionsschicht und als Ressourcenverwalter.
@@ -320,7 +320,7 @@ fungiert als eine Hardware-Abstraktionsschicht und als Ressourcenverwalter.
 unterstützen derzeit den Gebrauch der Programmiersprachen C, C++ und X10.
 \cite{octopos}\cite{invasiveManyCore}\cite{invasiveRISC}
 
-Um das Konzept des invasiven Computing möglichst effizient auszunutzen, wird speziell an das invasive Computing
+Um das Konzept des invasiven Rechnens möglichst effizient auszunutzen, wird speziell an das invasive Rechnen
 angepasste Hardware entwickelt, deren Prozessorkerne auf dem Design des LEON3 Prozessors basieren.
 Diese Hardware unterstützt gewisse invasive Grundfunktionen und entlastet somit das \textit{OctoPOS} Betriebssystem
 und das \textit{iRTSS}.\cite{invasiveArrays}
@@ -329,8 +329,8 @@ und das \textit{iRTSS}.\cite{invasiveArrays}
 
 Eine verwandte Arbeit ist "`Invasive Computing—An Overview"'\cite{invasiveOverview}
 von Jürgen Teich, Jörg Henkel, Andreas Herkersdorf, Doris Schmitt-Landsiedel, Wolfgang Schröder-Preikschat
-und Gregor Snelting. Diese illustriert die Grundkonzepte des invasiven Computing.
+und Gregor Snelting. Diese illustriert die Grundkonzepte des invasiven Rechnens.
 
 Eine weitere verwandte Arbeit ist "`Technical Report: An X10 Compiler for Invasive Architectures"'\cite{invasiveX10} 
 von Sebastian Buchwald, Manuel Mohr und Andreas Zwinkau, welche die Erstellung eines X10 Compilers für den Gebrauch 
-im invasiven Computing beschreibt.
+im invasiven Rechnen beschreibt.
