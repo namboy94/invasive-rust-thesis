@@ -65,8 +65,8 @@ Nachdem die \textit{libcore} Bibliothek erfolgreich kompiliert wurde, kann man
 die resultierende \texttt{\textsc{\textbf{.rlib}}}-Datei anderen Rust-Programmen
 beim Kompilieren zur Verfügung stellen, indem man diese in das korrekte Unterverzeichnis im
 lokalen \texttt{\textsc{\textbf{\char`~/.rustup}}} Verzeichnis kopiert.
-Alternativ kann man das \textit{libcore} Cargo-Projekt direkt durch die Abhängigkeiten in der Cargo.toml Datei
-eines Cargo Projekts einbinden.
+Alternativ kann man das \textit{libcore} Cargo-Projekt direkt durch die Abhängigkeiten in der
+\texttt{\textsc{\textbf{Cargo.toml}}} Datei eines Cargo Projekts einbinden.
 
 Soll ein Rust-Programm \textit{libcore} anstelle der Standardbibliothek verwenden, muss man dies
 mit der Anweisung \texttt{\textsc{\textbf{\#![no\char`_std]}}}
@@ -251,14 +251,14 @@ Programmiersprache anpassen. \textit{OctoPOS/IRTSS} bieten eine C-Schnittstelle 
 Die \textit{libc} Bibliothek bietet die Möglichkeit, Komponenten, welche die Standardbibliothek benötigen, 
 auszulassen, daher ist sie auch auf der SPARC-V8 Architektur nutzbar.
 
-Die \textit{octolib} Bibliothek wird vor dem Kompilieren als Abhängigkeit in die Cargo.toml Datei des
+Die \textit{octolib} Bibliothek wird vor dem Kompilieren als Abhängigkeit in die \texttt{\textsc{\textbf{Cargo.toml}}} Datei des
 zu kompilierenden Cargo Projekts eingefügt.
-Hierfür wird mithilfe des \texttt{\textsc{\textbf{toml}}} Python Moduls der derzeitige Inhalt der Cargo.toml Datei
+Hierfür wird mithilfe des \texttt{\textsc{\textbf{toml}}} Python Moduls der derzeitige Inhalt der \texttt{\textsc{\textbf{Cargo.toml}}} Datei
 eingelesen, der Pfad zur lokal installierten \textit{octolib} Bibliothek in diese Daten injiziert und anschließend 
 wieder in die Konfigurationsdatei geschrieben.
-Um zu vermeiden, dass die Cargo.toml Datei Werte enthält, die auf eine lokale Konfiguration basieren, wird zunächst
+Um zu vermeiden, dass die \texttt{\textsc{\textbf{Cargo.toml}}} Datei Werte enthält, die auf eine lokale Konfiguration basieren, wird zunächst
 eine Kopie der ursprünglichen Daten im Hauptspeicher behalten. Nachdem die Kompilierung beendet
-wurde, werden diese Daten wieder in die Cargo.toml Datei geschrieben.
+wurde, werden diese Daten wieder in die \texttt{\textsc{\textbf{Cargo.toml}}} Datei geschrieben.
 Damit die Bibliothek für jedes zu kompilierende Programm auffindbar ist,
 wird eine lokale Kopie während der Installation des \textit{octorust}-Programms im
 \texttt{\textsc{\textbf{\char`~/.octorust}}} Verzeichnis erstellt.
@@ -278,7 +278,7 @@ Die Bibliothek bietet die folgenden Module:
 \begin{description}
 
 	\item[bindings] 
-	Dieses Modul enthält die direkten C-Rust Bindings zur C-Schnittstelle von \textit{OctoPOS/iRTSS}.
+	Dieses Modul enthält die direkten C-Rust \textit{Bindings} zur C-Schnittstelle von \textit{OctoPOS/iRTSS}.
 	
 	\item[helper]
 	Dieses Modul enthält eine Sammlung an Hilfsfunktionen, die nicht direkt mit dem \textit{OctoPOS} Betriebssystem 
@@ -297,7 +297,7 @@ Die Bibliothek bietet die folgenden Module:
 
 \end{description}
 
-\subsection{Direkte C-Rust Bindings}
+\subsection{Direkte C-Rust \textit{Bindings}}
 
 Im ersten Schritt wurden die Funktionen der C-Schnittstelle direkt Eins-zu-Eins als Rust-Funktionen eingebunden.
 Dank der \textit{Foreign Function Interface} müssen lediglich die Parameter- und Rückgabetypen
@@ -343,8 +343,8 @@ Null-terminiert werden müssen. Um "`Hello World"' zu drucken, muss man also die
 
 \subsection{Rust-spezifische Verbesserungen}
 
-Im Folgenden werden verschiedene Abstraktionen über die direkten C-Rust Bindings erstellt, welche das Programmieren
-vereinfachen und die Stärken von Rust ausnutzen sollen.
+Im Folgenden werden verschiedene Abstraktionen über die direkten C-Rust \textit{Bindings} erstellt,
+welche das Programmieren vereinfachen und die Stärken von Rust ausnutzen sollen.
 
 \subsubsection{Constraints}
 
@@ -360,7 +360,7 @@ welche die minimale und maximale Anzahl an Rechenelementen spezifizieren.
 
 Alle Parameter der \textit{Constraints} lassen sich nachträglich durch Methoden der Struktur ändern.
 Hierbei profitieren vor allem die Methoden, welche boolesche Werte als Parametertypen besitzen,
-denn diese werden in den direkten C-Rust Bindings statt mit \texttt{\textsc{\textbf{bool}}}-Werten mit
+denn diese werden in den direkten C-Rust \textit{Bindings} statt mit \texttt{\textsc{\textbf{bool}}}-Werten mit
 \texttt{\textsc{\textbf{u8}}}-Werten aufgerufen. Dies liegt daran, dass es in C keinen
 \texttt{\textsc{\textbf{bool}}} oder ähnlichen Typen gibt. Dort werden stattdessen Zahlenwerte auf den
 Wert \texttt{\textsc{\textbf{0}}} geprüft. Dies wird in den Methoden dieser Struktur jedoch abstrahiert,
@@ -381,7 +381,7 @@ nicht mehr der \textit{Owner} des zugehörigen Speicherbereichs ist.
 \subsubsection{Closures}
 
 Rust Closures können nicht ohne Weiteres einer C-Schnittstelle als Parameter übergeben werden.
-Somit ist es mit den direkten C-Rust Bindings nicht möglich, Closures zu verwenden,
+Somit ist es mit den direkten C-Rust \textit{Bindings} nicht möglich, Closures zu verwenden,
 um Code auf den Rechenelementen ausführen zu lassen. Dies wäre jedoch eine
 wünschenswerte Funktionalität. Da Closures aus der Funktion selbst, als auch aus ihrem
 Erstellungskontext bestehen\cite{embeddedRustOS}, ist es nicht möglich,
