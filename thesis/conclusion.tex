@@ -16,10 +16,11 @@ Sollte es trotzdem während der Laufzeit zu schwerwiegenden Fehlern kommen, beis
 brechen Rust Programme die Ausführung ab und weisen so kein undefiniertes Verhalten auf.
 
 Des Weiteren weist Rust in Situationen, in denen häufig Objekte erstellt und wieder den Geltungsbereich verlassen,
-ein besseres Laufzeitverhalten auf als X10 es tut. Außerdem eignet sich X10 wegen des Garbage Collectors nicht für 
-Anwendungsgebiete, in denen Pausen jeglicher Art nicht erwünscht sind, beispielsweise bei Echtzeitsystemen. In diesem
-Einsatzgebiet ist die Verfügbarkeit des Systems wichtig, daher wäre eine Garbage Collector Pause nicht
-wünschenswert. Rust wäre hier eine bessere Option.
+ein besseres Laufzeitverhalten auf als X10 es tut. Außerdem eignet sich X10 wegen des \textit{Garbage Collectors}
+nicht für Anwendungsgebiete, in denen Pausen jeglicher Art nicht erwünscht sind,
+beispielsweise bei Echtzeitsystemen.
+In diesem Einsatzgebiet ist die Verfügbarkeit des Systems wichtig, daher wäre eine \textit{Garbage Collector}-Pause
+nicht wünschenswert. Rust wäre hier eine bessere Option.
 
 Außerdem weist das Kompilieren mit \textit{octorust} deutlich kürzere Kompilierungsdauer
 als der \textit{x10i}-Compiler auf,

@@ -52,8 +52,8 @@ Das Ziel hierbei ist es, Code aus anderen Sprachen aus einem Rust Kontext heraus
 \subsection{Das Typsystem}
 
 Das signifikanteste Alleinstellungsmerkmal der Programmiersprache Rust ist ihr Typsystem. Dieses ermöglicht es
-erst, die versprochenen Sicherheitsgarantien ohne zusätzliche Konstrukte wie einem Garbage
-Collector zu realisieren.\cite{rustBook}
+erst, die versprochenen Sicherheitsgarantien ohne zusätzliche Konstrukte wie einem \textit{Garbage Collector}
+zu realisieren.\cite{rustBook}
 
 \subsubsection{Ownership, Move-Semantik und Borrowing}
 
@@ -65,7 +65,7 @@ Zu jedem Zeitpunkt darf die Speicherregion nur einen \textit{Owner} haben.
 Sobald dieser \textit{Owner} den Geltungsbereich verlässt, wird die zugehörige Speicherregion freigegeben,
 die dort vorhandenen Daten können anschließend nicht mehr verwendet werden.
 Dies ist der Mechanismus, der es in Rust erlaubt, Speicher ohne manuelle Befreiung oder Nutzung eines
-Garbage Collectors zu verwalten. Er stellt sicher, dass keine fehlerhaften Speicherzugriffe
+\textit{Garbage Collectors} zu verwalten. Er stellt sicher, dass keine fehlerhaften Speicherzugriffe
 durch die Nutzung von ungültigen Daten im Speicher entstehen.\cite{rustBook}
 Das Konzept des \textit{Ownership} wurde von affinen Typen inspiriert.\cite{embeddedRustOS}
 Solche Typen können maximal ein mal verwendet werden.\cite{affineTypes}

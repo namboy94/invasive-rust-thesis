@@ -95,7 +95,7 @@ anschließend sofort wieder beendet.
 			\toprule
 			Sprache    & $\bar{x}$ & $\tilde{x}$ & $s_x$ & $v_x$\\
 			\midrule
-			C          &   0.5564 &   0.5600 & 0.0138 & 2.4829\% \\
+			C          &   0.4924 &   0.4900 & 0.0170 & 3.4465\% \\
 			C (opt)    &   0.5586 &   0.5600 & 0.0134 & 2.3993\% \\
 			Rust       &   0.8174 &   0.8200 & 0.0164 & 2.0051\% \\
 			Rust (opt) &   0.8116 &   0.8100 & 0.0136 & 1.6765\% \\
@@ -162,8 +162,8 @@ der Kompilierungsdauer und Dateigröße verwendet wurde.
 			\toprule
 			Sprache    & $\bar{x}$ & $\tilde{x}$ & $s_x$ & $v_x$ \\
 			\midrule
-			C          & 0.3916 & 0.3800 & 0.0214 &  5.4687\% \\
-			C (opt)    & 0.3900 & 0.3800 & 0.0208 &  5.3334\% \\
+			C          & 0.3772 & 0.3700 & 0.0140 &  3.7123\% \\
+			C (opt)    & 0.3852 & 0.3800 & 0.0171 &  4.4268\% \\
 			Rust       & 0.3820 & 0.3800 & 0.0139 &  3.6258\% \\
 			Rust (opt) & 0.4026 & 0.3800 & 0.0459 & 11.4080\% \\
 			X10        & 1.7738 & 1.7800 & 0.0255 &  1.4357\% \\
@@ -207,8 +207,8 @@ benötigt wird, wäre dies ohnehin aller Wahrscheinlichkeit nach kein entscheide
 			\toprule
 			Sprache    & $\bar{x}$ & $\tilde{x}$ & $s_x$ & $v_x$   \\
 			\midrule
-			C          &  4.2094  &  4.2000 & 0.0219 & 0.5201\% \\
-			C (opt)    &  4.2202  &  4.2300 & 0.0277 & 0.6572\% \\
+			C          &  4.6898  & 4.6950  & 0.0313 & 0.6681\% \\
+			C (opt)    &  4.2134  & 4.2150  & 0.0297 & 0.7041\% \\
 			Rust       & 61.6462  & 61.6050 & 0.2849 & 0.4621\% \\
 			Rust (opt) &  4.9692  &  4.9650 & 0.0319 & 0.6413\% \\
 			X10        & 10.5830  & 10.5500 & 0.1368 & 1.2923\% \\
@@ -233,8 +233,8 @@ benötigt wird, wäre dies ohnehin aller Wahrscheinlichkeit nach kein entscheide
 			\toprule
 			Sprache    & $\bar{x}$ & $\tilde{x}$ & $s_x$ & $v_x$ \\
 			\midrule
-			C          & 0.5626 & 0.5600 & 0.0191 & 3.4031\% \\
-			C (opt)    & 0.5620 & 0.5600 & 0.0199 & 3.5405\% \\
+			C          & 0.6250 & 0.6150 & 0.0196 & 3.1382\% \\
+			C (opt)    & 0.5584 & 0.5500 & 0.0175 & 3.1408\% \\
 			Rust       & 0.8362 & 0.8300 & 0.0138 & 1.6544\% \\
 			Rust (opt) & 0.4984 & 0.4900 & 0.0210 & 4.2196\% \\
 			X10        & 2.3508 & 2.3400 & 0.0347 & 1.4782\% \\
@@ -287,12 +287,12 @@ indem jede Zahl mit jeder kleineren Zahl auf Teilbarkeit geprüft wird.
 			\toprule
 			Sprache & $\bar{x}$ & $\tilde{x}$ & $s_x$ & $v_x$ \\
 			\midrule
-			C          &  30.6064 &  30.590 & 0.6380 & 2.0844\% \\
-			C (opt)    &  30.4666 &  30.075 & 0.6262 & 2.0554\% \\
-			Rust       & 476.9242 & 475.895 & 3.6647 & 0.7684\% \\
-			Rust (opt) &  37.6212 &  37.330 & 0.6651 & 1.7679\% \\
-			X10        &  67.9618 &  67.405 & 1.1505 & 1.6929\% \\
-			X10 (opt)  &  31.4584 &  31.305 & 0.4181 & 1.3290\% \\
+			C          &  33.9812 &  33.7450 & 0.4918 & 1.4473\% \\
+			C (opt)    &  29.9782 &  29.9750 & 0.0377 & 0.1257\% \\
+			Rust       & 476.9242 & 475.8950 & 3.6647 & 0.7684\% \\
+			Rust (opt) &  37.6212 &  37.3300 & 0.6651 & 1.7679\% \\
+			X10        &  67.9618 &  67.4050 & 1.1505 & 1.6929\% \\
+			X10 (opt)  &  31.4584 &  31.3050 & 0.4181 & 1.3290\% \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
@@ -314,8 +314,8 @@ indem jede Zahl mit jeder kleineren Zahl auf Teilbarkeit geprüft wird.
 			\toprule
 			Sprache & $\bar{x}$ & $\tilde{x}$ & $s_x$ & $v_x$ \\
 			\midrule
-			C          &  13.8136 &  13.7800 & 0.0935 & 0.6772\% \\
-			C (opt)    &  13.7898 &  13.7800 & 0.0912 & 0.6612\% \\
+			C          &  16.4720 &  16.4600 & 0.0528 & 0.3203\% \\
+			C (opt)    &  13.8018 &  13.7950 & 0.0352 & 0.2551\% \\
 			Rust       & 242.6560 & 242.4800 & 0.7602 & 0.3133\% \\
 			Rust (opt) &  17.8830 &  17.8700 & 0.0862 & 0.4823\% \\
 			X10        &  46.3264 &  46.3800 & 0.2348 & 0.5069\% \\
@@ -367,8 +367,8 @@ Varianten berechnen.
 			\toprule
 			Sprache & $S_{\bar{x}}(8)$ & $S_{\tilde{x}}(8)$ & $E_{\bar{x}}(8)$ & $E_{\tilde{x}}(8)$ \\
 			\midrule
-			C          & 2.2157 & 2.2199 & 0.2770 & 0.2775 \\
-			C (opt)    & 2.2094 & 2.1825 & 0.2762 & 0.2728 \\
+			C          & 2.0630 & 2.0501 & 0.2579 & 0.2563 \\
+			C (opt)    & 2.1721 & 2.1729 & 0.2715 & 0.2716 \\
 			Rust       & 1.9654 & 1.9626 & 0.2457 & 0.2453 \\
 			Rust (opt) & 2.1037 & 2.0890 & 0.2630 & 0.2611 \\
 			X10        & 1.4670 & 1.4533 & 0.1834 & 0.1817 \\
@@ -378,7 +378,8 @@ Varianten berechnen.
 	\end{center}
 	\caption{
 		In dieser Tabelle werden die berechneten Werte für den \textit{Speedup} und die \textit{Effizienz}
-		des \textit{parallel-primes-Benchmark} veranschaulicht. Hierbei wurden die Ergebnisse sowohl für den
+		des \textit{parallel-primes-Benchmark} für acht Recheneinheiten veranschaulicht.
+		Hierbei wurden die Ergebnisse sowohl für den
 		Median als auch für das arithmetischen Mittel berechnet. Alle Werte sind auf vier Nachkommastellen gerundet.
 	}
 	\label{fig:primes_parallel_speedup_efficiency_table}
@@ -399,16 +400,17 @@ den höchsten Werten länger als alle anderen \textit{i-lets} benötigen, um sei
 
 \subsection{Allokation auf dem Heap}
 
-X10 verwaltet den Speicher mithilfe eines Garbage Collectors, wobei C und Rust auf einen solchen verzichten.
-Während Garbage Collector ein sehr hilfreiches Werkzeug sind, um den Programmieraufwand zu verringern, so kann dies
-allerdings auch auf Kosten der Laufzeiteffizienz und Verfügbarkeit durch Garbage Collector Pausen geschehen.
+X10 verwaltet den Speicher mithilfe eines \textit{Garbage Collectors}, wobei C und Rust auf einen solchen verzichten.
+Während \textit{Garbage Collector} ein sehr hilfreiches Werkzeug sind,
+um den Programmieraufwand zu verringern, so kann dies
+allerdings auch auf Kosten der Laufzeiteffizienz und Verfügbarkeit durch \textit{Garbage Collector}-Pausen geschehen.
 
 Um zu Prüfen, ob diese Gegebenheit einen messbaren Effekt auf die Laufzeit eines Programmes haben kann,
 wurde ein Programm geschrieben, welches kontinuierlich Objekte auf dem Heap erstellt,
 welche anschließend wieder aus dem Geltungsbereich verschwinden.
 In C muss der Speicher, in dem diese Objekte gespeichert werden, manuell mit \texttt{\textsc{\textbf{free}}}
 befreit werden, in Rust wird dieser Speicher automatisch wieder befreit sobald ihr \textit{Owner} den
-Geltungsbereich verlässt und im Falle von X10 werden diese Objekte vom Garbage Collector verwaltet.
+Geltungsbereich verlässt und im Falle von X10 werden diese Objekte vom \textit{Garbage Collector} verwaltet.
 
 Die erstellten Objekte sind in diesem Fall Arrays von Integer-Zahlenwerten. In C und X10 wurden die
 \texttt{\textsc{\textbf{int}}}-Typen, in Rust der \texttt{\textsc{\textbf{i32}}} Typ verwendet. 
@@ -420,12 +422,12 @@ Das Äquivalent zu Arrays in X10 sind Rails, daher wurden in der X10 Implementie
 			\toprule
 			Sprache    & $\bar{x}$ & $\tilde{x}$ & $s_x$ & $v_x$ \\
 			\midrule
-			C          & 0.3894   & 0.3800 & 0.0191 & 4.9058\%  \\
-			C (opt)    & 0.3876   & 0.3800 & 0.0197 & 5.0953\%  \\
-			Rust       & 29.5478  & 29.480 & 0.2671 & 0.9038\%  \\
-			Rust (opt) & 5.1024   & 5.1000 & 0.0258 & 0.5048\%  \\
-			X10        & 339.345  & 338.19 & 2.3484 & 0.6920\%  \\
-			X10 (opt)  & 227.8816 & 226.09 & 2.8234 & 1.2390\%  \\
+			C          &  19.0216 &  19.0000 & 0.0743 & 0.3904\%  \\
+			C (opt)    &   0.3854 &   0.3700 & 0.0206 & 5.3513\%  \\
+			Rust       &  29.5478 &  29.4800 & 0.2671 & 0.9038\%  \\
+			Rust (opt) &   5.1024 &   5.1000 & 0.0258 & 0.5048\%  \\
+			X10        & 339.3450 & 338.1900 & 2.3484 & 0.6920\%  \\
+			X10 (opt)  & 227.8816 & 226.0900 & 2.8234 & 1.2390\%  \\
 			\bottomrule
 		\end{tabular}
 	\end{center}
@@ -441,7 +443,7 @@ Das Äquivalent zu Arrays in X10 sind Rails, daher wurden in der X10 Implementie
 
 Wie man an den Ergebnissen der Tabelle \ref{fig:garbageonly_table} erkennen kann,
 benötigt X10 im Vergleich zu Rust oder C deutlich länger, um die selbe Anzahl an gleich großen Objekten zu erstellen. 
-Dies könnte eine Konsequenz des Garbage Collectors sein, es lässt sich jedoch ohne eine genaue Messung des
+Dies könnte eine Konsequenz des \textit{Garbage Collectors} sein, es lässt sich jedoch ohne eine genaue Messung des
 Speicherverhaltens keine eindeutige Aussage diesbezüglich treffen.
 
 Bei häufiger Erstellung von neuen Objekten weisen Rust und C allerdings trotzdem durch die gemessene Laufzeit
