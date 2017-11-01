@@ -9,7 +9,7 @@ Rust ist eine Programmiersprache, welche wie beispielsweise C++ direkte Kontroll
 unterliegende Hardware bieten soll. Dies bedeutet in der Praxis, dass diese Sprache nicht von einem
 \textit{Garbage Collector} Gebrauch macht, wie es beispielsweise bei der Sprache X10 der Fall ist.
 Im Gegensatz zu C++ bietet Rust jedoch
-standardmäßig automatische Speichersicherheit und garantieren somit, dass Programme keine Speicherfehler enthalten.
+standardmäßig automatische Speichersicherheit und garantiert somit, dass Programme keine Speicherfehler enthalten.
 \cite{theRustLanguage}
 
 Rust erfreut sich seit ihrer Veröffentlichung wachsender Beliebtheit bei Programmierern aller Art. Sie wurde
@@ -24,7 +24,7 @@ Leistung und Sicherheit als vorhergehende Technologien vorweisen\cite{engineerin
 
 \subsection{Motivation}
 
-Eine der Kernziele der Rust Programmiersprache ist es, sichere Speicherzugriffe zu gewährleisten, ohne
+Eines der Kernziele der Rust Programmiersprache ist es, sichere Speicherzugriffe zu gewährleisten, ohne
 für diesen Zweck einen \textit{Garbage Collector} zu verwenden. Fehlerhafte Speicherzugriffe können undefiniertes
 Verhalten auslösen, welches ein Sicherheitsrisiko darstellen kann, denn diese Fehler können gezielt ausgenutzt
 werden, um Schadcode auszuführen. Hierbei beziehen sich fehlerhafte Speicherzugriffe auf das Verwenden von 
@@ -46,7 +46,7 @@ Diese zusätzlichen Sicherheiten und Nutzerfreundlichkeiten sollen gleichzeitig 
 sich ziehen, denn es ist ein Ziel von Rust, 
 eine ähnliche Recheneffizienz im Vergleich mit bestehenden Systemsprachen wie C oder C++ vorzuweisen.
 Außerdem soll Rust es vereinfachen, mehrere Programmiersprachen miteinander zu verwenden.
-Das Ziel hierbei ist es, Code aus anderen Sprachen aus einem Rust Kontext heraus zu verwenden als auch umgekehrt.
+Das Ziel hierbei ist es, Code aus anderen Sprachen aus einem Rust Kontext heraus zu verwenden, als auch umgekehrt.
 \cite{rustBook}
 
 
@@ -69,7 +69,7 @@ Dies ist der Mechanismus, der es in Rust erlaubt, Speicher ohne manuelle Befreiu
 \textit{Garbage Collectors} zu verwalten. Er stellt sicher, dass keine fehlerhaften Speicherzugriffe
 durch die Nutzung von ungültigen Daten im Speicher entstehen.\cite{rustBook}
 Das Konzept des \textit{Ownership} wurde von affinen Typen inspiriert.\cite{embeddedRustOS}
-Solche Typen können maximal ein mal verwendet werden.\cite{affineTypes}
+Solche Typen können maximal einmal verwendet werden.\cite{affineTypes}
 
 Die \textit{Ownership} einer Speicherregion kann mithilfe der \textit{Move}-Semantik den Besitzer wechseln.
 Dies kann bei Funktionsaufrufen oder auch bei Zuweisungen geschehen. Beispiele hierfür sind in Listing
@@ -110,8 +110,8 @@ zu verhindern. Eine Referenz kann also nie auf eine Variable zeigen, die bereits
 Es gibt zwei unterschiedliche
 Typen von Referenzen, veränderliche und unveränderliche Referenzen. Standardmäßig werden in Rust unveränderliche
 Referenzen verwendet. Diese erlauben es nicht, den Wert des Speicherbereichs zu verändern, sondern nur auszulesen.
-Es gibt keine Limitierung bei der Anzahl unveränderlicher Referenzen, die eine Variable besitzen kann. Im Gegensatz
-hierzu kann nur eine veränderliche Referenz auf die Variable existieren. Dies ermöglicht es, bereits zur
+Es gibt keine Limitierung bei der Anzahl unveränderlicher Referenzen die eine Variable besitzen kann. Im Gegensatz
+hierzu kann nur eine veränderliche Referenz auf die Variable existieren. Dies ermöglicht es bereits zur
 Compile-Zeit gewisse Wettlaufsituationen, sogenannte \textit{Data Races},
 in der Parallelprogrammierung auszuschließen.\cite{rustBook}
 
@@ -143,10 +143,10 @@ Zusätzlich zur benutzerdefinierten Spezifikation
 solcher \textit{Interface}-ähnlichen Konstrukte bietet Rust vordefinierte Traits, welche das Verhalten der Typen
 bezüglich \textit{Ownership} und \textit{Move}-Semantik beeinflussen können.\cite{rustBook}
 
-Zum einen existiert das \textit{Drop}-Trait. Dieses Trait erlaubt es, das Verhalten eines Typen beim Verlassen des
+Ein solches Trait ist das \textit{Drop}-Trait. Dieses erlaubt es, das Verhalten eines Typen beim Verlassen des
 Geltungsbereichs zu beeinflussen. In der \textit{drop}-Methode des Traits wird es ermöglicht, einen Destruktor
 für den Typ zu definieren. Dieser kann aus unterschiedlichen Gründen benötigt oder hilfreich sein.
-Beispielsweise kann man einen solchen verwenden, 
+Beispielsweise kann einen solcher Destruktor verwendet werden, 
 um einen Referenzzähler zu dekrementieren, unbenutzte Netzwerkverbindungen
 zu trennen oder andersweitig Ressourcen wieder freizugeben.\cite{rustBook}
 
@@ -165,7 +165,7 @@ unerwünschten Konsequenzen führen.\cite{rustBook}\cite{rustDocCopy}
 Obwohl der Compiler dank Rusts Typsystem bereits bei der Kompilierung eine Vielzahl von Fehlern erkennen kann,
 ist dies  nicht für alle möglichen Fehlertypen möglich. Beispielsweise ist es möglich, dass
 durch eine inkorrekte Indizierung eines Arrays ein Fehler entsteht.
-Solche Fehler müssen also zur Laufzeit behandelt werden.\cite{rustBook}
+Solche Fehler müssen zur Laufzeit behandelt werden.\cite{rustBook}
 
 Fehler werden in Rust idiomatisch mithilfe von Rückgabewerten vom Aufzählungstyp \texttt{\textsc{\textbf{Result}}}
 behandelt. Anhand dieser Rückgabewerte lässt sich mithilfe von
@@ -210,7 +210,7 @@ Der offizielle Rust Compiler heißt \texttt{\textsc{\textbf{rustc}}} und kann ei
 kompilieren. Rust-Quelldateien haben per Konvention die Dateiendung \texttt{\textsc{\textbf{.rs}}}.\cite{rustBook}
 
 Als Lösung zum Abhängigkeitsmanagement und der Distribution wurde das Werkzeug \texttt{\textsc{\textbf{cargo}}} 
-entwickelt. Es ermöglicht es dem Programmierer, verwendete Bibliotheken in ein Projekt einzugliedern,
+entwickelt. Dieses ermöglicht es dem Programmierer, verwendete Bibliotheken in ein Projekt einzugliedern,
 indem diese in einer \texttt{\textsc{\textbf{Cargo.toml}}}-Konfigurationsdatei im Hauptverzeichnis
 des Projekts angegeben werden. Hierbei ist es möglich, Bibliotheken von der zentralen \textit{crates.io}
 Plattform automatisch herunterladen zu lassen oder einen lokalen Dateipfad zu einer solchen
@@ -270,7 +270,7 @@ SPARC (\textbf{S}calable \textbf{P}rocessor \textbf{ARC}hitecture) ist eine Rech
 RISC (Reduced Instruction Set Computing) Konzept aufbaut. Eines der Ziele der SPARC Architektur ist es, skalierbar
 zu sein und so in unterschiedlichsten Umgebungen zum Einsatz zu kommen. So können SPARC Prozessoren in
 Mikrocontrollern bis hin zu Supercomputern verwendet werden. Die Architektur wird an unterschiedliche
-Halbleiter-Unternehmen lizensiert, mit dem Ziel durch konkurrierende Kräfte Innovation bezüglich Leistung als auch
+Halbleiter-Unternehmen lizensiert, mit dem Ziel durch konkurrierende Kräfte Innovation bezüglich Leistung und
 Kosten zu fördern.\cite{sparc}
 
 SPARC-V8 ist eine auf SPARC basierende Architektur. Es handelt sich hierbei um eine Allzweckarchitektur mit einem
@@ -280,14 +280,14 @@ SPARC-V8 ist eine auf SPARC basierende Architektur. Es handelt sich hierbei um e
 
 Die ursprünglich von der European Space Agency (ESA) und anschließend von Gaisler Research entwickelten
 LEON-Prozessoren basieren auf der SPARC-V8 Architektur.
-Das Hauptziel der LEON-Prozessoren war es, fehlertolerante Nachfolger zu älteren SPARC-V7-basierten
+Das Hauptziel der LEON-Prozessoren war es, fehlertolerante Nachfolger zu den älteren SPARC-V7-basierten
 Prozessoren, die zu dem Zeitpunkt bei der ESA Verwendung fanden, zu bieten.\cite{gaislerLeon}
-Es handelt sich bei ihnen um stark konfigurierbare
+Es handelt sich bei der LEON-Prozessorfamilie um stark konfigurierbare
 Implementierungen der SPARC-V8 Architektur in der Hardwarebeschreibungssprache
 VHDL (Very High Speed Integrated Circuit Hardware Description Language).
-Unterschiedliche Iterationen dieser Prozessorfamilie sind unter Open-Source Lizenzen als VHDL-Designs verfügbar.
-So wurden die VHDL-Designs des LEON2 Prozessors unter der GNU LGPL Lizenz veröffentlicht.\cite{sparcv8Eval}
-Auch das Design des LEON3 Prozessors ist unter einer Open-Source Lizenz verfügbar\cite{invasiveArrays}.
+Unterschiedliche Iterationen der Prozessorfamilie sind unter Open-Source Lizenzen als VHDL-Designs verfügbar.
+So wurden die VHDL-Designs des LEON2 Prozessors unter der GNU LGPL Lizenz veröffentlicht\cite{sparcv8Eval} und
+auch das Design des LEON3 Prozessors ist unter einer Open-Source Lizenz verfügbar\cite{invasiveArrays}.
 
 Die Kombination von stark konfigurierbaren Designs und der Open-Source Lizenz ermöglicht den Gebrauch der
 LEON VHDL Designs in domänenspezifischen, angepassten ASICs (Application-Specific Integrated Circuit),

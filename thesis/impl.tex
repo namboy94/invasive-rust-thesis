@@ -51,8 +51,8 @@ muss in der \texttt{\textsc{\textbf{linker}}}-Option der JSON-Datei angegeben we
 
 Sobald man diese JSON Datei erstellt hat, kann man die \textit{libcore} Bibliothek mit dem
 \texttt{\textsc{\textbf{cargo build}}} Befehl kompilieren.
-Um dies für SPARC-V8 zu tun, verwendet man als Parameter für die \texttt{\textsc{\textbf{-{}-target}}}-Option
-den Pfad zur Spezifikations-JSON-Datei.
+Um dies für SPARC-V8 zu bewerkstelligen, verwendet man als Parameter für die
+\texttt{\textsc{\textbf{-{}-target}}}-Option den Pfad zur Spezifikations-JSON-Datei.
 Derzeit ist es nicht möglich, \textit{libcore} mit dem stabilen Rust-Compiler zu kompilieren,
 da diese Bibliothek Funktionalitäten verwendet, welche auf dem stabilen Compiler deaktiviert sind.
 Daher muss ein Nightly-Compiler installiert werden, welches
@@ -383,11 +383,11 @@ nicht mehr der \textit{Owner} des zugehörigen Speicherbereichs ist.
 Rust Closures können nicht ohne Weiteres einer C-Schnittstelle als Parameter übergeben werden.
 Somit ist es mit den direkten C-Rust Bindings nicht möglich, Closures zu verwenden,
 um Code auf den Rechenelementen ausführen zu lassen. Dies wäre jedoch eine
-wünschenswerte Funktionalität. Da Closures aus der Funktion selbst, als auch ihrem
+wünschenswerte Funktionalität. Da Closures aus der Funktion selbst, als auch aus ihrem
 Erstellungskontext bestehen\cite{embeddedRustOS}, ist es nicht möglich,
 eine Closure direkt als eine normale Rust Funktion zu verwenden.
 Stattdessen erstellt man einen Zeiger auf die Datenregion,
-welche die Closure repräsentiert und übergibt diesen dann einer
+welche die Closure repräsentiert und übergibt diesen daraufhin einer
 \texttt{\textsc{\textbf{extern \char`"C\char`"}}} Funktion, welche aus diesem Zeiger die Closure in einem
 \texttt{\textsc{\textbf{unsafe}}}-Block zurück konvertiert.
 Diese \texttt{\textsc{\textbf{extern \char`"C\char`"}}}-Funktion kann dann der C-Schnittstelle zusammen mit dem

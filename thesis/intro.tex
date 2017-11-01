@@ -11,7 +11,7 @@ Der Grundgedanke dahinter ist es, mehrere Recheneinheiten zu verwenden, welche g
 lösen. Somit wird keine Verbesserung der einzelnen Recheneinheiten benötigt, um eine verbesserte Rechenleistung
 zu erzielen.
 
-Der Trend zum parallelen Rechnen kann bereits beobachtet werden,
+Der Trend zum parallelen Rechnen kann bereits heute beobachtet werden,
 so sind moderne PCs oder Smartphones generell alle mit Mehrkernsystemen ausgestattet.
 Bei Grafikprozessoren kommen mittlerweile bereits Tausende einzelner Rechenkerne zum Einsatz,
 beispielsweise verfügt die Nvidia GTX 1080 GPU laut Spezifikation \cite{nvidia1080specs} über 2560 Kerne.
@@ -28,15 +28,15 @@ Eine solche wäre das invasive Computing, welches es einem Programmierer erlaubt
 die Ressourcen in parallelen Systemen besser zu nutzen.
 Vor allem bei Systemen mit vielen Kernen ist dieses Paradigma ein interessanter Lösungsansatz.
 So kann man beispielsweise auf einer Nvidia GTX 1080 GPU mit insgesamt 2560 Kernen ein Programm
-ausführen, welches dann ein Problem bearbeitet, das auf genau 1000 dieser Kerne ausgeführt wird.
-Gleichzeitig kann dann ein anderes Problem auf einer weiteren Untermenge der Kerne ausgeführt werden.
+ausführen, welches ein Problem bearbeitet, das auf genau 1000 dieser Kerne ausgeführt wird.
+Gleichzeitig kann ein anderes Problem auf einer weiteren Untermenge der Kerne ausgeführt werden.
 
 Die derzeit existierenden invasiven Systeme unterstützen nur die Programmiersprachen C, C++ und X10.
 Eine interessante Addition hierzu wäre die Sprache Rust,
 welche einen Fokus auf die Sicherheit vor schwerwiegenden Programmierfehlern, die vor 
 allem durch Zugriffe auf ungültige Speicherregionen ausgelöst werden, legt.
 
-Damit man Rust im Kontext des invasiven Computing verwenden kann,
+Damit Rust im Kontext des invasiven Computing verwendet werden kann,
 werden zunächst die Grundlagen der Programmiersprache Rust,
 des invasiven Computing und der Prozessorarchitektur SPARC-V8 erarbeitet. 
 Anschließend werden Werkzeuge zum Erstellen von invasiven
