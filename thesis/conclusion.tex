@@ -15,13 +15,13 @@ hingewiesen. Dies erlaubt es, sicherere und weniger fehleranfällige Programme z
 Sollte es trotzdem während der Laufzeit zu schwerwiegenden Fehlern kommen, beispielsweise bei einem Pufferüberlauf,
 brechen Rust Programme die Ausführung ab und weisen so kein undefiniertes Verhalten auf.
 
-Des Weiteren weist Rust in Situationen, in denen häufig Objekte erstellt werden und den Geltungsbereich wieder verlassen,
+Des Weiteren weist Rust in Situationen, in denen viele Objekte erstellt werden und den Geltungsbereich wieder verlassen,
 ein mindestens 10-fach besseres Laufzeitverhalten auf als X10.
 Zudem eignet sich X10 wegen des \textit{Garbage Collectors}
 nicht für Anwendungsgebiete, in denen Pausen jeglicher Art nicht erwünscht sind,
 beispielsweise bei Echtzeitsystemen.
 In diesem Einsatzgebiet ist die Verfügbarkeit des Systems wichtig, daher wäre eine \textit{Garbage Collector}-Pause
-nicht wünschenswert. Rust wäre hier eine bessere Option.
+nicht wünschenswert. Rust wäre hier eine empfehlenswertere Option.
 
 Außerdem weist das Kompilieren mit \textit{octorust} eine 100- bis 200-fach kürzere Kompilierungsdauer
 als der \textit{x10i}-Compiler auf. Dies kann bei der Entwicklung von Programmen ein Zeitersparnis von
@@ -33,11 +33,11 @@ Rust bietet beim Programmieraufwand kaum Vorteile gegenüber X10, einzig das imp
 erwähnen.
 X10 bietet zudem derzeit robustere Abstraktionen über die C-Schnittstelle von \textit{OctoPOS} und
 \textit{iRTSS}.
-Vergleicht man Rust diesbezüglich allerdings mit C, so erkennt man eine deutliche Reduktion im Programmieraufwand.
+Vergleicht man Rust diesbezüglich allerdings mit C, so erkennt man eine Reduktion im Programmieraufwand.
 
-Negativ zu betrachten wäre die starke Abhängigkeit von der \textit{OctoPOS/iRTSS} C-Schnittstelle,
+Negativ zu betrachten wäre die Abhängigkeit von der \textit{OctoPOS/iRTSS} C-Schnittstelle,
 welche die Sicherheit von Rust teils aufgibt. Die Funktionen der C-Schnittstelle bieten nämlich keine Garantien 
-bezüglich der Sicherheit und die häufige Nutzung von \texttt{\textsc{\textbf{void}}}-Zeigern zum Übertragen
+bezüglich der Sicherheit und die Nutzung von \texttt{\textsc{\textbf{void}}}-Zeigern zum Übertragen
 von Parametern ist ebenfalls ein Problem, welches zu Fehlern führen kann.
 
 Bei der Primzahlenberechnung der Evaluation konnte zudem festgestellt werden, dass Rust im Schnitt die schlechtesten
@@ -63,7 +63,7 @@ Durch die unsichere Art und Weise, in der die Parameterübergabe in der \textit{
 \textit{octolib} angeboten wird, können Programmfehler entstehen. Dies könnte beispielsweise durch den Einsatz von
 Serialisierungsbibliotheken wie \texttt{\textsc{\textbf{serde}}} in der Zukunft verbessert werden.
 
-Um die starke Abhängigkeit von der \textit{OctoPOS/iRTSS} C-Schnittstelle zu verringern,
+Um die negativen Effekte der Abhängigkeit von der \textit{OctoPOS/iRTSS} C-Schnittstelle zu verringern,
 können weitere Abstraktionen erstellt werden, welche von den
 besonderen Eigenschaften der Rust-Programmiersprache Gebrauch machen.
 Dass dies möglich ist, hat die Implementierung des X10-Compilers \textit{x10i} bewiesen,
