@@ -5,7 +5,7 @@ wird vor allem mit den bereits unterstützten Sprachen C und X10 verglichen.
 
 Jedes der folgenden Programme wurde auf der folgenden Hardware/Software Konfiguration kompiliert und ausgeführt:
 
-\begin{figure}[hb]
+\begin{table}[hb]
 	\begin{center}
 		\begin{tabular}{ll}
 			\midrule
@@ -28,7 +28,7 @@ Jedes der folgenden Programme wurde auf der folgenden Hardware/Software Konfigur
 		auf dem die nachfolgenden Programme kompiliert und ausgeführt wurden.
 	}
 	\label{fig:specs_table}
-\end{figure}
+\end{table}
 
 Für jedes betrachtete Programm wurden je zwei Versionen pro Programmiersprache betrachtet.
 Zum einen mit Compiler-Optimierungen,
@@ -42,8 +42,8 @@ Um die statistische Relevanz der Ergebnisse zu evaluieren, wurden zu jeder Messu
 das arithmetische Mittel (Abbildung \ref{formula:mean}),
 der Median (Abbildung \ref{formula:median}),
 die Stichproben-Standardabweichung (Abbildung \ref{formula:std_deviation}) und
-der zugehörige Stichproben-Variationskoeffizient (Abbildung \ref{formula:variation_coefficient}) berechnet.
-\cite{wtSkript}
+der zugehörige Stichproben-Variationskoeffizient (Abbildung \ref{formula:variation_coefficient}) berechnet
+\cite{wtSkript}.
 
 \begin{figure}
 	\caption{Das Arithmetische Mittel}
@@ -78,7 +78,7 @@ der zugehörige Stichproben-Variationskoeffizient (Abbildung \ref{formula:variat
 	\begin{equation*}
 		v_x = \frac{s_x}{\bar{x}}
 	\end{equation*}
-
+	\label{formula:variation_coefficient}
 \end{figure}
 
 
@@ -491,7 +491,7 @@ Um dieses Programm in Rust zu implementieren, muss man zunächst die notwendigen
 Benötigt werden die \texttt{\textsc{\textbf{Constraints}}}- und \texttt{\textsc{\textbf{AgentClaim}}}-Strukturen.
 Zusätzlich muss der \texttt{\textsc{\textbf{libc::c\char`_void}}}-Typ importiert werden,
 um die Funktionssignatur der \textit{i-let} Funktionen zu definieren.
-Außerdem wird zum Drucken von "`Hello World!"' die \texttt{\textsc{\textbf{helper::printer::print}}}-Funktion benötigt.
+Außerdem wird zur Ausgabe von "`Hello World!"' die \texttt{\textsc{\textbf{helper::printer::print}}}-Funktion benötigt.
 
 Zunächst werden die \textit{Constraints} mithilfe der \texttt{\textsc{\textbf{Constraints}}}-Struktur initialisiert.
 Anschließend können diese weiter konfiguriert werden oder direkt bei der Initialisierung einer Instanz der
@@ -500,7 +500,7 @@ der \texttt{\textsc{\textbf{AgentClaim}}}-Struktur aufgerufen,
 so wird die \textit{Invade}-Operation implizit durchgeführt.
 Es muss nun nur noch die \texttt{\textsc{\textbf{infect}}}-Methode aufgerufen werden.
 Dieser Methode wird eine Closure als Parameter übergeben, welche den
-Text "`Hello World"' auf die Kommandozeile druckt. Sobald die \texttt{\textsc{\textbf{infect}}}-Methode
+Text "`Hello World"' auf die Kommandozeile ausgibt. Sobald die \texttt{\textsc{\textbf{infect}}}-Methode
 aufgerufen wurde, wartet der Hauptfaden des Programms darauf,
 dass die einzelnen Rechenelemente ihre Ausführung beendet haben.
 
@@ -542,7 +542,7 @@ mindestens die Klassen \\
 \texttt{\textsc{\textbf{invasic.IncarnationID}}} und \\
 \texttt{\textsc{\textbf{invasic.Claim}}}
 benötigt. Zusätzlich muss \texttt{\textsc{\textbf{x10.io.Console}}} importiert werden
-um das Drucken auf die Kommandozeile zu ermöglichen.
+um die Ausgabe auf die Kommandozeile zu ermöglichen.
 
 Wie bereits bei Rust werden zunächst die \textit{Constraints} spezifiziert. Hierzu
 ruft man den Konstruktor der Klasse \texttt{\textsc{\textbf{PEQuantity}}} auf. Man kann mithilfe
@@ -553,7 +553,7 @@ Anschließend führt man die \textit{Invade}-Phase mithilfe der statischen
 \texttt{\textsc{\textbf{Claim.invade}}}-Methode aus und erhält als Rückgabewert den erstellten \textit{Claim}.
 Um darauf die \textit{Infect}-Phase zu beginnen, muss auf diesem \textit{Claim} die
 \texttt{\textsc{\textbf{infect}}}-Methode verwendet werden.
-Als Parameter erhält diese eine Closure, welche "`Hello World"' auf die Kommandozeile druckt.
+Als Parameter erhält diese eine Closure, welche "`Hello World"' auf die Kommandozeile ausgibt.
 Sobald die Methode aufgerufen wurde, wartet der Hauptfaden des Programms auf das Ende der Ausführung der
 verwendeten Rechenelemente.
 
@@ -592,7 +592,7 @@ class Infect {
 Im Gegensatz zu Rust und X10 müssen die in C verwendeten Strukturen nicht alle explizit importiert werden.
 Es muss lediglich \texttt{\textsc{\textbf{octopos.h}}} mit der Präprozessor-Anweisung
 \texttt{\textsc{\textbf{include}}} verwendet werden.
-Um auf die Kommandozeile drucken zu können, muss zusätzlich \texttt{\textsc{\textbf{stdio.h}}} importiert werden.
+Um auf die Kommandozeile ausgeben zu können, muss zusätzlich \texttt{\textsc{\textbf{stdio.h}}} importiert werden.
 
 Die Constraints werden mithilfe der \texttt{\textsc{\textbf{agent\char`_constr\char`_create}}}-Funktion initialisiert
 und müssen anschließend mit diversen \texttt{\textsc{\textbf{agent\char`_constr\char`_set\char`_...}}}-Funktionen
@@ -670,7 +670,7 @@ void main_ilet(claim_t claim_id) {
 
 Die Vorgehensweisen bei Rust und X10 sind nahezu identisch. Der einzige nennenswerte Unterschied hierbei ist es, dass
 man in Rust keine explizite "'Retreat"'-Operation initialisieren muss.
-Das C Programm ist im Vergleich zu den beiden anderen Programmiersprachen hingegen komplexer und somit auch
-fehleranfälliger. Zudem benötigt ein solches C Programm ungefähr doppelt so viele 
-Codezeilen wie die äquivalenten Rust oder X10 Programme. Obendrein ist es in C nicht möglich, Closures oder
+Das C-Programm ist im Vergleich zu den beiden anderen Programmiersprachen hingegen komplexer und somit auch
+fehleranfälliger. Zudem benötigt ein solches C-Programm ungefähr doppelt so viele
+Codezeilen wie die äquivalenten Rust- oder X10-Programme. Obendrein ist es in C nicht möglich, Closures oder
 ähnliche Konstrukte zu verwenden, Rust und X10 unterstützen dies jedoch.

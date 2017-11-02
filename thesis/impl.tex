@@ -16,17 +16,17 @@ Programme mit einer minimalen, plattformunabhängigen Untermenge der Standardbib
 Diese Funktionalität wird hier ausgenutzt,
 um eine minimale Implementierung der Programmiersprache auf die SPARC-V8 Architektur zu portieren.
 
-Um ein Rust Programm für eine nicht offiziell unterstütze Architektur zu kompilieren,
-muss man zuerst die \textit{libcore} Bibliothek
+Um ein Rust-Programm für eine nicht offiziell unterstütze Architektur zu kompilieren,
+muss man zuerst die \textit{libcore}-Bibliothek
 für die Zielarchitektur kompilieren. Um dies zu bewerkstelligen, benötigt man eine JSON-Datei, welche
 dem Compiler die nötigen Informationen bezüglich der Zielarchitektur zur Verfügung stellt.
 Eine solche JSON Datei für die
-SPARC-V8 Architektur wird beispielsweise in Listing \ref{code:leon_json} veranschaulicht.
-\cite{initialSparcSupportGithub}
+SPARC-V8 Architektur wird beispielsweise in Listing \ref{code:leon_json} veranschaulicht
+\cite{initialSparcSupportGithub}.
 
 \begin{lstlisting}[float,caption={
-Eine beispielhafte JSON-Spezifikationsdatei für die SPARC-V8 Architektur.
-\cite{initialSparcSupportGithub}
+Eine beispielhafte JSON-Spezifikationsdatei für die SPARC-V8 Architektur
+\cite{initialSparcSupportGithub.}
 },label=code:leon_json]
 {
     "arch": "sparc",
@@ -49,19 +49,19 @@ Außerdem wird ein Linker, beispielsweise \texttt{\textsc{\textbf{gcc}}},
 für die SPARC-V8 Architektur benötigt. Der Pfad zu diesem Linker
 muss in der \texttt{\textsc{\textbf{linker}}}-Option der JSON-Datei angegeben werden.
 
-Sobald man diese JSON Datei erstellt hat, kann man die \textit{libcore} Bibliothek mit dem
-\texttt{\textsc{\textbf{cargo build}}} Befehl kompilieren.
+Sobald man diese JSON-Datei erstellt hat, kann man die \textit{libcore}-Bibliothek mit dem
+\texttt{\textsc{\textbf{cargo build}}}-Befehl kompilieren.
 Um dies für SPARC-V8 zu bewerkstelligen, verwendet man als Parameter für die
 \texttt{\textsc{\textbf{-{}-target}}}-Option den Pfad zur JSON-Spezifikationsdatei.
 Derzeit ist es nicht möglich, \textit{libcore} mit dem stabilen Rust-Compiler zu kompilieren,
 da diese Bibliothek Funktionalitäten verwendet, welche auf dem stabilen Compiler deaktiviert sind.
 Daher muss ein \textit{Nightly}-Compiler installiert werden, was
 dank \texttt{\textsc{\textbf{rustup}}} benutzerfreundlich gestaltet ist.
-Außerdem sollte die Version der \textit{libcore} Bibliothek
+Außerdem sollte die Version der \textit{libcore}-Bibliothek
 mit der Version des \textit{Nightly}-Compilers übereinstimmen,
 um versionsabhängige Konflikte bei der Kompilierung zu vermeiden.
 
-Nachdem die \textit{libcore} Bibliothek erfolgreich kompiliert wurde, kann man
+Nachdem die \textit{libcore}-Bibliothek erfolgreich kompiliert wurde, kann man
 die resultierende \texttt{\textsc{\textbf{.rlib}}}-Datei anderen Rust-Programmen
 beim Kompilieren zur Verfügung stellen, indem man diese in das korrekte Unterverzeichnis im
 lokalen \texttt{\textsc{\textbf{\char`~/.rustup}}} Verzeichnis kopiert.
@@ -92,13 +92,13 @@ Der Beginn eines Rust-Programms, welches nicht die Standardbibliothek verwendet.
 
 Um anschließend das Programm zu kompilieren,
 verwendet man entweder \texttt{\textsc{\textbf{rustc}}} bei eigenständigen
-\texttt{\textsc{\textbf{.rs}}} Dateien oder den \texttt{\textsc{\textbf{cargo build}}} Befehl für \textit{Cargo} Projekte.
+\texttt{\textsc{\textbf{.rs}}} Dateien oder den \texttt{\textsc{\textbf{cargo build}}} Befehl für \textit{Cargo}-Projekte.
 Beiden Befehlen muss wie auch beim Kompilieren von \textit{libcore} die 
 JSON-Spezifikationsdatei als Argument für die \texttt{\textsc{\textbf{-{}-target}}}-Option übergeben werden. 
 
 \section{Erstellung des \textit{octorust} Hilfsprogramms}
 
-Um das Kompilieren für Rust-Programme
+Um das Kompilieren für Rust-Programmen
 auf der SPARC-V8 Architektur zu vereinfachen, sowie
 besagte Rust-Programme zusammen mit dem \textit{OctoPOS} Betriebssystem und dem \textit{iRTSS} zu verwenden,
 wurde ein Python-Programm namens \textit{octorust} geschrieben, welche diese Schritte
@@ -107,7 +107,7 @@ Das Programm wurde in Python geschrieben, da Pythons Standardbibliothek viele n�
 von Dateien bietet, welches sich für diesen Zweck als hilfreich erwiesen hat.
 
 Das Programm verwendet \texttt{\textsc{\textbf{python-setuptools}}} und eine dafür konfigurierte \\
-\texttt{\textsc{\textbf{setup.py}}} Datei, um das Programm lokal zu installieren.
+\texttt{\textsc{\textbf{setup.py}}}-Datei, um das Programm lokal zu installieren.
 Während des Installationsprozesses wird zum einen das \textit{octorust}-Programm lokal als Python Modul 
 installiert und das zugehörige \texttt{\textsc{\textbf{octorust}}} Skript als ausführbare Datei dem Nutzer zur 
 Verfügung gestellt.
@@ -124,7 +124,7 @@ kompiliert und in den Installationspfad der derzeit verwendeten
 \begin{description}
 
 	\item[-h, -{}-help]
-	Diese Option druckt einen Nutzungshinweis inklusive aller möglichen Kommandozeilenoptionen.
+	Diese Option gibt einen Nutzungshinweis inklusive aller möglichen Kommandozeilenoptionen aus.
 	
 	\item[-a. -{}-architecture]
 	Diese Option ermöglicht es, eine \textit{OctoPOS/iRTSS} Zielarchitektur zu wählen. Zur Wahl stehen \textit{x86guest},
@@ -300,7 +300,7 @@ Die Bibliothek bietet die folgenden Module:
 \subsection{Direkte C-Rust \textit{Bindings}}
 
 Im ersten Schritt werden die Funktionen der C-Schnittstelle direkt Eins-zu-Eins als Rust-Funktionen eingebunden.
-Dank der \textit{Foreign Function Interface} müssen lediglich die Parameter- und Rückgabetypen
+Dank des \textit{Foreign Function Interface} müssen lediglich die Parameter- und Rückgabetypen
 an die neue Programmiersprache angepasst werden.
 Für die meisten Typen gibt es direkte Äquivalente in Rust, jegliche anderen Typen
 stellt die \textit{libc} Bibliothek zur Verfügung. Ein nennenswertes Beispiel eines Typs, der nicht in Rust enthalten 
@@ -335,10 +335,10 @@ Schlüsselwort \texttt{\textsc{\textbf{type}}} erstellen.
 Das \texttt{\textsc{\textbf{helper}}}-Modul enthält Adapter für C-Funktionen,
 für die in Rust ohne Zugriff zur Standardbibliothek keine Alternative existieren.
 So werden beispielsweise mehrere Adapter um die \texttt{\textsc{\textbf{printf}}}-Funktion aus der C-Standardbibliothek
-geboten,  die je eine andere Anzahl an zusätzlichen Parametern bieten, um Variablen ausdrucken zu können.
+geboten,  die je eine andere Anzahl an zusätzlichen Parametern bieten, um Variablen ausgeben zu können.
 
 Beachtet werden muss bei diesen print-Funktionen, dass die überreichten Zeichenketten manuell
-Null-terminiert werden müssen. Um "`Hello World"' zu drucken, muss man somit die Anweisung
+Null-terminiert werden müssen. Um "`Hello World"' auszugeben, muss man somit die Anweisung
 \texttt{\textsc{\textbf{print(\char`"Hello World\char`\\n\char`\\0\char`");}}} verwenden.
 
 \subsection{Rust-spezifische Verbesserungen}
@@ -384,7 +384,7 @@ Rust Closures können nicht ohne Weiteres einer C-Schnittstelle als Parameter ü
 Somit ist es mit den direkten C-Rust \textit{Bindings} nicht möglich, Closures zu verwenden,
 um Code auf den Rechenelementen ausführen zu lassen. Dies wäre jedoch eine
 wünschenswerte Funktionalität. Da Closures aus der Funktion selbst, als auch aus ihrem
-Erstellungskontext bestehen\cite{embeddedRustOS}, ist es nicht möglich,
+Erstellungskontext bestehen \cite{embeddedRustOS}, ist es nicht möglich,
 eine Closure direkt als eine normale Rust Funktion zu verwenden.
 Stattdessen erstellt man einen Zeiger auf die Datenregion,
 welche die Closure repräsentiert und übergibt diesen daraufhin einer
@@ -412,7 +412,7 @@ welche für alle folgenden Methodenaufrufe verwendet wird. Es wird somit bereits
 \textit{Invade}-Phase des invasiven Rechnens ausgeführt.
 
 Eine praktische Methode für das \textit{Debugging} ist \texttt{\textsc{\textbf{set\char`_verbose}}}.
-Diese Methode erlaubt es, die Ausführlichkeit der auf die Kommandozeile gedruckten Informationen der
+Diese Methode erlaubt es, die Ausführlichkeit der auf die Kommandozeile ausgegebenen Informationen der
 \texttt{\textsc{\textbf{AgentClaim}}}-Struktur zu beeinflussen.
 
 Die \texttt{\textsc{\textbf{reinvade}}}-Methode erlaubt es, eine \textit{Reinvade}-Operation auf dem
@@ -466,7 +466,7 @@ Wurden der \texttt{\textsc{\textbf{infect}}}-Methode zusätzliche Datenparameter
 übergeben, so werden diese als zweite Datenparameter den \textit{i-lets} übergeben.
 Nachdem ein \text{i-let} initialisiert wurde, wird die eigentliche \textit{Infect}-Operation durchgeführt.
 
-Das bereits im Grundlagenkapitel erläuterte \textit{Drop}-Trait für Rust-Strukturen wird für die
+Das bereits im Grundlagenkapitel \ref{sec:rust_type_system} erläuterte \texttt{\textsc{\textbf{Drop}}}-Trait für Rust-Strukturen wird für die
 \texttt{\textsc{\textbf{AgentClaim}}}-Struktur implementiert.
 Verlässt eine Instanz der \texttt{\textsc{\textbf{AgentClaim}}}-Struktur den Geltungsbereich, wird eine
 \texttt{\textsc{\textbf{Retreat}}}-Operation auf der internen \\
