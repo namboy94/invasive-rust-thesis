@@ -225,7 +225,7 @@ benötigt wird, wäre dies ohnehin aller Wahrscheinlichkeit nach kein entscheide
 	\label{fig:primes_naive_table}
 \end{table}
 
-\begin{table}[hb]
+\begin{table}
 	\begin{center}
 		\begin{tabular}{lrrrr}
 			\toprule
@@ -265,8 +265,6 @@ Werden allerdings die Versionen ohne Compiler-Optimierungen betrachtet, gibt es 
 Sprachen. In Tabelle \ref{fig:primes_naive_table} ist beispielsweise zu erkennen, dass die unoptimierte
 Version des Rust-Programms ungefähr 6-mal langsamer als die nächstlangsamste betrachtete Konfiguration ist.
 
-\FloatBarrier
-
 \subsection{Paralleles Berechnen von Primzahlen}
 
 Um auch die invasiven Aspekte der Sprachen zu evaluieren, wurden X10-, C- und Rust-Programme geschrieben,
@@ -277,7 +275,7 @@ Die Anzahl und Größe der Partitionen hängen hierbei von der Anzahl an verfüg
 Jedes der Rechenelemente berechnet anschließend die ihm zugewiesene Menge an Zahlen naiv,
 indem jede Zahl mit jeder kleineren Zahl auf Teilbarkeit geprüft wird.
 
-\begin{table}[hb]
+\begin{table}
 	\begin{center}
 		\begin{tabular}{lrrrr}
 			\toprule
@@ -304,7 +302,7 @@ indem jede Zahl mit jeder kleineren Zahl auf Teilbarkeit geprüft wird.
 	\label{fig:primes_parallel_one_table}
 \end{table}
 
-\begin{table}[hb]
+\begin{table}
 	\begin{center}
 		\begin{tabular}{lrrrr}
 			\toprule
@@ -399,8 +397,6 @@ Leistungseinbußen in Kauf nimmt. Dies liegt vor allem daran, dass bei der naive
 einen höheren Rechenaufwand erfordern. Da jedoch alle Partitionen gleich groß sind, wird der \textit{i-let} mit
 den höchsten Werten länger als alle anderen \textit{i-lets} benötigen, um seine Ausführung zu beenden.
 
-\FloatBarrier
-
 \subsection{Allokation auf dem Heap}
 
 X10 verwaltet den Speicher mithilfe eines \textit{Garbage Collectors}, wobei C und Rust auf einen solchen verzichten.
@@ -419,7 +415,7 @@ Die erstellten Objekte sind in diesem Fall Arrays von Integer-Zahlenwerten. In C
 \texttt{\textsc{\textbf{int}}}-Typen, in Rust der \texttt{\textsc{\textbf{i32}}} Typ verwendet. 
 Das Äquivalent zu Arrays in X10 sind Rails, daher wurden in der X10 Implementierung diese verwendet.
 
-\begin{table}[hb]
+\begin{table}
 	\begin{center}
 		\begin{tabular}{lrrrr}
 			\toprule

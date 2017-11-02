@@ -468,8 +468,9 @@ Nachdem ein \text{i-let} initialisiert wurde, wird die eigentliche \textit{Infec
 
 Das bereits im Grundlagenkapitel \ref{sec:rust_type_system} erläuterte \texttt{\textsc{\textbf{Drop}}}-Trait für Rust-Strukturen wird für die
 \texttt{\textsc{\textbf{AgentClaim}}}-Struktur implementiert.
-Verlässt eine Instanz der \texttt{\textsc{\textbf{AgentClaim}}}-Struktur den Geltungsbereich, wird eine
-\texttt{\textsc{\textbf{Retreat}}}-Operation auf der internen \\
+Verlässt eine Instanz der \\
+\texttt{\textsc{\textbf{AgentClaim}}}-Struktur den Geltungsbereich, wird eine
+\texttt{\textsc{\textbf{Retreat}}}-Operation auf der internen
 \texttt{\textsc{\textbf{agentclaim\char`_t}}}-Struktur ausgeführt und zusätzlich
 die \textit{Constraints} des \textit{Claims} gelöscht. Dieses implizite \textit{Retreat}
 stellt sicher, dass die vom Claim verwendeten Ressourcen nach dem Gebrauch wieder freigegeben werden und
