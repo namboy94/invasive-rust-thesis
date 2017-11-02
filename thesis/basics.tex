@@ -19,7 +19,7 @@ Entwicklern ermittelt \cite{stackoverflowSurvey}\cite{newStackoverflowSurvey}.
 Das wohl derzeit prominenteste Projekt, welches Rust verwendet, ist der \textit{Servo Web Browser Engine}.
 Dieses Projekt wurde von Mozilla Research initiiert, erhält jedoch ebenfalls Beiträge von Freiwilligen
 als auch von Unternehmen wie Samsung.
-Diese Software soll nach und nach im Mozilla Firefox Webbrowser integriert werden und hierbei eine bessere
+Diese Software soll nach und nach im \textit{Mozilla Firefox Webbrowser} integriert werden und hierbei eine bessere
 Leistung und Sicherheit als vorhergehende Technologien vorweisen \cite{engineeringServo}.
 
 \subsection{Motivation}
@@ -46,7 +46,7 @@ Diese zusätzlichen Sicherheiten und Nutzerfreundlichkeiten sollen gleichzeitig 
 sich ziehen, denn es ist ein Ziel von Rust, 
 eine ähnliche Recheneffizienz im Vergleich mit bestehenden Systemsprachen wie C oder C++ vorzuweisen.
 Außerdem soll Rust es vereinfachen, mehrere Programmiersprachen miteinander zu verwenden.
-Das Ziel hierbei ist es, Code aus anderen Sprachen aus einem Rust Kontext heraus zu verwenden, als auch umgekehrt
+Das Ziel hierbei ist es, Code anderer Sprachen aus einem Rust Kontext heraus zu verwenden, als auch umgekehrt
 \cite{rustBook}.
 
 
@@ -111,8 +111,9 @@ zu verhindern. Eine Referenz kann also nie auf eine Variable zeigen, die bereits
 Es gibt zwei unterschiedliche
 Typen von Referenzen, veränderliche und unveränderliche. Standardmäßig werden in Rust unveränderliche
 Referenzen verwendet. Diese erlauben es nicht, den Wert des Speicherbereichs zu verändern, sondern nur auszulesen.
-Es gibt keine Limitierung bei der Anzahl unveränderlicher Referenzen die eine Variable besitzen kann. Im Gegensatz
-hierzu kann nur eine veränderliche Referenz auf die Variable existieren. Dies ermöglicht es bereits zur
+Es gibt keine Limitierung bei der Anzahl unveränderlicher Referenzen die auf eine Variable zeigen können.
+Im Gegensatz
+hierzu kann nur eine einzelne veränderliche Referenz auf eine Variable existieren. Dies ermöglicht es, bereits zur
 Compile-Zeit gewisse Wettlaufsituationen, sogenannte \textit{Data Races},
 in der Parallelprogrammierung auszuschließen \cite{rustBook}.
 
@@ -129,7 +130,7 @@ Diese Möglichkeit erlaubt es, eine objektorientierte Herangehensweise in Rust z
 Implementierungen erlauben das Definieren von Methoden, welche auf einer initialisierten Struktur aufgerufen werden
 können und eine Referenz auf \texttt{\textsc{\textbf{self}}}, also der Struktur selbst, als Parameter entgegennehmen.
 Zusätzlich können Funktionen definiert werden, welche keinen solchen Parameter entgegennehmen und somit auch mit
-Strukturen verwendet werden können ohne diese im Voraus zu initialisieren.
+Strukturen verwendet werden können, ohne diese im Voraus zu initialisieren.
 Dies ähnelt statischen Methoden in objektorientierten Sprachen \cite{rustBook}.
 
 Aufzählungen agieren in Rust ähnlich zu anderen Programmiersprachen. Der Vorteil der Aufzählungen in Rust ist es,
@@ -158,8 +159,8 @@ stattdessen eine bitweise Kopie der Daten erstellt. Primitive Datentypen wie \te
 verhalten sich standardmäßig bereits so. Das \texttt{\textsc{\textbf{Copy}}}-Trait kann jedoch nicht auf jeden Typ
 angewandt werden.
 Insbesondere kann ein Typ nicht das \texttt{\textsc{\textbf{Copy}}}- als auch  das \texttt{\textsc{\textbf{Drop}}}-Trait implementieren,
-da Typen die das \texttt{\textsc{\textbf{Drop}}}-Trait implementieren beim Verlassen des Geltungsbereichs einen Einfluss außerhalb ihres
-Speicherbereich haben können.
+da Typen die das \texttt{\textsc{\textbf{Drop}}}-Trait implementieren beim Verlassen des Geltungsbereichs einen Einfluss außerhalb ihres eigenen
+Speicherbereichs haben können.
 Würde der Destruktor für jede Kopie aufgerufen werden, könnte dies zu unvorhergesehenen und
 unerwünschten Konsequenzen führen \cite{rustBook}\cite{rustDocCopy}.
 
@@ -187,9 +188,9 @@ dass stattdessen die Ausführung des Programms beendet wird sobald ein unbehande
 Eine praktische Eigenschaft Rusts ist es, dass sie in Verbindung mit einer Vielzahl von anderen Programmiersprachen
 verwendet werden kann. Mithilfe des \textit{Foreign Function Interface} kann man Code aus anderen
 Sprachen in Rust verwenden. Dadurch kann Rust beispielsweise Bibliotheken, welche in C geschrieben sind, verwenden.
-Das \textit{Foreign Function Interface} erlaubt es zusätzlich, Rust Code aus dem Kontext anderer Sprachen zu
+Das \textit{Foreign Function Interface} erlaubt es zusätzlich, Rust-Code aus dem Kontext anderer Sprachen zu
 verwenden. Dies wird für eine Vielzahl an Programmiersprachen unterstützt, unter anderem C, aber auch höheren
-Programmiersprachen wie Python oder Ruby, welche durch die Einbindung von Rust Code Leistungssteigerungen erzielen
+Programmiersprachen wie Python oder Ruby, welche durch die Einbindung von Rust-Code Leistungssteigerungen erzielen
 können \cite{firstRustBook}\cite{rustBook-1.2.0}.
 
 \subsection{\texttt{\textsc{\textbf{unsafe}}}-Blöcke in Rust}
@@ -220,7 +221,7 @@ des Projekts angegeben werden. Hierbei ist es möglich, Bibliotheken von der zen
 Plattform automatisch herunterladen zu lassen oder einen lokalen Dateipfad zu einer solchen
 Bibliothek anzugeben.
 Außerdem unterstützt \texttt{\textsc{\textbf{cargo}}} hilfreiche Funktionen zum Testen oder
-Verteilen der entwickelten Software. Kompilierte Software kann als ein sogenanntes \textit{Crate} bei
+Verteilen der entwickelten Software. Entwickelte Software kann als ein sogenanntes \textit{Crate} bei
 \textit{crates.io} hochgeladen werden \cite{rustBook}.
 
 Um den Gebrauch von unterschiedlichen \texttt{\textsc{\textbf{rustc}}} und \texttt{\textsc{\textbf{cargo}}} Versionen 
@@ -271,8 +272,8 @@ unterstützten Rechnerarchitekturen zu kompilieren \cite{rustGPU}.
 \section{SPARC und SPARC-V8}
 
 SPARC (\textbf{S}calable \textbf{P}rocessor \textbf{ARC}hitecture) ist eine Rechnerarchitektur, welche auf das
-RISC (Reduced Instruction Set Computing) Konzept aufbaut. Eines der Ziele der SPARC Architektur ist es, skalierbar
-zu sein und so in unterschiedlichsten Umgebungen zum Einsatz zu kommen. So können SPARC Prozessoren in
+RISC (Reduced Instruction Set Computing) Konzept aufbaut. Eines der Ziele der SPARC-Architektur ist es, skalierbar
+zu sein und so in unterschiedlichsten Umgebungen zum Einsatz zu kommen. So können SPARC-Prozessoren in
 Mikrocontrollern bis hin zu Supercomputern verwendet werden. Die Architektur wird an unterschiedliche
 Halbleiter-Unternehmen lizensiert, mit dem Ziel durch konkurrierende Kräfte Innovation bezüglich Kosten und
 Rechenleistung zu fördern \cite{sparc}.
@@ -283,29 +284,29 @@ SPARC-V8 ist eine auf SPARC basierende Architektur. Es handelt sich hierbei um e
 \subsection{LEON}
 
 Die ursprünglich von der European Space Agency (ESA) und anschließend von Gaisler Research entwickelten
-LEON-Prozessoren basieren auf der SPARC-V8 Architektur.
+LEON-Prozessoren basieren auf der SPARC-V8-Architektur.
 Das Hauptziel der LEON-Prozessoren war es, fehlertolerante Nachfolger zu den älteren SPARC-V7-basierten
 Prozessoren, die zu dem Zeitpunkt bei der ESA Verwendung fanden, zu bieten \cite{gaislerLeon}.
 Es handelt sich bei der LEON-Prozessorfamilie um stark konfigurierbare
-Implementierungen der SPARC-V8 Architektur in der Hardwarebeschreibungssprache
+Implementierungen der SPARC-V8-Architektur in der Hardwarebeschreibungssprache
 VHDL (\textit{Very High Speed Integrated Circuit Hardware Description Language}).
 Unterschiedliche Iterationen der Prozessorfamilie sind unter Open-Source Lizenzen als VHDL-Designs verfügbar.
 So wurden die VHDL-Designs des LEON2 Prozessors unter der GNU LGPL Lizenz veröffentlicht \cite{sparcv8Eval} und
 auch das Design des LEON3 Prozessors ist unter einer Open-Source Lizenz verfügbar \cite{invasiveArrays}.
 
 Die Kombination von stark konfigurierbaren Designs und der Open-Source Lizenz ermöglicht den Gebrauch der
-LEON VHDL Designs in domänenspezifischen, angepassten \textit{ASICs (Application-Specific Integrated Circuit)},
+LEON VHDL-Designs in domänenspezifischen, angepassten \textit{ASICs (Application-Specific Integrated Circuit)},
 \textit{FPGAs (Field Programmable Gate Array)} oder \textit{SOCs (System On Chip)}.
 Daher eignet sich die LEON Prozessorfamilie auch zum Einsatz im invasiven Rechnen,
-um deren neuartigen Konzepte möglichst effizient auszunutzen \cite{sparcv8Eval}.
+um deren neuartigen Konzepte möglichst effizient durch angepasste Hardware auszunutzen \cite{sparcv8Eval}.
 
 \section{Invasives Rechnen}
 
 Invasives Rechnen beschreibt die Möglichkeit eines Programms auf einem Parallelrechner,
 dynamisch Hardwareressourcen zu reservieren, nutzen und anschließend wieder freizugeben \cite{octopos}.
 
-Die drei fundamentalen Phasen des invasiven Rechnens sind die \textit{\textbf{Invade}}, \textit{\textbf{Infect}}
-und \textit{\textbf{Retreat}} Phasen. In der \textit{Invade} Phase werden zunächst die gewünschten
+Die drei fundamentalen Phasen des invasiven Rechnens sind die \textit{\textbf{Invade}}-, \textit{\textbf{Infect}}-
+und \textit{\textbf{Retreat}}-Phasen. In der \textit{Invade}-Phase werden zunächst die gewünschten
 Hardwareressourcen angefordert und anschließend reserviert. Diese Menge an Ressourcen kann dann mithilfe
 eines \textit{Claims} verwaltet werden. Die zu reservierenden Ressourcen werden mithilfe von \textit{Constraints}
 spezifiziert.
@@ -313,11 +314,11 @@ Wurden die Ressourcen erfolgreich reserviert, kann die \textit{Infect}
 Phase beginnen. In dieser werden Ausführungsfäden erstellt,
 welche auf den reservierten Hardwareressourcen ausgeführt werden. Im Kontext des invasiven Rechnens wird ein solcher
 Faden als \textit{invasive-let} oder abgekürzt als \textit{i-let} bezeichnet \cite{invasiveCommonTerms}.
-Benötigt das Programm die reservierten Ressourcen nicht mehr, können diese in der \textit{Retreat} Phase wieder
+Benötigt das Programm die reservierten Ressourcen nicht mehr, können diese in der \textit{Retreat}-Phase wieder
 freigegeben werden \cite{octopos}.
 
 Für den praktischen Einsatz des invasiven Rechnens wurde ein Betriebssystem namens \textit{OctoPOS} entwickelt.
-Dieses unterstützt die \textit{Invade}, \textit{Infect} und \textit{Retreat} Phasen auf der Systemebene.
+Dieses unterstützt die \textit{Invade}-, \textit{Infect}- und \textit{Retreat}-Phasen auf der Systemebene.
 Zusätzlich hierzu existiert das \textit{invasive Run-Time Support System (iRTSS)}. Diese Middleware
 fungiert als eine Hardware-Abstraktionsschicht und als Ressourcenverwalter.
 \textit{OctoPOS} und \textit{iRTSS} bieten so eine Plattform für das invasive Programmieren und
@@ -325,7 +326,7 @@ unterstützen derzeit den Gebrauch der Programmiersprachen C, C++ und X10
 \cite{octopos}\cite{invasiveManyCore}\cite{invasiveRISC}.
 
 Um das Konzept des invasiven Rechnens möglichst effizient auszunutzen, wird speziell an das invasive Rechnen
-angepasste Hardware entwickelt, deren Prozessorkerne auf dem Design des LEON3 Prozessors basieren.
+angepasste Hardware entwickelt, deren Prozessorkerne auf dem Design des LEON3-Prozessors basieren.
 Diese Hardware unterstützt gewisse invasive Grundfunktionen und entlastet somit das \textit{OctoPOS} Betriebssystem
 und das \textit{iRTSS} \cite{invasiveArrays}.
 

@@ -5,10 +5,7 @@ und ein Ausblick auf die Zukunft der Programmiersprache Rust im Bezug zum invasi
 
 \section{Fazit}
 
-Betrachtet man die Ergebnisse der Evaluation, so kann behauptet werden,
-dass Rust in gewissen Aspekten C oder X10 vorzuziehen ist.
-
-Zum einen eliminiert Rust einige Fehlerquellen, welche in C oder anderen herkömmlichen
+Rust eliminiert einige Fehlerquellen, welche in C oder anderen herkömmlichen
 Systemsprachen zu undefiniertem Verhalten führen können.
 In Rust muss der Programmierer nicht selbst auf solche Fehler achten und wird bereits vom Compiler auf Fehler
 hingewiesen. Dies erlaubt es, sicherere und weniger fehleranfällige Programme zu schreiben.
@@ -21,7 +18,7 @@ Zudem eignet sich X10 wegen des \textit{Garbage Collectors}
 nicht für Anwendungsgebiete, in denen Pausen jeglicher Art nicht erwünscht sind,
 beispielsweise bei Echtzeitsystemen.
 In diesem Einsatzgebiet ist die Verfügbarkeit des Systems wichtig, daher wäre eine \textit{Garbage Collector}-Pause
-nicht wünschenswert. Rust wäre hier eine empfehlenswertere Option.
+nicht wünschenswert. Rust stellt hier eine empfehlenswertere Option dar.
 
 Außerdem weist das Kompilieren mit \textit{octorust} eine 100- bis 200-fach kürzere Kompilierungsdauer
 als der \textit{x10i}-Compiler auf. Dies kann bei der Entwicklung von Programmen ein Zeitersparnis von
@@ -41,6 +38,9 @@ welche die Sicherheit von Rust teils aufgibt. Die Funktionen der C-Schnittstelle
 bezüglich der Sicherheit und die Nutzung von \texttt{\textsc{\textbf{void}}}-Zeigern zum Übertragen
 von Parametern ist ebenfalls ein Problem, welches zu Fehlern führen kann.
 
+Außerdem weist Rust bei mathematischen Berechnungen keinen Vorteil gegenüber C oder X10 auf. In den betrachteten
+Messungen benötigte Rust meist mehr Zeit um dieselben Aufgaben zu lösen.
+
 \section{Ausblick}
 
 Da Rust erst im Jahre 2015 offiziel veröffentlicht wurde, sind noch nicht viele Bibliotheken für diese implementiert.
@@ -50,10 +50,10 @@ nicht die Sicherheitsgarantien wie Rust es tut.
 In dieser Hinsicht sollte sich die Lage jedoch in der Zukunft verbessern, wenn Rust
 weiterhin gerne von Entwicklern genutzt wird und eventuell großflächiger zum Einsatz kommt.
 
-Eine weitere Möglichkeit in der Zukunft ist die Portierung der Standardbibliothek auf die SPARC-V8 Architektur.
+Eine weitere Möglichkeit in der Zukunft ist die Portierung der Standardbibliothek auf die SPARC-V8-Architektur.
 Die Standardbibliothek bietet einige hilfreiche Konstrukte und Funktionen,
 die das Programmieren erleichtern und sicherer machen.
-Möglich wäre es, dass die Entwickler der Rust Programmiersprache selbst die SPARC-V8 Architektur
+Möglich wäre es, dass die Entwickler der Rust Programmiersprache selbst die SPARC-V8-Architektur
 in der Zukunft unterstützen und so die Standardbibliothek portiert wird. Alternativ wäre es möglich, dass die 
 Standardbibliothek im Rahmen des invasiven Rechnen portiert wird, sollte genügend Interesse daran bestehen.
 

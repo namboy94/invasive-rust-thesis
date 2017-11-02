@@ -7,20 +7,20 @@ Programmiersprache Rust zu schreiben.
 
 \section{Rust auf der SPARC LEON Architektur}\label{sec:rust_on_sparc}
 
-Rust wird derzeit nicht offiziell auf der SPARC-V8 Architektur unterstützt. Rust verwendet jedoch als Compiler-Backend
+Rust wird derzeit nicht offiziell auf der SPARC-V8-Architektur unterstützt. Rust verwendet jedoch als Compiler-Backend
 LLVM, das für diese Architektur Maschinenbefehle aus der Zwischensprache LLVM-IR generieren kann.
 Daher ist es prinzipiell möglich, Rust-Programme für diese Architektur zu kompilieren.
 Die Rust-Standardbibliothek ist allerdings schwierig auf andere Architekturen zu portieren.
 Um diese Hürde zu umgehen bietet Rust die Funktion,
 Programme mit einer minimalen, plattformunabhängigen Untermenge der Standardbibliothek zu kompilieren.
 Diese Funktionalität wird hier ausgenutzt,
-um eine minimale Implementierung der Programmiersprache auf die SPARC-V8 Architektur zu portieren.
+um eine minimale Implementierung der Programmiersprache auf die SPARC-V8-Architektur zu portieren.
 
 Um ein Rust-Programm für eine nicht offiziell unterstütze Architektur zu kompilieren,
 muss man zuerst die \textit{libcore}-Bibliothek
 für die Zielarchitektur kompilieren. Um dies zu bewerkstelligen, benötigt man eine JSON-Datei, welche
 dem Compiler die nötigen Informationen bezüglich der Zielarchitektur zur Verfügung stellt.
-Eine solche JSON Datei für die
+Eine solche JSON-Datei für die
 SPARC-V8 Architektur wird beispielsweise in Listing \ref{code:leon_json} veranschaulicht
 \cite{initialSparcSupportGithub}.
 
@@ -70,12 +70,12 @@ Alternativ kann man das \textit{libcore} \textit{Cargo}-Projekt direkt durch die
 
 Soll ein Rust-Programm \textit{libcore} anstelle der Standardbibliothek verwenden, muss man dies
 mit der Anweisung \texttt{\textsc{\textbf{\#![no\char`_std]}}}
-am Anfang des Programms kenntlich machen.
+zu Beginn des Programms kenntlich machen.
 Außerdem müssen die Funktionen \texttt{\textsc{\textbf{eh\char`_personality}}},
 \texttt{\textsc{\textbf{eh\char`_unwind\char`_resume}}} und
 \texttt{\textsc{\textbf{panic\char`_fmt}}} in diesem Programm manuell implementiert werden.
 Nennenswert ist vor allem Letztere, denn diese Funktion
-wird aufgerufen, sobald ein Programm nach einen unbehandelten Fehler kontrolliert die Ausführung beendet.
+wird aufgerufen, sobald ein Programm nach einem unbehandelten Fehler kontrolliert die Ausführung beendet.
 Der Anfang eines zu kompilierenden Programms muss also aussehen wie das Beispiel in Listing \ref{code:minimal_nostd}.
 
 \begin{lstlisting}[float,caption={
@@ -92,7 +92,7 @@ Der Beginn eines Rust-Programms, welches nicht die Standardbibliothek verwendet.
 
 Um anschließend das Programm zu kompilieren,
 verwendet man entweder \texttt{\textsc{\textbf{rustc}}} bei eigenständigen
-\texttt{\textsc{\textbf{.rs}}} Dateien oder den \texttt{\textsc{\textbf{cargo build}}} Befehl für \textit{Cargo}-Projekte.
+\texttt{\textsc{\textbf{.rs}}} Dateien oder den \texttt{\textsc{\textbf{cargo build}}}-Befehl für \textit{Cargo}-Projekte.
 Beiden Befehlen muss wie auch beim Kompilieren von \textit{libcore} die 
 JSON-Spezifikationsdatei als Argument für die \texttt{\textsc{\textbf{-{}-target}}}-Option übergeben werden. 
 
@@ -108,8 +108,8 @@ von Dateien bietet, welches sich für diesen Zweck als hilfreich erwiesen hat.
 
 Das Programm verwendet \texttt{\textsc{\textbf{python-setuptools}}} und eine dafür konfigurierte \\
 \texttt{\textsc{\textbf{setup.py}}}-Datei, um das Programm lokal zu installieren.
-Während des Installationsprozesses wird zum einen das \textit{octorust}-Programm lokal als Python Modul 
-installiert und das zugehörige \texttt{\textsc{\textbf{octorust}}} Skript als ausführbare Datei dem Nutzer zur 
+Während des Installationsprozesses wird zum einen das \textit{octorust}-Programm lokal als Python-Modul 
+installiert und das zugehörige \texttt{\textsc{\textbf{octorust}}}-Skript als ausführbare Datei dem Nutzer zur 
 Verfügung gestellt.
 Gleichzeitig wird ein Verzeichnis namens \texttt{\textsc{\textbf{.octorust}}}
 im Heimverzeichnis des derzeitigen Nutzers erstellt.
@@ -132,8 +132,7 @@ kompiliert und in den Installationspfad der derzeit verwendeten
 	Sollte diese Option nicht angegeben werden, wird standardmäßig für die \textit{x86guest} Architektur kompiliert.
 	
 	\item[-v, -{}-variant]
-	Diese Option ermöglicht es, eine \textit{OctoPOS/iRTSS}-Variante zu wählen,
-	beispielsweise \textit{generic} oder \textit{4t5c-nores-chipit-w-iotile}.
+	Diese Option ermöglicht es, eine \textit{OctoPOS/iRTSS}-Variante zu wählen.
 	Sollte diese Option nicht angegeben werden, wird je nach gewählter Architektur
 	eine passende Standardvariante verwendet.
 	Im Falle von \textit{x86guest} und \textit{x64native} wird die Variante \textit{generic} gewählt und für 
@@ -186,9 +185,10 @@ Ein genauerer Überblick über die \textit{octolib} Bibliothek folgt in Kapitel 
 \subsection{Struktur eines invasiven \textit{Cargo}-Projekts}
 
 Wie normale \textit{Cargo}-Projekte besteht ein invasives Cargo-Projekt aus mindestens einem
-\texttt{\textsc{\textbf{src}}} Verzeichnis, einer Haupt-Bibliotheksdatei
-und einer \texttt{\textsc{\textbf{Cargo.toml}}} Konfigurationsdatei.
-Bei invasiven \textit{Cargo}-Projekten muss das \texttt{\textsc{\textbf{crate-type}}} Attribut zudem immer als
+\texttt{\textsc{\textbf{src}}}-Verzeichnis, einer Haupt-Bibliotheksdatei
+und einer \texttt{\textsc{\textbf{Cargo.toml}}}- \\
+Konfigurationsdatei.
+Bei invasiven \textit{Cargo}-Projekten muss das \texttt{\textsc{\textbf{crate-type}}}-Attribut zudem immer als
 \texttt{\textsc{\textbf{staticlib}}} angegeben werden,
 damit das Projekt als statische Bibliothek kompiliert wird, welche dann mit \textit{OctoPOS} und dem \textit{iRTSS} 
 verlinkt werden kann.
@@ -227,11 +227,11 @@ da diese offiziell von \texttt{\textsc{\textbf{rustc}}} und \texttt{\textsc{\tex
 Nachdem diese Spezifikationsdatei generiert wurde, wird das Projekt mithilfe von \texttt{\textsc{\textbf{cargo}}}
 als statische Bibliothek kompiliert.
 Wurde das Projekt erfolgreich kompiliert, wird anschließend ein minimales C-Programm generiert,
-welches die von \textit{OctoPOS/iRTSS} benötigte \texttt{\textsc{\textbf{main\char`_ilet}}} Funktion implementiert
-und innerhalb dieser die \texttt{\textsc{\textbf{rust\char`_main\char`_ilet}}} Funktion aufruft.
+welches die von \textit{OctoPOS/iRTSS} benötigte \texttt{\textsc{\textbf{main\char`_ilet}}}-Funktion implementiert
+und innerhalb dieser die \texttt{\textsc{\textbf{rust\char`_main\char`_ilet}}}-Funktion aufruft.
 Im Anschluss daran wird dann noch die \texttt{\textsc{\textbf{shutdown}}} Funktion aufgerufen, um die 
-Ausführung des Programms zu beenden. Die generierte C Datei wird mithilfe eines passenden
-\texttt{\textsc{\textbf{gcc}}} Compilers als Objekt-Datei kompiliert
+Ausführung des Programms zu beenden. Die generierte C-Datei wird mithilfe eines passenden
+\texttt{\textsc{\textbf{gcc}}}-Compilers als Objekt-Datei kompiliert
 und anschließend mit \textit{OctoPOS/iRTSS} und der zuvor kompilierten statischen Rust-Bibliothek verlinkt.
 Nun sollte eine ausführbare Datei existieren, welche auf einem Rechner mit x86-Architektur im Falle der "`x86guest"' 
 Architektur nativ ausführbar ist oder im Falle von \textit{x64native} und \textit{leon} mithilfe eines Emulators wie 
@@ -244,21 +244,21 @@ die minimale C Datei oder auch die C Objektdatei.
 
 \section{\textit{octolib}}\label{sec:octolib}
 
-Zusätzlich zum \textit{octorust} Programm wurde ebenfalls eine Rust-Bibliothek namens \textit{octolib} geschrieben. 
+Zusätzlich zum \textit{octorust}-Programm wurde ebenfalls eine Rust-Bibliothek namens \textit{octolib} geschrieben. 
 Diese Bibliothek soll die Interaktion zwischen Rust und \textit{OctoPOS/iRTSS} ermöglichen und an die neue 
 Programmiersprache anpassen. \textit{OctoPOS/IRTSS} bieten eine C-Schnittstelle an, welche man mithilfe von Rusts
 \textit{Foreign Function Interface} und der \textit{libc} Bibliothek aus Rust heraus ansprechen kann.
-Die \textit{libc} Bibliothek bietet die Möglichkeit, Komponenten, welche die Standardbibliothek benötigen, 
+Die \textit{libc}-Bibliothek bietet die Möglichkeit, Komponenten, welche die Standardbibliothek benötigen, 
 auszulassen, daher ist sie auch auf der SPARC-V8 Architektur nutzbar.
 
-Die \textit{octolib} Bibliothek wird vor dem Kompilieren als Abhängigkeit in die \texttt{\textsc{\textbf{Cargo.toml}}} Datei des
+Die \textit{octolib}-Bibliothek wird vor dem Kompilieren als Abhängigkeit in die \texttt{\textsc{\textbf{Cargo.toml}}}-Datei des
 zu kompilierenden \textit{Cargo}-Projekts eingefügt.
-Hierfür wird mithilfe des \texttt{\textsc{\textbf{toml}}} Python Moduls der derzeitige Inhalt der \texttt{\textsc{\textbf{Cargo.toml}}} Datei
-eingelesen, der Pfad zur lokal installierten \textit{octolib} Bibliothek in diese Daten injiziert und anschließend 
+Hierfür wird mithilfe des \texttt{\textsc{\textbf{toml}}} Python Moduls der derzeitige Inhalt der \texttt{\textsc{\textbf{Cargo.toml}}}-Datei
+eingelesen, der Pfad zur lokal installierten \textit{octolib}-Bibliothek in diese Daten injiziert und anschließend 
 wieder in die Konfigurationsdatei geschrieben.
-Um zu vermeiden, dass die \texttt{\textsc{\textbf{Cargo.toml}}} Datei Werte enthält, die auf eine lokale Konfiguration basieren, wird zunächst
+Um zu vermeiden, dass die \texttt{\textsc{\textbf{Cargo.toml}}}-Datei Werte enthält, die auf eine lokale Konfiguration basieren, wird zunächst
 eine Kopie der ursprünglichen Daten im Hauptspeicher behalten. Nachdem die Kompilierung beendet
-wurde, werden diese Daten wieder in die \texttt{\textsc{\textbf{Cargo.toml}}} Datei geschrieben.
+wurde, werden diese Daten wieder in die \texttt{\textsc{\textbf{Cargo.toml}}}-Datei geschrieben.
 Damit die Bibliothek für jedes zu kompilierende Programm auffindbar ist,
 wird eine lokale Kopie während der Installation des \textit{octorust}-Programms im
 \texttt{\textsc{\textbf{\char`~/.octorust}}} Verzeichnis erstellt.
@@ -287,7 +287,7 @@ Die Bibliothek bietet die folgenden Module:
 	
 	\item[improvements]
 	Dieses Modul enthält Rust-spezifische Abstraktionen, die es dem Programmierer erleichtern,
-	Programme mit Rust für invasive Systeme zu schreiben.
+	Rust-Programme für invasive Systeme zu schreiben.
 	
 	\item[octo\char`_structs]
 	Dieses Modul enthält Rust-äquivalente Strukturen zu denen, die in der C-Schnittstelle verwendet werden.
@@ -297,15 +297,15 @@ Die Bibliothek bietet die folgenden Module:
 
 \end{description}
 
-\subsection{Direkte C-Rust \textit{Bindings}}
+\subsection{Direkte C-Rust-\textit{Bindings}}
 
 Im ersten Schritt werden die Funktionen der C-Schnittstelle direkt Eins-zu-Eins als Rust-Funktionen eingebunden.
 Dank des \textit{Foreign Function Interface} müssen lediglich die Parameter- und Rückgabetypen
 an die neue Programmiersprache angepasst werden.
 Für die meisten Typen gibt es direkte Äquivalente in Rust, jegliche anderen Typen
-stellt die \textit{libc} Bibliothek zur Verfügung. Ein nennenswertes Beispiel eines Typs, der nicht in Rust enthalten 
+stellt die \textit{libc}-Bibliothek zur Verfügung. Ein nennenswertes Beispiel eines Typs, der nicht in Rust enthalten 
 ist, ist der \texttt{\textsc{\textbf{void}}} Typ. Dieser Typ kann durch den
-\texttt{\textsc{\textbf{c\char`_void}}} Typen aus der \textit{libc} Bibliothek emuliert werden.
+\texttt{\textsc{\textbf{c\char`_void}}} Typen aus der \textit{libc}-Bibliothek emuliert werden.
 \texttt{\textsc{\textbf{void}}}-Zeiger (\texttt{\textsc{\textbf{void*}}}), welche an einigen Stellen der
 C-Schnittstelle verwendet werden, können so als \texttt{\textsc{\textbf{*mut c\char`_void}}} in Rust
 dargestellt werden.
@@ -325,7 +325,7 @@ Strukturen und Typen ebenfalls portiert werden.
 Dank der \texttt{\textsc{\textbf{\#[repr(C)]}}} Anweisung kann man in Rust Strukturen erstellen,
 welche kompatibel mit ihren C-Äquivalenten sind.
 Diese Strukturen sind teils von Plattform-spezifischen Konstanten abhängig, welche man in Rust mit der
-\texttt{\textsc{\textbf{\#[cfg(target\char`_arch = \char`"Zielarchitektur\char`")]}}} Anweisung
+\texttt{\textsc{\textbf{\#[cfg(target\char`_arch = \char`"Zielarchitektur\char`")]}}}-Anweisung
 für unterschiedliche Architekturen definieren kann.
 Benutzerdefinierte Typen, welche prinzipiell Aliase für bestehende Typen sind, lassen sich in Rust durch das
 Schlüsselwort \texttt{\textsc{\textbf{type}}} erstellen.
@@ -338,7 +338,7 @@ So werden beispielsweise mehrere Adapter um die \texttt{\textsc{\textbf{printf}}
 geboten,  die je eine andere Anzahl an zusätzlichen Parametern bieten, um Variablen ausgeben zu können.
 
 Beachtet werden muss bei diesen print-Funktionen, dass die überreichten Zeichenketten manuell
-Null-terminiert werden müssen. Um "`Hello World"' auszugeben, muss man somit die Anweisung
+null-terminiert werden müssen. Um "`Hello World"' auszugeben, muss man somit die Anweisung
 \texttt{\textsc{\textbf{print(\char`"Hello World\char`\\n\char`\\0\char`");}}} verwenden.
 
 \subsection{Rust-spezifische Verbesserungen}
@@ -348,32 +348,32 @@ welche das Programmieren vereinfachen und die Stärken von Rust ausnutzen sollen
 
 \subsubsection{Constraints}
 
-Die \texttt{\textsc{\textbf{Constraints}}} Struktur ist eine
+Die \texttt{\textsc{\textbf{Constraints}}}-Struktur ist eine
 objektorientierte Abstraktion für die \textit{Constraints}, mit denen die Anzahl Ressourcen
 die einem \textit{Claim} zur Verfügung stehen sollen, spezifiziert werden.
 Die Implementierung dieser Struktur bietet einen Konstruktor, welcher eine neue
-\texttt{\textsc{\textbf{constraints\char`_t}}} Struktur mithilfe der
-\texttt{\textsc{\textbf{agent\char`_constr\char`_create}}}
-Funktion aus dem \texttt{\textsc{\textbf{octo\char`_bindings}}} Modul erstellt und anschließend einige Standardwerte setzt. 
+\texttt{\textsc{\textbf{constraints\char`_t}}}-Struktur mithilfe der
+\texttt{\textsc{\textbf{agent\char`_constr\char`_create}}}-Funktion aus dem
+\texttt{\textsc{\textbf{octo\char`_bindings}}}-Modul erstellt und anschließend einige Standardwerte setzt. 
 Dem Konstruktor werden zudem 2 Parameter übergeben,
 welche die minimale und maximale Anzahl an Rechenelementen spezifizieren.
 
 Alle Parameter der \textit{Constraints} lassen sich nachträglich durch Methoden der Struktur ändern.
 Hierbei profitieren vor allem die Methoden, welche boolesche Werte als Parametertypen besitzen,
-denn diese werden in den direkten C-Rust \textit{Bindings} statt mit \texttt{\textsc{\textbf{bool}}}-Werten mit
+denn diese werden in den direkten C-Rust-\textit{Bindings} statt mit \texttt{\textsc{\textbf{bool}}}-Werten mit
 \texttt{\textsc{\textbf{u8}}}-Werten aufgerufen. Dies liegt daran, dass es in C keinen
 \texttt{\textsc{\textbf{bool}}} oder ähnlichen Typen gibt. Dort werden stattdessen Zahlenwerte auf den
 Wert \texttt{\textsc{\textbf{0}}} geprüft. Dies wird in den Methoden dieser Struktur jedoch abstrahiert,
 so dass man in Rust den \texttt{\textsc{\textbf{bool}}}-Typ verwenden kann.
 
 Außerdem unterstützt die Methode \texttt{\textsc{\textbf{merge\char`_constraints}}} anstelle einer \\
-\texttt{\textsc{\textbf{constraints\char`_t}}} Struktur aus der C-Schnittstelle eine in Rust definierte
-\texttt{\textsc{\textbf{Constraints}}} Struktur. Möchte man trotzdem lieber eine
+\texttt{\textsc{\textbf{constraints\char`_t}}}-Struktur aus der C-Schnittstelle eine in Rust definierte \\
+\texttt{\textsc{\textbf{Constraints}}}-Struktur. Möchte man trotzdem lieber eine
 \texttt{\textsc{\textbf{constraints\char`_t}}}-Struktur verwenden, so kann stattdessen die
-\texttt{\textsc{\textbf{merge\char`_constraints\char`_t}}} Methode verwendet werden.
+\texttt{\textsc{\textbf{merge\char`_constraints\char`_t}}}-Methode verwendet werden.
 
-Um Zugriff auf die interne \texttt{\textsc{\textbf{constraints\char`_t}}} Struktur zu erhalten, kann die \\
-\texttt{\textsc{\textbf{to\char`_constraints\char`_t}}} Methode aufgerufen werden.
+Um Zugriff auf die interne \texttt{\textsc{\textbf{constraints\char`_t}}}-Struktur zu erhalten, kann die \\
+\texttt{\textsc{\textbf{to\char`_constraints\char`_t}}}-Methode aufgerufen werden.
 Hiernach ist die \texttt{\textsc{\textbf{Constraints}}}-Struktur selbst nicht mehr verwendbar,
 da die interne \texttt{\textsc{\textbf{constraints\char`_t}}}-Variable aufgrund der \textit{Move-Semantik}
 nicht mehr der \textit{Owner} des zugehörigen Speicherbereichs ist.
@@ -381,11 +381,11 @@ nicht mehr der \textit{Owner} des zugehörigen Speicherbereichs ist.
 \subsubsection{Closures}
 
 Rust Closures können nicht ohne Weiteres einer C-Schnittstelle als Parameter übergeben werden.
-Somit ist es mit den direkten C-Rust \textit{Bindings} nicht möglich, Closures zu verwenden,
+Somit ist es mit den direkten C-Rust-\textit{Bindings} nicht möglich, Closures zu verwenden,
 um Code auf den Rechenelementen ausführen zu lassen. Dies wäre jedoch eine
 wünschenswerte Funktionalität. Da Closures aus der Funktion selbst, als auch aus ihrem
 Erstellungskontext bestehen \cite{embeddedRustOS}, ist es nicht möglich,
-eine Closure direkt als eine normale Rust Funktion zu verwenden.
+eine Closure direkt als eine normale Rust-Funktion zu verwenden.
 Stattdessen erstellt man einen Zeiger auf die Datenregion,
 welche die Closure repräsentiert und übergibt diesen daraufhin einer
 \texttt{\textsc{\textbf{extern \char`"C\char`"}}} Funktion, welche aus diesem Zeiger die Closure in einem
@@ -399,10 +399,11 @@ erledigt, während zur Rückkonvertierung eine \texttt{\textsc{\textbf{extern \c
 
 \subsubsection{AgentClaim}
 
-Das wichtigste Konstrukt in der \textit{octolib} Bibliothek ist die \texttt{\textsc{\textbf{AgentClaim}}} Struktur,
+Das wichtigste Konstrukt in der \textit{octolib} Bibliothek ist die \texttt{\textsc{\textbf{AgentClaim}}}-Struktur,
 da sie Abstraktionen für die \textit{Invade}-, \textit{Infect}- und \textit{Retreat}-Phasen implementiert.
-Diese Struktur bietet zunächst einmal eine Abstraktionsschicht über die \texttt{\textsc{\textbf{agentclaim\char`_t}}}
-Struktur aus der C-Schnittstelle und verschiedene Methoden um diese zu verwenden.
+Diese Struktur bietet zunächst einmal eine Abstraktionsschicht über die
+\texttt{\textsc{\textbf{agentclaim\char`_t}}}-Struktur aus der C-Schnittstelle
+und verschiedene Methoden um diese zu verwenden.
 
 Der Konstruktor nimmt als einzigen Parameter eine \texttt{\textsc{\textbf{Constraints}}}-Struktur entgegen,
 welche verwendet wird, um die Ressourcen des \textit{Claims} zu spezifizieren.

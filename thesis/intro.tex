@@ -8,11 +8,11 @@ physische Grenzen stoßen werden \cite{endOfMooresLaw}.
 
 Um zukünftig trotzdem eine verbesserte Rechenleistung zu erzielen, wird unter anderem auf Parallelrechner gesetzt.
 Der Grundgedanke dahinter ist es, mehrere Recheneinheiten zu verwenden, welche gemeinsam eine Aufgabe
-lösen. Somit wird keine Verbesserung der einzelnen Recheneinheiten benötigt, um eine verbesserte Rechenleistung
+lösen. Somit wird keine Verbesserung der einzelnen Recheneinheiten benötigt, um eine verbesserte Gesamtrechenleistung
 zu erzielen.
 
-Der Trend zum parallelen Rechnen kann bereits heute beobachtet werden,
-so sind moderne PCs oder Smartphones generell alle mit Mehrkernsystemen ausgestattet.
+Der Trend zum parallelen Rechnen kann bereits heute beobachtet werden.
+So sind moderne PCs oder Smartphones generell alle mit Mehrkernsystemen ausgestattet.
 Bei Grafikprozessoren kommen mittlerweile bereits Tausende einzelner Rechenkerne zum Einsatz,
 beispielsweise verfügt die Nvidia GTX 1080 GPU laut Spezifikation \cite{nvidia1080specs} über 2560 Kerne.
 
@@ -26,7 +26,7 @@ Um die zusätzliche Komplexität des parallelen Rechnens für den Programmierer 
 müssen neue Techniken oder Programmierparadigmen entwickelt werden.
 Eine solche wäre das invasive Rechnen, welches es einem Programmierer erlaubt,
 die Ressourcen in parallelen Systemen besser zu nutzen.
-Vor allem bei Systemen mit vielen Kernen ist dieses Paradigma ein interessanter Lösungsansatz.
+Vor allem bei Systemen mit vielen Rechenkernen ist dieses Paradigma ein interessanter Lösungsansatz.
 So kann man beispielsweise auf einer Nvidia GTX 1080 GPU mit insgesamt 2560 Kernen ein Programm
 ausführen, welches ein Problem bearbeitet, das auf genau 1000 dieser Kerne ausgeführt wird.
 Gleichzeitig kann ein anderes Problem auf einer weiteren Untermenge der Kerne ausgeführt werden.
@@ -40,6 +40,6 @@ Damit Rust im Kontext des invasiven Rechnens verwendet werden kann,
 werden zunächst die Grundlagen der Programmiersprache Rust,
 des invasiven Rechnens und der Prozessorarchitektur SPARC-V8 erarbeitet.
 Anschließend werden Werkzeuge zum Erstellen von invasiven
-Rust Programmen entwickelt, welche das Ziel verfolgen,
+Rust-Programmen entwickelt, welche das Ziel verfolgen,
 Rust effektiv in Verbindung mit diesem Programmierparadigma zu verwenden.
 Abschließend muss der tatsächliche Wert dieses Unterfangens evaluiert und bewertet werden.

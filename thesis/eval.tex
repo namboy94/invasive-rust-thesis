@@ -180,7 +180,7 @@ der Kompilierungsdauer und Dateigröße verwendet wurde.
 
 Anhand der Werte in Tabelle \ref{fig:startup_table} kann man prinzipiell erkennen,
 dass die Anlaufzeiten von C und Rust sich sehr nahe sind, etwaige Unterschiede lassen sich auf die Varianz der
-Ergebnisse zurückführen. Die Implementierung in X10 benötigt jedoch im Schnitt ungefähr 1,3 Sekunden mehr Zeit
+Ergebnisse zurückführen. Die Implementierung in X10 benötigt jedoch im Schnitt ungefähr 1,3-1,4 Sekunden mehr Zeit
 als es bei den beiden anderen Programmiersprachen der Fall ist.
 
 
@@ -196,8 +196,8 @@ ist.
 Im Falle des Siebs von Eratosthenes kann Rust in diesem Kontext keine Quadratwurzeloperation durchführen,
 da diese die Standardbibliothek benötigt. Daher wurden in allen Sprachen anstelle einer Quadratwurzelfunktion
 feste Zahlen verwendet, um den Vergleich zwischen den Sprachen gerecht zu gestalten.
-Da jedoch nur eine Quadratwurzeloperation für das Sieb des Eratosthenes
-benötigt wird, wäre dies ohnehin aller Wahrscheinlichkeit nach kein entscheidender Faktor bei der Laufzeitmessung.
+Da jedoch nur eine einzelne Quadratwurzeloperation für das Sieb des Eratosthenes
+benötigt wird, wäre dies ohnehin aller Wahrscheinlichkeit nach kein entscheidender Faktor bei der Laufzeitbewertung.
 
 \begin{table}[hb]
 	\begin{center}
@@ -270,7 +270,7 @@ Version des Rust-Programms ungefähr 6-mal langsamer als die nächstlangsamste b
 Um auch die invasiven Aspekte der Sprachen zu evaluieren, wurden X10-, C- und Rust-Programme geschrieben,
 welche Primzahlen in einer parallelen Art und Weise berechnen.
 Hierfür wird die Menge an Zahlen, welche überprüft werden sollen,
-ob es sich bei ihnen um Primzahlen handelt, gleichermaßen in Partitionen getrennt.
+ob es sich bei ihnen um Primzahlen handelt, gleichermaßen in Partitionen aufgeteilt.
 Die Anzahl und Größe der Partitionen hängen hierbei von der Anzahl an verfügbaren Rechenelementen ab.
 Jedes der Rechenelemente berechnet anschließend die ihm zugewiesene Menge an Zahlen naiv,
 indem jede Zahl mit jeder kleineren Zahl auf Teilbarkeit geprüft wird.
@@ -331,11 +331,12 @@ indem jede Zahl mit jeder kleineren Zahl auf Teilbarkeit geprüft wird.
 Der Vergleich der Werte in Tabelle \ref{fig:primes_parallel_one_table} und \ref{fig:primes_parallel_eight_table} 
 lässt, anders wie in Kapitel \ref{sec:primes_calc}, Aussagen zur Laufzeiteffizienz der einzelnen Sprachen zu.
 Vor allem in Tabelle \ref{fig:primes_parallel_one_table} kann man erkennen, dass C mit 30 Sekunden die beste Laufzeit aufweist,
-gefolgt von X10 mit 31 Sekunden. Die schlechteste Laufzeit wies Rust auf mit 38 Sekunden auf.
+gefolgt von X10 mit 31 Sekunden. Die schlechteste Laufzeit wies Rust mit 38 Sekunden auf.
 
 Zur Bewertung von parallelen Algorithmen verwendet man unter Anderem die Werte des \textit{Speedup}
 und der \textit{Effizienz}.
-Den relativen \textit{Speedup} eines parallelen Programms berechnet man mit der Formel aus Abbildung\ref{formula:speedup} und die
+Den relativen \textit{Speedup} eines parallelen Programms berechnet man mit der Formel aus
+Abbildung \ref{formula:speedup} und die
 \textit{Effizienz} mit der Formel aus Abbildung \ref{formula:effizienz}. $S(n)$ bezeichnet hierbei den \textit{Speedup},
 $E(n)$ die \textit{Effizienz} und $T(x)$ die Ausführungszeit mit x Prozessoren.
 
@@ -433,7 +434,8 @@ Das Äquivalent zu Arrays in X10 sind Rails, daher wurden in der X10 Implementie
 	\caption{
 		Diese Tabelle stellt die Ergebnisse des \textit{garbageonly}-Benchmarks dar. Dieser Benchmark erstellt insgesamt
 		\texttt{\textsc{\textbf{1000000}}} \texttt{\textsc{\textbf{int}}}/\texttt{\textsc{\textbf{i32}}}-Arrays/Rails
-		mit einer Größe von \texttt{\textsc{\textbf{5000}}} Elementen.
+		mit einer Größe von \texttt{\textsc{\textbf{5000}}} Elementen, welche alle auf den Wert
+		\texttt{\textsc{\textbf{0}}} initialisiert werden.
 		Alle Werte sind auf vier Nachkommastellen gerundet und mit Ausnahme des Variationskoeffizienten
 		in Sekunden angegeben.
 	}
@@ -468,7 +470,7 @@ Gleiches gilt für X10, für welches \textit{x10i} die Kompilierung durchführt.
 Zusätzlich hierzu bietet \textit{octorust} jedoch auch das Kompilieren von \textit{Cargo}-Projekten.
 Diese weisen zwar einen etwas
 höheren Arbeitsaufwand zu Beginn des Projekts auf, erlauben aber anschließend benutzerfreundliches Einbinden von
-externen Bibliotheken in der \texttt{\textsc{\textbf{Cargo.toml}}} Konfigurationsdatei. Außerdem wird in
+externen Bibliotheken in der \texttt{\textsc{\textbf{Cargo.toml}}}-Konfigurationsdatei. Außerdem wird in
 \textit{Cargo}-Projekten die \textit{octolib}-Bibliothek automatisch eingebunden.
 Im Falle von X10 und C ist eine ähnliche
 Funktionalität nicht vorhanden, externe Bibliotheken müssen beim Kompilieren manuell eingebunden werden.
@@ -499,7 +501,6 @@ Dieser Methode wird eine Closure als Parameter übergeben, welche den
 Text "`Hello World"' auf die Kommandozeile ausgibt. Sobald die \texttt{\textsc{\textbf{infect}}}-Methode
 aufgerufen wurde, wartet der Hauptfaden des Programms darauf,
 dass die einzelnen Rechenelemente ihre Ausführung beendet haben.
-
 Hiernach muss der Programmierer keine zusätzlichen Instruktionen aufrufen. Die \textit{Retreat}-Phase wird beim
 Verlassen des Geltungsbereichs automatisch durchgeführt.
 
@@ -537,7 +538,7 @@ mindestens die Klassen \\
 \texttt{\textsc{\textbf{invasic.constraints.PEQuantity}}},
 \texttt{\textsc{\textbf{invasic.IncarnationID}}} und \\
 \texttt{\textsc{\textbf{invasic.Claim}}}
-benötigt. Zusätzlich muss \texttt{\textsc{\textbf{x10.io.Console}}} importiert werden
+benötigt. Zusätzlich muss \texttt{\textsc{\textbf{x10.io.Console}}} importiert werden,
 um die Ausgabe auf die Kommandozeile zu ermöglichen.
 
 Wie bereits bei Rust werden zunächst die \textit{Constraints} spezifiziert. Hierzu
@@ -547,13 +548,12 @@ des \texttt{\textsc{\textbf{\char`&\char`&}}}-Operators weitere \textit{Constrai
 \texttt{\textsc{\textbf{PEQuantity}}} verbinden.
 Anschließend führt man die \textit{Invade}-Phase mithilfe der statischen
 \texttt{\textsc{\textbf{Claim.invade}}}-Methode aus und erhält als Rückgabewert den erstellten \textit{Claim}.
-Um darauf die \textit{Infect}-Phase zu beginnen, muss auf diesem \textit{Claim} die
+Um daraufhin die \textit{Infect}-Phase zu beginnen, muss auf diesem \textit{Claim} die
 \texttt{\textsc{\textbf{infect}}}-Methode verwendet werden.
 Als Parameter erhält diese eine Closure, welche "`Hello World"' auf die Kommandozeile ausgibt.
 Sobald die Methode aufgerufen wurde, wartet der Hauptfaden des Programms auf das Ende der Ausführung der
 verwendeten Rechenelemente.
-
-Nach erfolgreicher Ausführung der \textit{Infect}-Phase, muss dann noch manuell die 
+Nach erfolgreicher Ausführung der \textit{Infect}-Phase muss dann noch manuell die 
 \texttt{\textsc{\textbf{retreat}}}-Methode des \textit{Claims} aufgerufen werden.
 
 Eine beispielhafte Implementierung dieses Programms wird in Listing \ref{code:x10_minimal_infect} veranschaulicht.
@@ -585,7 +585,8 @@ class Infect {
 
 \subsubsection{C}
 
-Im Gegensatz zu Rust und X10 müssen die in C verwendeten Strukturen nicht alle explizit importiert werden.
+Im Gegensatz zu Rust und X10 müssen die in C verwendeten Funktionen und Strukturen nicht alle explizit
+importiert werden.
 Es muss lediglich \texttt{\textsc{\textbf{octopos.h}}} mit der Präprozessor-Anweisung
 \texttt{\textsc{\textbf{include}}} verwendet werden.
 Um auf die Kommandozeile ausgeben zu können, muss zusätzlich \texttt{\textsc{\textbf{stdio.h}}} importiert werden.
@@ -600,7 +601,7 @@ der \texttt{\textsc{\textbf{agent\char`_claim\char`_invade}}}-Funktion initialis
 Nach dieser \textit{Invade}-Operation muss man in C manuell über alle reservierten Rechenelemente iterieren, dabei
 \texttt{\textsc{\textbf{simple\char`_ilet}}}-Strukturen für diese erstellen und anschließend mit der
 \texttt{\textsc{\textbf{proxy\char`_infect}}}-Funktion
-die Ausführung beginnen. Als \textit{i-let}-Funktion muss eine C Funktion verwendet werden,
+die Ausführung beginnen. Als \textit{i-let}-Funktion muss eine C-Funktion verwendet werden,
 da die Sprache keine Closures oder ähnliche Konstrukte bietet.
 Damit der Hauptfaden auf das Ausführungsende der einzelnen Rechenelemente wartet, muss
 man manuell Signalstrukturen verwenden.
@@ -665,7 +666,7 @@ void main_ilet(claim_t claim_id) {
 \subsubsection{Vergleich}
 
 Die Vorgehensweisen bei Rust und X10 sind nahezu identisch. Der einzige nennenswerte Unterschied hierbei ist es, dass
-man in Rust keine explizite "'Retreat"'-Operation initialisieren muss.
+man in Rust keine explizite "'Retreat"'-Operation initiieren muss.
 Das C-Programm ist im Vergleich zu den beiden anderen Programmiersprachen hingegen komplexer und somit auch
 fehleranfälliger. Zudem benötigt ein solches C-Programm ungefähr doppelt so viele
 Codezeilen wie die äquivalenten Rust- oder X10-Programme. Obendrein ist es in C nicht möglich, Closures oder
