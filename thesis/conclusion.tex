@@ -15,7 +15,7 @@ hingewiesen. Dies erlaubt es, sicherere und weniger fehleranfällige Programme z
 Sollte es trotzdem während der Laufzeit zu schwerwiegenden Fehlern kommen, beispielsweise bei einem Pufferüberlauf,
 brechen Rust Programme die Ausführung ab und weisen so kein undefiniertes Verhalten auf.
 
-Des Weiteren weist Rust in Situationen, in denen häufig Objekte erstellt und wieder den Geltungsbereich verlassen,
+Des Weiteren weist Rust in Situationen, in denen häufig Objekte erstellt werden und den Geltungsbereich wieder verlassen,
 ein mindestens 10-fach besseres Laufzeitverhalten auf als X10.
 Zudem eignet sich X10 wegen des \textit{Garbage Collectors}
 nicht für Anwendungsgebiete, in denen Pausen jeglicher Art nicht erwünscht sind,
@@ -40,9 +40,12 @@ welche die Sicherheit von Rust teils aufgibt. Die Funktionen der C-Schnittstelle
 bezüglich der Sicherheit und die häufige Nutzung von \texttt{\textsc{\textbf{void}}}-Zeigern zum Übertragen
 von Parametern ist ebenfalls ein Problem, welches zu Fehlern führen kann.
 
+Bei der Primzahlenberechnung der Evaluation konnte zudem festgestellt werden, dass Rust im Schnitt die schlechtesten
+Laufzeitergebnisse erzielte. Für mathematisch intensive Probleme wäre wohl der Gebrauch von C zu empfehlen.
+
 \section{Ausblick}
 
-Da Rust noch eine relativ junge Programmiersprache ist, wurden viele Bibliotheken für diese noch nicht implementiert.
+Da Rust erst im Jahre 2015 offiziel veröffentlicht wurde, sind noch nicht viele Bibliotheken für diese implementiert.
 Zwar können mithilfe der \textit{Foreign Function Interface} Bibliotheken,
 die in anderen Sprachen geschrieben worden sind, eingebunden werden, diese bieten jedoch
 nicht die Sicherheitsgarantien wie Rust es tut.
@@ -65,5 +68,5 @@ können weitere Abstraktionen erstellt werden, welche von den
 besonderen Eigenschaften der Rust-Programmiersprache Gebrauch machen.
 Dass dies möglich ist, hat die Implementierung des X10-Compilers \textit{x10i} bewiesen,
 denn dieser verwendet dieselbe C-Schnittstelle,
-bietet jedoch robuste Abstraktionen über diese und erlaubt so
+bietet jedoch zahlreiche Abstraktionen über diese und erlaubt so
 das Entwickeln von X10-Programmen, ohne dass der Programmierer sich dabei mit der C-Schnittstelle befassen muss.

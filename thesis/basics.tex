@@ -108,7 +108,7 @@ zu verhindern. Eine Referenz kann also nie auf eine Variable zeigen, die bereits
 \cite{rustBook}
 
 Es gibt zwei unterschiedliche
-Typen von Referenzen, veränderliche und unveränderliche Referenzen. Standardmäßig werden in Rust unveränderliche
+Typen von Referenzen, veränderliche und unveränderliche. Standardmäßig werden in Rust unveränderliche
 Referenzen verwendet. Diese erlauben es nicht, den Wert des Speicherbereichs zu verändern, sondern nur auszulesen.
 Es gibt keine Limitierung bei der Anzahl unveränderlicher Referenzen die eine Variable besitzen kann. Im Gegensatz
 hierzu kann nur eine veränderliche Referenz auf die Variable existieren. Dies ermöglicht es bereits zur
@@ -122,17 +122,17 @@ Implementierungen (\texttt{\textsc{\textbf{impl}}}), Aufzählungen (\texttt{\tex
 Traits (\texttt{\textsc{\textbf{trait}}}).
 
 Strukturen in Rust spezifizieren benutzerdefinierte Datentypen, welche verwandte Daten vereinen. Das Konzept
-ähnelt den Strukturen in C. Anders wie in C kann man jedoch mithilfe von Implementierungen Methoden und assoziierte
+ähnelt den Strukturen in C. Anders als in C kann man jedoch mithilfe von Implementierungen Methoden und assoziierte
 Funktionen für diese Strukturen definieren.
-Diese Möglichkeit erlaubt es eine objektorientierte Herangehensweise in Rust zu verwenden.
-Implementierungen erlauben das Definieren von Methoden, welche auf einer initiierten Struktur aufgerufen werden 
+Diese Möglichkeit erlaubt es, eine objektorientierte Herangehensweise in Rust zu verwenden.
+Implementierungen erlauben das Definieren von Methoden, welche auf einer initialisierten Struktur aufgerufen werden
 können und eine Referenz auf \texttt{\textsc{\textbf{self}}}, also der Struktur selbst, als Parameter entgegennehmen.
 Zusätzlich können Funktionen definiert werden, welche keinen solchen Parameter entgegennehmen und somit auch mit
 Strukturen verwendet werden können ohne diese im Voraus zu initialisieren.
 Dies ähnelt statischen Methoden in objektorientierten Sprachen.\cite{rustBook}
 
 Aufzählungen agieren in Rust ähnlich zu anderen Programmiersprachen. Der Vorteil der Aufzählungen in Rust ist es,
-dass diese fürs \textit{Pattern Matching} verwendet werden können.
+dass diese für \textit{Pattern Matching} verwendet werden können.
 Ein Beispiel dazu, wie dies in der Praxis verwendet
 werden kann, wird in Kapitel \ref{sec:error_handling} beschrieben.
 \cite{rustBook}
@@ -146,25 +146,27 @@ bezüglich \textit{Ownership} und \textit{Move}-Semantik beeinflussen können.\c
 Ein solches Trait ist das \textit{Drop}-Trait. Dieses erlaubt es, das Verhalten eines Typen beim Verlassen des
 Geltungsbereichs zu beeinflussen. In der \textit{drop}-Methode des Traits wird es ermöglicht, einen Destruktor
 für den Typ zu definieren. Dieser kann aus unterschiedlichen Gründen benötigt oder hilfreich sein.
-Beispielsweise kann einen solcher Destruktor verwendet werden, 
+Beispielsweise kann ein solcher Destruktor verwendet werden,
 um einen Referenzzähler zu dekrementieren, unbenutzte Netzwerkverbindungen
-zu trennen oder andersweitig Ressourcen wieder freizugeben.\cite{rustBook}
+zu trennen oder anderweitig Ressourcen wieder freizugeben.\cite{rustBook}
 
 Außerdem gibt es die \textit{Copy}-Traits, welche es ermöglichen, anstelle der \textit{Move}-Semantik die
 \textit{Copy}-Semantik zu verwenden. Für Typen, die dieses Trait implementieren, wird jedes mal, wenn ein
 Speicherbereich im Kontext der \textit{Move}-Semantik den \textit{Owner} wechseln würde,
 stattdessen eine bitweise Kopie der Daten erstellt. Primitive Datentypen wie \texttt{\textsc{\textbf{i32}}}
 verhalten sich standardmäßig bereits so. Das \textit{Copy}-Trait kann jedoch nicht auf jeden Typ
-angewandt werden. Insbesondere kann das \textit{Drop}-Trait nicht gleichzeitig auf diesen Typ angewandt werden,
-da diese beim Verlassen des Geltungsbereichs einen Einfluss außerhalb ihres Speicherbereich haben können.
+angewandt werden.
+Insbesondere kann ein Typ nicht das \textit{Copy}- als auch  das \textit{Drop}-Trait implementieren,
+da Typen die das \textit{Drop}-Trait implementieren beim Verlassen des Geltungsbereichs einen Einfluss außerhalb ihres
+Speicherbereich haben können.
 Würde der Destruktor für jede Kopie aufgerufen werden, könnte dies zu unvorhergesehenen und
 unerwünschten Konsequenzen führen.\cite{rustBook}\cite{rustDocCopy}
 
 \subsection{Fehlerbehandlung}\label{sec:error_handling}
 
 Obwohl der Compiler dank Rusts Typsystem bereits bei der Kompilierung eine Vielzahl von Fehlern erkennen kann,
-ist dies  nicht für alle möglichen Fehlertypen möglich. Beispielsweise ist es möglich, dass
-durch eine inkorrekte Indizierung eines Arrays ein Fehler entsteht.
+ist dies nicht für alle Fehlertypen möglich. Beispielsweise kann es vorkommen, dass
+durch inkorrekte Indizierung eines Arrays ein Fehler entsteht.
 Solche Fehler müssen zur Laufzeit behandelt werden.\cite{rustBook}
 
 Fehler werden in Rust idiomatisch mithilfe von Rückgabewerten vom Aufzählungstyp \texttt{\textsc{\textbf{Result}}}
@@ -175,7 +177,7 @@ kann der eigentliche Rückgabewert der Funktion aus dieser Aufzählung entnommen
 
 Wird ein Fehler nicht auf diese Art und Weise behandelt, wird das \texttt{\textsc{\textbf{panic!}}}-Makro
 aufgerufen. Dieses befreit standardmäßig die Daten des Programms auf dem Stack, druckt anschließend einen
-Stacktrace und beendet darauf die Ausführung des Programms.
+\textit{Stacktrace} und beendet darauf die Ausführung des Programms.
 Es ist jedoch auch möglich, ein Programm so zu konfigurieren,
 dass stattdessen die Ausführung des Programms beendet wird sobald ein unbehandelter Fehler auftritt.\cite{rustBook}
 
@@ -186,9 +188,10 @@ verwendet werden kann. Mithilfe der \textit{Foreign Function Interface} kann man
 Sprachen in Rust verwenden. Dadurch kann Rust beispielsweise Bibliotheken, welche in C geschrieben sind, verwenden.
 Die \textit{Foreign Function Interface} erlaubt es zusätzlich, Rust Code aus dem Kontext anderer Sprachen zu
 verwenden. Dies wird für eine Vielzahl an Programmiersprachen unterstützt, unter anderem C, aber auch höheren
-Programmiersprachen wie Python oder Ruby, welche durch die Einbindung von Rust-Code Leistungssteigerungen erzielen können.\cite{firstRustBook}\cite{rustBook-1.2.0}
+Programmiersprachen wie Python oder Ruby, welche durch die Einbindung von Rust Code Leistungssteigerungen erzielen
+können.\cite{firstRustBook}\cite{rustBook-1.2.0}
 
-\subsection{Unsicheres Rust}
+\subsection{\texttt{\textsc{\textbf{unsafe}}}-Blöcke in Rust}
 
 In gewissen Situationen kann es sein, dass Rusts Sicherheitsgarantien die Implementierung erschweren oder
 sogar unmöglich machen. Vor allem bei sehr Hardware-nahen Programmen, beispielsweise einem Betriebssystem,
@@ -196,7 +199,7 @@ kann eine solche Situation vorkommen. Als Lösung für dieses Problem bietet Rus
 \texttt{\textsc{\textbf{unsafe}}}-Blöcke an. Innerhalb dieser ist es möglich, Zeiger zu dereferenzieren, welche
 direkt ein Speichersegment adressieren. Somit hat man direkte Kontrolle über diesen Speicher, was
 jedoch bei Unachtsamkeit seitens des Entwicklers zu Fehlern oder undefiniertem Verhalten führen kann.
-Außerdem können unsichere Funktionen, beispielsweise welche die mithilfe der
+Außerdem können unsichere Funktionen, beispielsweise solche die mithilfe der
 \textit{Foreign Function Interface} aus anderen Programmiersprachen importiert wurden,
 nur in \texttt{\textsc{\textbf{unsafe}}}-Blöcken verwendet werden.\cite{rustBook}
 
@@ -270,8 +273,8 @@ SPARC (\textbf{S}calable \textbf{P}rocessor \textbf{ARC}hitecture) ist eine Rech
 RISC (Reduced Instruction Set Computing) Konzept aufbaut. Eines der Ziele der SPARC Architektur ist es, skalierbar
 zu sein und so in unterschiedlichsten Umgebungen zum Einsatz zu kommen. So können SPARC Prozessoren in
 Mikrocontrollern bis hin zu Supercomputern verwendet werden. Die Architektur wird an unterschiedliche
-Halbleiter-Unternehmen lizensiert, mit dem Ziel durch konkurrierende Kräfte Innovation bezüglich Leistung und
-Kosten zu fördern.\cite{sparc}
+Halbleiter-Unternehmen lizensiert, mit dem Ziel durch konkurrierende Kräfte Innovation bezüglich Kosten und
+Rechenleistung zu fördern.\cite{sparc}
 
 SPARC-V8 ist eine auf SPARC basierende Architektur. Es handelt sich hierbei um eine Allzweckarchitektur mit einem
 32-bit breiten Datenpfad.\cite{sparcv8Eval}
@@ -330,7 +333,6 @@ und das \textit{iRTSS}.\cite{invasiveArrays}
 Eine verwandte Arbeit ist "`Invasive Computing—An Overview"'\cite{invasiveOverview}
 von Jürgen Teich, Jörg Henkel, Andreas Herkersdorf, Doris Schmitt-Landsiedel, Wolfgang Schröder-Preikschat
 und Gregor Snelting. Diese illustriert die Grundkonzepte des invasiven Rechnens.
-
 Eine weitere verwandte Arbeit ist "`Technical Report: An X10 Compiler for Invasive Architectures"'\cite{invasiveX10} 
 von Sebastian Buchwald, Manuel Mohr und Andreas Zwinkau, welche die Erstellung eines X10 Compilers für den Gebrauch 
 im invasiven Rechnen beschreibt.

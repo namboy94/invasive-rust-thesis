@@ -7,9 +7,9 @@ Programmiersprache Rust zu schreiben.
 
 \section{Rust auf der SPARC LEON Architektur}\label{sec:rust_on_sparc}
 
-Rust wird derzeit nicht offiziell auf der SPARC-V8 Architektur unterstützt. Rust verwendet jedoch als Backend LLVM,
-welches diese Architektur unterstützt und daher ist es prinzipiell möglich,
-Rust-Programme für diese Architektur zu kompilieren.
+Rust wird derzeit nicht offiziell auf der SPARC-V8 Architektur unterstützt. Rust verwendet jedoch als Compiler-Backend
+LLVM, das für diese Architektur Maschinenbefehle aus der Zwischensprache LLVM-IR generieren kann.
+Daher ist es prinzipiell möglich, Rust-Programme für diese Architektur zu kompilieren.
 Die Rust-Standardbibliothek ist allerdings schwierig auf andere Architekturen zu portieren.
 Um diese Hürde zu umgehen bietet Rust die Funktion,
 Programme mit einer minimalen, plattformunabhängigen Untermenge der Standardbibliothek zu kompilieren.
@@ -52,21 +52,21 @@ muss in der \texttt{\textsc{\textbf{linker}}}-Option der JSON-Datei angegeben we
 Sobald man diese JSON Datei erstellt hat, kann man die \textit{libcore} Bibliothek mit dem
 \texttt{\textsc{\textbf{cargo build}}} Befehl kompilieren.
 Um dies für SPARC-V8 zu bewerkstelligen, verwendet man als Parameter für die
-\texttt{\textsc{\textbf{-{}-target}}}-Option den Pfad zur Spezifikations-JSON-Datei.
+\texttt{\textsc{\textbf{-{}-target}}}-Option den Pfad zur JSON-Spezifikationsdatei.
 Derzeit ist es nicht möglich, \textit{libcore} mit dem stabilen Rust-Compiler zu kompilieren,
 da diese Bibliothek Funktionalitäten verwendet, welche auf dem stabilen Compiler deaktiviert sind.
-Daher muss ein Nightly-Compiler installiert werden, welches
+Daher muss ein \textit{Nightly}-Compiler installiert werden, was
 dank \texttt{\textsc{\textbf{rustup}}} benutzerfreundlich gestaltet ist.
 Außerdem sollte die Version der \textit{libcore} Bibliothek
-mit der Version des nightly-Compilers übereinstimmen,
+mit der Version des \textit{Nightly}-Compilers übereinstimmen,
 um versionsabhängige Konflikte bei der Kompilierung zu vermeiden.
 
 Nachdem die \textit{libcore} Bibliothek erfolgreich kompiliert wurde, kann man
 die resultierende \texttt{\textsc{\textbf{.rlib}}}-Datei anderen Rust-Programmen
 beim Kompilieren zur Verfügung stellen, indem man diese in das korrekte Unterverzeichnis im
 lokalen \texttt{\textsc{\textbf{\char`~/.rustup}}} Verzeichnis kopiert.
-Alternativ kann man das \textit{libcore} Cargo-Projekt direkt durch die Abhängigkeiten in der
-\texttt{\textsc{\textbf{Cargo.toml}}} Datei eines Cargo Projekts einbinden.
+Alternativ kann man das \textit{libcore} \textit{Cargo}-Projekt direkt durch die Abhängigkeiten in der
+\texttt{\textsc{\textbf{Cargo.toml}}} Datei eines \textit{Cargo}-Projekts einbinden.
 
 Soll ein Rust-Programm \textit{libcore} anstelle der Standardbibliothek verwenden, muss man dies
 mit der Anweisung \texttt{\textsc{\textbf{\#![no\char`_std]}}}
@@ -92,15 +92,15 @@ Der Beginn eines Rust-Programms, welches nicht die Standardbibliothek verwendet.
 
 Um anschließend das Programm zu kompilieren,
 verwendet man entweder \texttt{\textsc{\textbf{rustc}}} bei eigenständigen
-\texttt{\textsc{\textbf{.rs}}} Dateien oder den \texttt{\textsc{\textbf{cargo build}}} Befehl für Cargo Projekte.
+\texttt{\textsc{\textbf{.rs}}} Dateien oder den \texttt{\textsc{\textbf{cargo build}}} Befehl für \textit{Cargo} Projekte.
 Beiden Befehlen muss wie auch beim Kompilieren von \textit{libcore} die 
 JSON-Spezifikationsdatei als Argument für die \texttt{\textsc{\textbf{-{}-target}}}-Option übergeben werden. 
 
 \section{Erstellung des \textit{octorust} Hilfsprogramms}
 
 Um das Kompilieren für Rust-Programme
-auf der SPARC-V8 Architektur zu vereinfachen, als
-auch besagte Rust-Programme zusammen mit dem \textit{OctoPOS} Betriebssystem und dem \textit{iRTSS} zu verwenden,
+auf der SPARC-V8 Architektur zu vereinfachen, sowie
+besagte Rust-Programme zusammen mit dem \textit{OctoPOS} Betriebssystem und dem \textit{iRTSS} zu verwenden,
 wurde ein Python-Programm namens \textit{octorust} geschrieben, welche diese Schritte
 vereinfacht.
 Das Programm wurde in Python geschrieben, da Pythons Standardbibliothek viele nützliche Funktionen zur Manipulation
@@ -120,14 +120,14 @@ Zudem werden für alle unterstützten Architekturen die \textit{libcore} und \te
 kompiliert und in den Installationspfad der derzeit verwendeten
 \texttt{\textsc{\textbf{rustup}}}-Werkzeugkette kopiert.
 
-\textit{Octorust} bietet die folgenden Optionen:
+\textit{Octorust} bietet die folgenden Kommandozeilenoptionen:
 \begin{description}
 
 	\item[-h, -{}-help]
 	Diese Option druckt einen Nutzungshinweis inklusive aller möglichen Kommandozeilenoptionen.
 	
 	\item[-a. -{}-architecture]
-	Diese Option ermöglicht es, eine IRTSS Zielarchitektur zu wählen. Zur Wahl stehen \textit{x86guest},
+	Diese Option ermöglicht es, eine \textit{OctoPOS/iRTSS} Zielarchitektur zu wählen. Zur Wahl stehen \textit{x86guest},
 	\textit{x64native} als auch \textit{leon}.
 	Sollte diese Option nicht angegeben werden, wird standardmäßig für die \textit{x86guest} Architektur kompiliert.
 	
@@ -142,12 +142,12 @@ kompiliert und in den Installationspfad der derzeit verwendeten
 	\item[-o, -{}-output]
 	Mit dieser Option kann der Pfad zur resultierenden Ausgabedatei explizit angegeben	werden.
 	Ansonsten ermittelt \textit{octorust} automatisch einen sinnvollen Ausgabenamen,
-	beispielsweise \texttt{\textsc{\textbf{foo.out}}} für ein Cargo-Projekt mit dem Namen
+	beispielsweise \texttt{\textsc{\textbf{foo.out}}} für ein \textit{Cargo}-Projekt mit dem Namen
 	\textit{foo}.
 	
 	\item[-k, -{}-keep]
 	Wird diese Option verwendet, werden jegliche temporäre Dateien,
-	die während dem Kompilieren und dem Linken erstellt werden im
+	die während dem Kompilieren und dem Linken erstellt werden, im
 	Anschluss nicht gelöscht.
 	Dies beinhaltet unter anderem erstellte statische Bibliotheken oder Objekt-Dateien.
 	
@@ -175,20 +175,20 @@ kompiliert und in den Installationspfad der derzeit verwendeten
 \end{description}
 
 Unterstützt wird das Kompilieren von eigenständigen C- und Rust-Quelldateien, als auch das Kompilieren von
-Cargo-Projekten. Cargo-Projekte bieten durch das Abhängigkeitsmanagement zusätzlich den Gebrauch
+\textit{Cargo}-Projekten. \textit{Cargo}-Projekte bieten durch das Abhängigkeitsmanagement zusätzlich den Gebrauch
 von Rust-Bibliotheken, vor allem der \textit{octolib}-Bibliothek,
 welche eigens für die Interaktion zwischen Rust und \textit{OctoPOS/iRTSS}
 entwickelt wurde.
-Daher werden sich die folgenden Prozesse primär mit dem Kompilierungsvorgang der Cargo-Projekte
+Daher werden sich die folgenden Prozesse primär mit dem Kompilierungsvorgang der \textit{Cargo}-Projekte
 beschäftigen.
 Ein genauerer Überblick über die \textit{octolib} Bibliothek folgt in Kapitel \ref{sec:octolib}.
 
-\subsection{Struktur eines invasiven Cargo-Projekts}
+\subsection{Struktur eines invasiven \textit{Cargo}-Projekts}
 
-Wie normale Cargo-Projekte besteht ein invasives Cargo-Projekt aus mindestens einem
+Wie normale \textit{Cargo}-Projekte besteht ein invasives Cargo-Projekt aus mindestens einem
 \texttt{\textsc{\textbf{src}}} Verzeichnis, einer Haupt-Bibliotheksdatei
 und einer \texttt{\textsc{\textbf{Cargo.toml}}} Konfigurationsdatei.
-Bei invasiven Cargo-Projekten muss das \texttt{\textsc{\textbf{crate-type}}} Attribut zudem immer als
+Bei invasiven \textit{Cargo}-Projekten muss das \texttt{\textsc{\textbf{crate-type}}} Attribut zudem immer als
 \texttt{\textsc{\textbf{staticlib}}} angegeben werden,
 damit das Projekt als statische Bibliothek kompiliert wird, welche dann mit \textit{OctoPOS} und dem \textit{iRTSS} 
 verlinkt werden kann.
@@ -198,14 +198,14 @@ anstelle der \texttt{\textsc{\textbf{main()}}} Funktion muss eine
 \texttt{\textsc{\textbf{pub extern \char`"C\char`"}}} Funktion namens \\
 \texttt{\textsc{\textbf{rust\char`_main\char`_ilet}}} als Startpunkt des Programms verwendet werden.
 Diese Funktion nimmt genau einen Parameter entgegen, welcher vom Typ \texttt{\textsc{\textbf{u8}}} ist.
-Über dieser Funktion muss außerdem die Anweisung \texttt{\textsc{\textbf{\#[no\char`_mangle]}}} stehen,
+Vor dieser Funktion muss außerdem die Anweisung \texttt{\textsc{\textbf{\#[no\char`_mangle]}}} stehen,
 damit die Funktion aus einem C Kontext heraus aufrufbar ist.
 Außerdem sollte die \textit{octolib} Bibliothek mit der Anweisung \texttt{\textsc{\textbf{extern crate octolib;}}}
-eingebunden werden. Eine minimale Haupt-Quelldatei eines invasiven Cargo-Projekts wird in Listing 
+eingebunden werden. Eine minimale Haupt-Quelldatei eines invasiven \textit{Cargo}-Projekts wird in Listing
 \ref{code:minimal_cargo_source} veranschaulicht.
 
 \begin{lstlisting}[float,caption={
-Eine minimale Haupt-Quelldatei eines invasiven Cargo-Projekts
+Eine minimale Haupt-Quelldatei eines invasiven \textit{Cargo}-Projekts
 },label=code:minimal_cargo_source]
 #![no_std]
 
@@ -226,11 +226,11 @@ Für die anderen beiden Zielarchitekturen ist ein solcher Schritt nicht notwendi
 da diese offiziell von \texttt{\textsc{\textbf{rustc}}} und \texttt{\textsc{\textbf{cargo}}} unterstützt werden. 
 Nachdem diese Spezifikationsdatei generiert wurde, wird das Projekt mithilfe von \texttt{\textsc{\textbf{cargo}}}
 als statische Bibliothek kompiliert.
-Wurde das Projekt erfolgreich kompiliert, wird anschließend eine minimale C Datei generiert,
-welche die von \textit{OctoPOS/iRTSS} benötigte \texttt{\textsc{\textbf{main\char`_ilet}}} Funktion implementiert
+Wurde das Projekt erfolgreich kompiliert, wird anschließend ein minimales C-Programm generiert,
+welches die von \textit{OctoPOS/iRTSS} benötigte \texttt{\textsc{\textbf{main\char`_ilet}}} Funktion implementiert
 und innerhalb dieser die \texttt{\textsc{\textbf{rust\char`_main\char`_ilet}}} Funktion aufruft.
 Im Anschluss daran wird dann noch die \texttt{\textsc{\textbf{shutdown}}} Funktion aufgerufen, um die 
-Ausführung des Programms zu beenden. Diese generierte C Datei wird mithilfe eines passenden
+Ausführung des Programms zu beenden. Die generierte C Datei wird mithilfe eines passenden
 \texttt{\textsc{\textbf{gcc}}} Compilers als Objekt-Datei kompiliert
 und anschließend mit \textit{OctoPOS/iRTSS} und der zuvor kompilierten statischen Rust-Bibliothek verlinkt.
 Nun sollte eine ausführbare Datei existieren, welche auf einem Rechner mit x86-Architektur im Falle der "`x86guest"' 
@@ -252,7 +252,7 @@ Die \textit{libc} Bibliothek bietet die Möglichkeit, Komponenten, welche die St
 auszulassen, daher ist sie auch auf der SPARC-V8 Architektur nutzbar.
 
 Die \textit{octolib} Bibliothek wird vor dem Kompilieren als Abhängigkeit in die \texttt{\textsc{\textbf{Cargo.toml}}} Datei des
-zu kompilierenden Cargo Projekts eingefügt.
+zu kompilierenden \textit{Cargo}-Projekts eingefügt.
 Hierfür wird mithilfe des \texttt{\textsc{\textbf{toml}}} Python Moduls der derzeitige Inhalt der \texttt{\textsc{\textbf{Cargo.toml}}} Datei
 eingelesen, der Pfad zur lokal installierten \textit{octolib} Bibliothek in diese Daten injiziert und anschließend 
 wieder in die Konfigurationsdatei geschrieben.
@@ -299,7 +299,7 @@ Die Bibliothek bietet die folgenden Module:
 
 \subsection{Direkte C-Rust \textit{Bindings}}
 
-Im ersten Schritt wurden die Funktionen der C-Schnittstelle direkt Eins-zu-Eins als Rust-Funktionen eingebunden.
+Im ersten Schritt werden die Funktionen der C-Schnittstelle direkt Eins-zu-Eins als Rust-Funktionen eingebunden.
 Dank der \textit{Foreign Function Interface} müssen lediglich die Parameter- und Rückgabetypen
 an die neue Programmiersprache angepasst werden.
 Für die meisten Typen gibt es direkte Äquivalente in Rust, jegliche anderen Typen
@@ -334,11 +334,11 @@ Schlüsselwort \texttt{\textsc{\textbf{type}}} erstellen.
 
 Das \texttt{\textsc{\textbf{helper}}}-Modul enthält Adapter für C-Funktionen,
 für die in Rust ohne Zugriff zur Standardbibliothek keine Alternative existieren.
-So werden beispielsweise mehrere Adapter um die \texttt{\textsc{\textbf{printf}}}-Funktion geboten,
-die je eine andere Anzahl an zusätzlichen Parametern bieten, um Variablen ausdrucken zu können.
+So werden beispielsweise mehrere Adapter um die \texttt{\textsc{\textbf{printf}}}-Funktion aus der C-Standardbibliothek
+geboten,  die je eine andere Anzahl an zusätzlichen Parametern bieten, um Variablen ausdrucken zu können.
 
 Beachtet werden muss bei diesen print-Funktionen, dass die überreichten Zeichenketten manuell
-Null-terminiert werden müssen. Um "`Hello World"' zu drucken, muss man also die Anweisung
+Null-terminiert werden müssen. Um "`Hello World"' zu drucken, muss man somit die Anweisung
 \texttt{\textsc{\textbf{print(\char`"Hello World\char`\\n\char`\\0\char`");}}} verwenden.
 
 \subsection{Rust-spezifische Verbesserungen}
@@ -350,7 +350,7 @@ welche das Programmieren vereinfachen und die Stärken von Rust ausnutzen sollen
 
 Die \texttt{\textsc{\textbf{Constraints}}} Struktur ist eine
 objektorientierte Abstraktion für die \textit{Constraints}, mit denen die Anzahl Ressourcen
-die einem \textit{Claim} zur Verfügung stehen sollen spezifiziert werden.
+die einem \textit{Claim} zur Verfügung stehen sollen, spezifiziert werden.
 Die Implementierung dieser Struktur bietet einen Konstruktor, welcher eine neue
 \texttt{\textsc{\textbf{constraints\char`_t}}} Struktur mithilfe der
 \texttt{\textsc{\textbf{agent\char`_constr\char`_create}}}
@@ -408,10 +408,10 @@ Der Konstruktor nimmt als einzigen Parameter eine \texttt{\textsc{\textbf{Constr
 welche verwendet wird, um die Ressourcen des \textit{Claims} zu spezifizieren.
 Mit diesen \textit{Constraints} wird dann eine interne
 \texttt{\textsc{\textbf{agentclaim\char`_t}}}-Struktur initialisiert,
-welche für alle folgenden Methodenaufrufe verwendet wird. Es wird also bereits im Konstruktor implizit die
+welche für alle folgenden Methodenaufrufe verwendet wird. Es wird somit bereits im Konstruktor implizit die
 \textit{Invade}-Phase des invasiven Rechnens ausgeführt.
 
-Eine praktische Methode fürs Debuggen ist \texttt{\textsc{\textbf{set\char`_verbose}}}.
+Eine praktische Methode für das \textit{Debugging} ist \texttt{\textsc{\textbf{set\char`_verbose}}}.
 Diese Methode erlaubt es, die Ausführlichkeit der auf die Kommandozeile gedruckten Informationen der
 \texttt{\textsc{\textbf{AgentClaim}}}-Struktur zu beeinflussen.
 
@@ -432,26 +432,26 @@ Zusätzlich können ebenfalls Parameterdaten für die einzelnen Recheneinheiten 
 Diese Parameterdaten werden als ein Array von \texttt{\textsc{\textbf{void}}}-Zeigern übergeben.
 Die Anzahl der Elemente des Arrays muss mit der Anzahl der vom \textit{Claim} reservierten Rechenelemente 
 übereinstimmen. Bei einer zu geringen Anzahl an Rechenelementen kann es ansonsten zu Fehlern kommen.
-Bei einer zu großen Zahl an Rechenelementen kommt es zum Pufferüberlauf, welches den Absturz des Programms zur
+Bei einer zu großen Zahl an Rechenelementen kommt es zum Pufferüberlauf, was den Absturz des Programms zur
 Folge hat. Um die Parameterübergabe sicherer zu gestalten, können in der Zukunft Serialisierungsbibliotheken
 wie \texttt{\textsc{\textbf{serde}}} verwendet werden.
 
 In der \texttt{\textsc{\textbf{infect}}}-Methode werden Signal-Strukturen aus der C-Schnittstelle verwendet,
 um die Kommunikation zwischen verschiedenen Rechenelementen zu verwalten.
 
-Um dies zu vereinfachen, wird die übergebene Funktion oder Closure nochmals von einer internen Closure umgeben,
+Um dies zu erreichen, wird die übergebene Funktion oder Closure nochmals von einer internen Closure umgeben,
 welche eine Referenz auf eine in der \texttt{\textsc{\textbf{infect}}}-Methode erstellten Signal-Struktur besitzt.
 Über dieses Signal wird signalisiert, wann die übergebene Funktion oder Closure auf einem Rechenelement erfolgreich
 ausgeführt wurde.
 Hierdurch ist es möglich, nach der Initialisierung der \textit{i-lets} auf die
 vollständige Abarbeitung dieser zu warten, oder alternativ das Signal, mithilfe dessen die \textit{i-lets} mit dem
 Hauptfaden des Programms kommunizieren, als Rückgabewert zu verwenden.
-Um beide dieser Vorgehensweisen anzubieten, gibt es zusätzlich zur \texttt{\textsc{\textbf{infect}}}-Methode,
-welche auf die vollständige Ausführung der \textit{i-lets} wartet,
-die \texttt{\textsc{\textbf{infect\char`_async}}}-Methode,
-welche die \texttt{\textsc{\textbf{simple\char`_signal}}}-Struktur,
-mit der die \textit{i-lets} das Ende ihrer Ausführung signalisieren,
-als Rückgabewert verwendet. Anschließend kann der Nutzer mit der 
+Um beide dieser Vorgehensweisen anzubieten, gibt es zusätzlich zur \texttt{\textsc{\textbf{infect}}}-Methode
+die \texttt{\textsc{\textbf{infect\char`_async}}}-Methode. Die \texttt{\textsc{\textbf{infect}}}-Methode wartet auf
+die vollständige Ausführung aller \textit{i-lets}. Die \texttt{\textsc{\textbf{infect\char`_async}}}-Methode gibt hingegen
+die \texttt{\textsc{\textbf{simple\char`_signal}}}-Struktur, mit der die \textit{i-lets} das Ende ihrer Ausführung signalisieren,
+als Rückgabewert zurück.
+Anschließend kann der Nutzer mit der
 \texttt{\textsc{\textbf{simple\char`_signal\char`_wait}}}-Funktion aus dem
 \texttt{\textsc{\textbf{octo\char`_bindings}}}
 Modul auf die vollständige Ausführung aller \textit{i-lets} warten.
